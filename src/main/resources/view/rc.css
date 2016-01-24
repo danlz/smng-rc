@@ -1,0 +1,941 @@
+/******************************************************************************
+ * Global definitions
+ *
+ * Helvetica fonts downloaded from: http://www.ephifonts.com/free-fonts/download-free-helvetica-fonts
+ * TeXGyreHeros fonts downloaded from: http://www.1001fonts.com/texgyreheros-font.html
+ ******************************************************************************/
+
+@font-face {
+/*	font-family: Helvetica Condensed Black; */
+	font-weight: bold;
+    src: url('../fonts/Helvetica-Condensed-Black.otf');
+}
+@font-face {
+	font-family: Helvetica;
+	font-weight: bold;
+    src: url('../fonts/Helvetica-Bold.otf');
+}
+@font-face {
+	font-family: TeXGyreHerosCn;
+	font-weight: bold;
+    src: url('../fonts/texgyreheroscn-bold.otf');
+}
+@font-face {
+/*	font-family: Helvetica Ultra Compressed; */
+	font-weight: normal;
+    src: url('../fonts/Helvetica-UltraCompressed.otf');
+}
+
+.rcRoot {
+	-rc-background: #323232;
+
+	-fx-background-color: -rc-background;
+	-fx-padding: 8.0px;
+	-fx-background-radius: 20.0px;
+	-fx-alignment: center;
+	-fx-border-color: black;
+	-fx-border-width: 1.0px;
+	-fx-border-radius: 20.0px;
+}
+
+.rcButton, .settingsButton {
+	-fx-padding: 0.0px;
+}
+
+.rcButton, .rcIntegratedButton, .titleBar .button, .settingsButton {
+	-rc-button-background: black;
+	-rc-button-background-pressed: derive(-rc-button-background, 30.0%);
+
+	-fx-background-color: linear-gradient( from 0.0% 0.0% to 100.0% 100.0%, derive(-rc-button-background, 70.0%) 0.0, -rc-button-background 100.0);
+	-fx-border-color: derive(-rc-button-background, 100.0%);
+	-fx-background-insets: 0.0px;
+	-fx-border-radius: 4.0px;
+	-fx-background-radius: 4.0px;
+	-fx-text-fill: -rc-button-face;
+	-fx-font-weight: bold;
+	-fx-font-family: "Helvetica";
+	-fx-font-size: 11.0px;
+	-fx-effect: dropshadow(gaussian, derive(-rc-background, -80.0%), 8.0, 0.0, 5.0, 5.0);
+	-fx-ellipsis-string: "";
+}
+
+.rcButton:pressed, .rcIntegratedButton:pressed, .titleBar .button:pressed, .settingsButton:pressed {
+	-fx-background-color: linear-gradient( from 0.0% 0.0% to 100.0% 100.0%, derive(-rc-button-background-pressed, 70.0%) 0.0, -rc-button-background-pressed 100.0);
+	-fx-border-color: -rc-button-face-pressed;
+	-fx-text-fill: -rc-button-face-pressed;
+	-fx-effect: innershadow(gaussian, derive(-rc-button-background-pressed, -20.0%), 10.0, 0.0, 3.0, 3.0);
+}
+
+.rcButton, .rcPictoButton, .rcIntegratedButton, .titleBar .button, .settingsButton {
+	-rc-button-face: white;
+	-rc-button-face-pressed: rgb(0.0, 128.0, 255.0);
+}
+
+.rcPictoButton {
+	-fx-alignment: bottom-center;
+}
+
+.rcPictoButton .picto, .rcIntegratedButton .picto  {
+	-fx-background-color: -rc-button-face;
+}
+
+.rcPictoButton:pressed .picto, .rcIntegratedButton .rcPictoButton:pressed .picto {
+	-fx-background-color: -rc-button-face-pressed;
+}
+
+.rcIntegratedButton .rcButton {
+	-fx-background-color: transparent;
+	-fx-border-width: 0.0px;
+}
+
+.rcIntegratedButton .upper {
+	-fx-background-radius: 4.0px 4.0px 0.0px 0.0px;
+}
+
+.rcIntegratedButton .lower {
+	-fx-background-radius: 0.0px 0.0px 4.0px 4.0px;
+}
+
+.titleBar {
+	-rc-titlebar-background: derive(-rc-background, 30.0%);
+	-rc-titlebar-foreground: white;
+
+	-fx-background-color: -rc-titlebar-background;
+	-fx-background-radius: 15.0px;
+	-fx-alignment: center-right;
+	-fx-padding: 2.0px 6.0px;
+	-fx-spacing: 4.0px;
+}
+
+.titleBar .logo .logoText {
+	-fx-font-size: 16.0px;
+	-fx-font-family: "Helvetica Condensed Black";
+	-fx-text-fill: -rc-titlebar-foreground;
+}
+
+.titleBar .logo .logoOverlayForeground {
+	-fx-background-color: -rc-titlebar-foreground;
+	-fx-min-width: 79.0px;
+	-fx-min-height: 19.0px;
+	-fx-max-height: 19.0px;
+	-fx-shape: "M 0,0  l 0,19  Z
+	            M 76,9  l 0,6  l -6,0  Z
+	            M 79,0  l 0,19  Z";
+}
+
+.titleBar .logo .logoOverlayBackground {
+	-fx-background-color: -rc-titlebar-background;
+	-fx-min-width: 79.0px;
+	-fx-min-height: 19.0px;
+	-fx-max-height: 19.0px;
+	-fx-shape: "M 0,0  l 0,19  Z
+	            M 15.6,5  l -2.25,10  l 4.5,0  Z
+	            M 77,10  a 6,5 0 0 1 -8,6  l 8,0  Z
+	            M 79,0  l 0,19  Z";
+}
+
+.titleBar .button {
+	-fx-effect: none;
+	-fx-padding: 2.0px;
+	-fx-min-width: 20.0px;
+	-fx-max-width: 20.0px;
+}
+
+.region {
+	-rc-region-over-drag-target-background: derive(-rc-background, 40.0%);
+	-rc-region-moving-background: #555599;
+
+	-fx-border-width: 2.0px;
+	-fx-border-color: transparent;
+	-fx-border-radius: 8.0px;
+	-fx-background-radius: 8.0px;
+	-fx-padding: 4.0px;
+	-fx-hgap: 6.0px;
+	-fx-vgap: 6.0px;
+}
+
+.regionOverDragTarget {
+	-fx-background-color: -rc-region-over-drag-target-background;
+	-fx-border-color: derive(-rc-region-over-drag-target-background, 60.0%);
+}
+
+.regionMoving {
+	-fx-background-color: -rc-region-moving-background;
+	-fx-border-color: derive(-rc-region-moving-background, 60.0%);
+}
+
+.rcRoot .tooltip {
+	-fx-text-fill: -rc-button-face;
+	-fx-font-weight: bold;
+	-fx-font-family: "Helvetica";
+	-fx-font-size: 12.0px;
+	-fx-border-color: -rc-button-face;
+	-fx-border-width: 1px;
+	-fx-border-radius: 5px;
+}
+
+
+
+/******************************************************************************
+ * Power region
+ ******************************************************************************/
+
+.powerRegion {
+	-fx-padding: 1.0px 4.0px;
+}
+
+.offButton {
+	-fx-alignment: center;
+}
+
+.offButton .rcButton {
+	-rc-button-background: #AA2222;
+	-fx-border-radius: 30.0px;
+	-fx-background-radius: 30.0px;
+}
+
+.offButton .picto {
+	-fx-min-width: 23.0px;
+	-fx-max-width: 23.0px;
+	-fx-min-height: 25.0px;
+	-fx-max-height: 25.0px;
+	-fx-shape: "M 0,0  l 3,0  l 0,16  l -3,0  Z
+	            m 7.5,4  a 14,14 0 0 1 8,13   a 14,14 0 0 1 -28,0  a 14,14 0 0 1 8,-13
+	            l 0,3    a 11,11 0 0 0 -5,10  a 11,11 0 0 0 22,0   a 11,11 0 0 0 -5,-10  Z
+	            M 17,32";
+}
+
+.settingsButton {
+	-fx-font-family: "TeXGyreHerosCn";
+	-fx-font-size: 10.0px;
+
+	-rc-button-background: #101020;
+}
+
+
+
+/******************************************************************************
+ * Source region
+ ******************************************************************************/
+
+.sourceButton .rcButton {
+	-fx-alignment: top-center;
+	-fx-font-family: "TeXGyreHerosCn";
+}
+
+.sourceButton .picto {
+	-fx-min-height: 15.0px;
+	-fx-max-height: 15.0px;
+	-fx-min-width: 36.0px;
+	-fx-max-width: 36.0px;
+	-fx-shape: "M 0,0    l 150,0  l 0,90   l -150,0  l 0,-90
+	            l 10,10  l 0,70  l 130,0  l 0,-70   l -130,0  Z
+	            m -30,40  l 80,0  l 0,-15  l 30,20  l -30,20  l 0,-15  l -80,0  Z
+	            M 200,0  c 0,-10 150,-10 150,0  c 10,0 10,90 0,90    c 0,10 -150,10 -150,0  c -10,0 -10,-90 0,-90
+	            l 10,10  c -10,0 -10,70 0,70    c 0,10 130,10 130,0  c 10,0 10,-70 0,-70    c 0,-10 -130,-10 -130,0
+	            Z
+	            m 20,20  l 50,0  l 0,10  l -50,0  Z
+	            m 0,20   l 50,0  l 0,10  l -50,0  Z
+	            m 0,20   l 50,0  l 0,10  l -50,0  Z
+	            m 60,0   l 10,0  l 0,10  l -10,0  Z  m 20,0  l 10,0  l 0,10  l -10,0  Z  m 20,0  l 10,0  l 0,10  l -10,0  Z
+	            M 0,130";
+}
+
+
+
+/******************************************************************************
+ * Numbers region
+ ******************************************************************************/
+
+.numberButton {
+	-fx-padding: -8.0px;
+	-fx-font-size: 26.0px;
+}
+
+.ttxMixButton .rcButton {
+	-fx-alignment: top-center;
+}
+
+.ttxMixButton .picto {
+	-fx-min-height: 15.0px;
+	-fx-max-height: 15.0px;
+	-fx-min-width: 36.0px;
+	-fx-max-width: 36.0px;
+	-fx-shape: "M 0,0    c 0,-10 150,-10 150,0  c 10,0 10,90 0,90    c 0,10 -150,10 -150,0  c -10,0 -10,-90 0,-90
+	            l 10,10  c -10,0 -10,70 0,70    c 0,10 130,10 130,0  c 10,0 10,-70 0,-70    c 0,-10 -130,-10 -130,0
+	            Z
+	            m 20,20  l 110,0  l 0,10  l -110,0  Z
+	            m 0,20   l 110,0  l 0,10  l -110,0  Z
+	            m 0,20   l 110,0  l 0,10  l -110,0  Z
+	            M 170,95 l 20,-100  l 10,0  l -20,100  Z
+	            M 220,0  c 0,-10 150,-10 150,0  c 10,0 10,90 0,90    c 0,10 -150,10 -150,0  c -10,0 -10,-90 0,-90
+	            l 10,10  c -10,0 -10,70 0,70    c 0,10 130,10 130,0  c 10,0 10,-70 0,-70    c 0,-10 -130,-10 -130,0
+	            Z
+	            m 0,80  l 140,-80  l 10,10  l -140,80  Z
+	            m 130,-60  l 0,10  l -30,0  l 30,-10  Z
+	            m 0,20     l 0,10  l -70,0  l 30,-10  Z
+	            m 0,20     l 0,10  l -110,0 l 30,-10  Z
+	            M 0,130";
+}
+
+.preChButton .rcButton {
+	-fx-alignment: top-center;
+}
+
+.preChButton .picto {
+	-fx-min-height: 15.0px;
+	-fx-max-height: 15.0px;
+	-fx-min-width: 16.0px;
+	-fx-max-width: 16.0px;
+	-fx-shape: "M 0,0    c 0,-10 150,-10 150,0  c 10,0 10,90 0,90    c 0,10 -150,10 -150,0  c -10,0 -10,-90 0,-90
+	            l 10,10  c -10,0 -10,70 0,70    c 0,10 130,10 130,0  c 10,0 10,-70 0,-70    c 0,-10 -130,-10 -130,0
+	            Z
+	            m 20,20  l 50,0  l 0,10  l -50,0  Z
+	            m 0,20   l 50,0  l 0,10  l -50,0  Z
+	            m 0,20   l 50,0  l 0,10  l -50,0  Z
+	            m 60,-15  a 30,30 0 0 1 60,0  a 30,30 0 0 1 -60,0  l 30,0  l 0,-20  a 20,20 0 0 0 -20,20  Z
+	            M 0,130";
+}
+
+
+
+/******************************************************************************
+ * Volume/Program region
+ ******************************************************************************/
+
+.volPlusMinusButton, .progPlusMinusButton {
+	-rc-button-background: #666688;
+}
+
+.volPlusMinusButton .rcPictoButton .picto, .volPlusMinusButton .pictoMain,
+.progPlusMinusButton .rcPictoButton .picto, .progPlusMinusButton .pictoMain {
+	-fx-background-color: -rc-background;
+}
+
+.volPlusMinusButton .upperButton,
+.progPlusMinusButton .upperButton {
+	-fx-alignment: top-center;
+}
+
+.volPlusMinusButton .lowerButton,
+.progPlusMinusButton .lowerButton {
+	-fx-alignment: bottom-center;
+}
+
+.volPlusMinusButton .upperButton .picto {
+	-fx-min-width: 24.0px;
+	-fx-min-height: 34.0px;
+	-fx-max-height: 34.0px;
+	-fx-shape: "M 10,0  l 4,0  l 0,10  l 10,0  l 0,4  l -10,0  l 0,10  l -4,0  l 0,-10  l -10,0  l 0,-4  l 10,0  Z  M 0,-10";
+}
+
+.volPlusMinusButton .pictoMain {
+	-fx-min-width: 28.0px;
+	-fx-min-height: 8.0px;
+	-fx-max-height: 8.0px;
+	-fx-shape: "M 0,0  l 28,0  l 0,-8  Z";
+}
+
+.volPlusMinusButton .lowerButton .picto {
+	-fx-min-width: 24.0px;
+	-fx-min-height: 20.0px;
+	-fx-max-height: 20.0px;
+	-fx-shape: "M 0,0  l 24,0  l 0,4  l -24,0  Z  M 0,20";
+}
+
+.progPlusMinusButton .upperButton .picto {
+	-fx-min-width: 32.0px;
+	-fx-min-height: 37.0px;
+	-fx-shape: "M 170,0  l 170,100  l -30,30  l -140,-85  l -140,85  l -30,-30  Z
+	            m -75,150  c 0,-10 150,-10 150,0  c 10,0 10,90 0,90    c 0,10 -150,10 -150,0  c -10,0 -10,-90 0,-90
+	            l 10,10    c -10,0 -10,70 0,70    c 0,10 130,10 130,0  c 10,0 10,-70 0,-70    c 0,-10 -130,-10 -130,0
+	            Z
+	            m 20,20  l 45,0  l 0,10  l -45,0  Z
+	            m 0,20   l 45,0  l 0,10  l -45,0  Z
+	            m 0,20   l 45,0  l 0,10  l -45,0  Z
+	            m 55,-45  l 30,30  l -30,30  Z
+                m 45,5  l 10,0  l 0,50  l -10,0  l 0,-30  l -10,0  l 0,-10  a 10,10 0 0 0 10,-10  Z
+	            M 0,-80";
+}
+
+.progPlusMinusButton .pictoMain {
+	-fx-min-width: 11.0px;
+	-fx-min-height: 14.0px;
+	-fx-max-height: 14.0px;
+	-fx-shape: "M 0,0  l 3,0  l 0,20  l -3,0  Z
+	            l 8,0  a 5,6 0 0 1 0,12
+	            l -8,0  l 0,-3
+	            l 8,0  a 2.5,3 0 0 0 0,-6
+	            l -8,0  Z";
+}
+
+.progPlusMinusButton .lowerButton .picto {
+	-fx-min-width: 32.0px;
+	-fx-min-height: 37.0px;
+	-fx-shape: "M 170,0  l 170,-100  l -30,-30  l -140,85  l -140,-85  l -30,30  Z
+	            m -75,-240  c 0,-10 150,-10 150,0  c 10,0 10,90 0,90    c 0,10 -150,10 -150,0  c -10,0 -10,-90 0,-90
+	            l 10,10     c -10,0 -10,70 0,70    c 0,10 130,10 130,0  c 10,0 10,-70 0,-70    c 0,-10 -130,-10 -130,0
+	            Z
+                m 25,20  l 10,0  l 0,50  l -10,0  l 0,-30  l -10,0  l 0,-10  a 10,10 0 0 0 10,-10  Z
+	            m 50,-5  l 0,60  l -30,-30  Z
+	            m 10,5   l 45,0  l 0,10  l -45,0  Z
+	            m 0,20   l 45,0  l 0,10  l -45,0  Z
+	            m 0,20   l 45,0  l 0,10  l -45,0  Z
+	            M 0,80";
+}
+
+.muteButton .rcButton {
+	-fx-alignment: top-center;
+}
+
+.muteButton .picto {
+	-fx-min-height: 20.0px;
+	-fx-max-height: 20.0px;
+	-fx-min-width: 18.0px;
+	-fx-max-width: 18.0px;
+	-fx-shape: "M 0,0
+	            m 10,0  l 90,90  l -10,10  l -90,-90  Z
+	            m 80,0  l 10,10  l -90,90  l -10,-10  Z
+	            m -40,30  l 13,-13  l 0,-40  l -33,33  l 10,10  l 10,-10  Z
+	            m 0,40    l 13,13  l 0,40  l -33,-33  l 10,-10  l 10,10  Z
+	            m -40,5  l -30,0  l 0,-50  l 30,0  l 5,5  l -5,5  l 0,30  l 5,5  l -5,5
+	            l -10,-10  l 0,-30  l -10,0  l 0,30  l 10,0  Z
+	            M 0,160";
+}
+
+.chListButton .rcButton {
+	-fx-alignment: top-center;
+	-fx-font-size: 11.0px;
+	-fx-font-family: "TeXGyreHerosCn";
+}
+
+.chListButton .picto {
+	-fx-min-height: 17.0px;
+	-fx-max-height: 17.0px;
+	-fx-min-width: 16.0px;
+	-fx-max-width: 16.0px;
+	-fx-shape: "M 0,0    c 0,-10 150,-10 150,0  c 10,0 10,90 0,90    c 0,10 -150,10 -150,0  c -10,0 -10,-90 0,-90
+	            l 10,10  c -10,0 -10,70 0,70    c 0,10 130,10 130,0  c 10,0 10,-70 0,-70    c 0,-10 -130,-10 -130,0
+	            Z
+	            m 20,20  l 50,0  l 0,10  l -50,0  Z
+	            m 0,20   l 50,0  l 0,10  l -50,0  Z
+	            m 0,20   l 50,0  l 0,10  l -50,0  Z
+	            m 65,-15  l 25,-30  l 25,30  l -25,30  l -25,-30
+	            l 10,0    l 15,20  l 15,-20  l -15,-20  l -15,20  Z
+	            M 0,150";
+}
+
+
+
+/******************************************************************************
+ * Menu/Smart/Guide region
+ ******************************************************************************/
+
+.menuSmartGuideRegion {
+	-fx-padding: 1.0px 4.0px;
+}
+
+.menuButton .rcButton {
+	-fx-alignment: top-center;
+}
+
+.menuButton .picto {
+	-fx-min-height: 15.0px;
+	-fx-max-height: 15.0px;
+	-fx-min-width: 34.0px;
+	-fx-max-width: 34.0px;
+	-fx-shape: "M 0,-5   l 180,0  l 0,100  l -180,0  l 0,-100
+	            l 15,15  l 0,70   l 150,0  l 0,-70   l -150,0  Z
+	            m 15,0
+	            m 40,0  l 15,0  l 0,100  l -15,0  Z
+				m 15,0
+	            m 40,0  l 15,0  l 0,100  l -15,0  Z
+	            M 210,0  c 0,-10 150,-10 150,0  c 10,0 10,90 0,90    c 0,10 -150,10 -150,0  c -10,0 -10,-90 0,-90
+	            l 10,10  c -10,0 -10,70 0,70    c 0,10 130,10 130,0  c 10,0 10,-70 0,-70    c 0,-10 -130,-10 -130,0
+	            Z
+	            m 20,20  l 85,0  l 0,10  l -85,0  Z
+	            m 0,20   l 85,0  l 0,10  l -85,0  Z
+	            m 0,20   l 85,0  l 0,10  l -85,0  Z
+	            m 95,10
+				l 5,-5  l 0,-27  l 10,-3  l 0,30  l 5,5  Z
+				m 5,-45  a 5,5 0 0 1 10,0  a 5,5 0 0 1 -10,0  Z
+	            M 0,130";
+}
+
+.smartButton .rcButton {
+	-rc-button-background: #DDDDDD;
+	-rc-button-background-pressed: derive(-rc-button-background, -50.0%);
+	-fx-shape: "M 0,0
+	            l 19,9  c 2,1 2,2 2,2  l 0,34  c 0,0 0,1 -2,2  l -19,9
+	            c -2,1 -2,1 -4,0
+	            l -19,-9  c -2,-1 -2,-2 -2,-2  l 0,-34  c 0,0 0,-1 2,-2  l 19,-9
+                c 2,-1 2,-1 4,0
+	            Z";
+}
+
+.smartButton:pressed .rcButton {
+	-fx-background-color: -rc-button-face-pressed;
+}
+
+.smartButton .top {
+	-fx-background-color: rgba(255.0, 0.0, 0.0, 0.5);
+	-fx-min-height: 18.0px;
+	-fx-shape: "M 0,0  l 22,9  l -22,9  l -22,-9  Z";
+}
+
+.smartButton .left {
+	-fx-background-color: rgba(0.0, 255.0, 0.0, 0.5);
+	-fx-min-height: 31.0px;
+	-fx-shape: "M 0,0  l -18,-7  l 0,-23  l 18,7  Z";
+}
+
+.smartButton .right {
+	-fx-background-color: rgba(0.0, 0.0, 255.0, 0.5);
+	-fx-min-height: 31.0px;
+	-fx-shape: "M 0,0  l 18,-7  l 0,-23  l -18,7  Z";
+}
+
+
+
+/******************************************************************************
+ * Arrows region
+ ******************************************************************************/
+
+.arrowsRegion {
+	-fx-padding: 0.0px;
+}
+
+.arrowsRegion .frame {
+	-fx-background-color: derive(-rc-background, -40.0%);
+	-fx-border-color: derive(-rc-background, -70.0%);
+	-fx-border-width: 3.0px;
+	-fx-shape: "M 0,0     a 8,8 0 0 1 8,8
+	            l 2,28    a 12,12 0 0 0 12,12
+	            l 42,2    a 8,8 0 0 1 8,8
+	            l 0,14    a 8,8 0 0 1 -8,8
+	            l -42,2   a 12,12 0 0 0 -12,12
+	            l -2,28   a 8,8 0 0 1 -8,8
+	            l -14,0   a 8,8 0 0 1 -8,-8
+	            l -2,-28  a 12,12 0 0 0 -12,-12
+	            l -42,-2  a 8,8 0 0 1 -8,-8
+	            l 0,-14   a 8,8 0 0 1 8,-8
+	            l 42,-2   a 12,12 0 0 0 12,-12
+	            l 2,-28   a 8,8 0 0 1 8,-8
+	            Z";
+}
+
+.arrowsRegion .buttonsLayout {
+	-fx-padding: 4.0px;
+	-fx-hgap: 12.0px;
+	-fx-vgap: 10.0px;
+}
+
+.arrowsRegion.regionOverDragTarget .frame {
+	-fx-background-color: derive(-rc-region-over-drag-target-background, -40.0%);
+	-fx-border-color: derive(-rc-region-over-drag-target-background, -70.0%);
+}
+
+.arrowsRegion.regionMoving .frame {
+	-fx-background-color: derive(-rc-region-moving-background, -40.0%);
+	-fx-border-color: derive(-rc-region-moving-background, -70.0%);
+}
+
+.toolsButton .rcButton {
+	-fx-border-radius: 4.0px 4.0px 10.0px 4.0px;
+	-fx-background-radius: 4.0px 4.0px 10.0px 4.0px;
+	-fx-alignment: top-center;
+}
+
+.toolsButton .picto {
+	-fx-min-height: 15.0px;
+	-fx-max-height: 15.0px;
+	-fx-min-width: 28.0px;
+	-fx-max-width: 28.0px;
+	-fx-shape: "M 0,-5   l 110,0  l 0,95  l -60,0  l 0,-15
+	            l 45,0  l 0,-65  l -80,0  l 0,30  l -15,0  Z
+	            m 20,25  l 70,0  l 0,15  l -70,0  Z
+	            m -20,30  l 40,0  l 0,40  l -15,-15  l -20,20  l -10,-10  l 20,-20  Z
+	            M 140,0  c 0,-10 150,-10 150,0  c 10,0 10,90 0,90    c 0,10 -150,10 -150,0  c -10,0 -10,-90 0,-90
+	            l 10,10  c -10,0 -10,70 0,70    c 0,10 130,10 130,0  c 10,0 10,-70 0,-70    c 0,-10 -130,-10 -130,0
+	            Z
+	            m 20,20  l 60,0  l 0,10  l -60,0  Z
+	            m 0,20   l 60,0  l 0,10  l -60,0  Z
+	            m 0,20   l 60,0  l 0,10  l -60,0  Z
+	            m 70,-20
+				l 40,0  l 0,10  l -40,0  Z
+				m 0,-5  l 20,-20  l 20,20  Z
+				m 0,20  l 20,20  l 20,-20  Z
+	            M 0,130";
+}
+
+.upButton, .leftButton, .enterButton, .rightButton, .downButton {
+	-fx-alignment: center;
+}
+
+.upButton {
+	-fx-alignment: top-center;
+}
+
+.upButton .rcButton {
+	-fx-shape: "M 0,0
+	            a 4,4 0 0 1 4,4    l 2,30
+	            a 4,4 0 0 1 -4,4   l -24,0
+	            a 4,4 0 0 1 -4,-4  l 2,-30
+	            a 4,4 0 0 1 4,-4
+	            Z";
+}
+
+.upButton .picto {
+	-fx-min-width: 12.0px;
+	-fx-min-height: 25.0px;
+	-fx-max-height: 25.0px;
+	-fx-shape: "M 0,0  l 6,17  l -12,0  Z  M 0,-7";
+}
+
+.infoButton .rcButton {
+	-fx-border-radius: 4.0px 4.0px 4.0px 10.0px;
+	-fx-background-radius: 4.0px 4.0px 4.0px 10.0px;
+	-fx-alignment: top-center;
+}
+
+.infoButton .picto {
+	-fx-min-height: 15.0px;
+	-fx-max-height: 15.0px;
+	-fx-min-width: 24.0px;
+	-fx-max-width: 24.0px;
+	-fx-shape: "M 30,5  a 13,13 0 0 0 26,0  a 13,13 0 0 0 -26,0  Z
+	            m -22,28  l 44,-7  l -16,56  l 15,0  c -5,10 -40,30 -40,5  l 14,-48  l -20,1  Z
+	            M 90,0   c 0,-10 150,-10 150,0  c 10,0 10,90 0,90    c 0,10 -150,10 -150,0  c -10,0 -10,-90 0,-90
+	            l 10,10  c -10,0 -10,70 0,70    c 0,10 130,10 130,0  c 10,0 10,-70 0,-70    c 0,-10 -130,-10 -130,0
+	            Z
+	            m 20,20  l 60,0  l 0,10  l -60,0  Z
+	            m 0,20   l 60,0  l 0,10  l -60,0  Z
+	            m 0,20   l 60,0  l 0,10  l -60,0  Z
+	            m 70,-25  a 20,20 0 0 1 40,0    c 0,10 -20,15 -15,25
+				l -10,0   c 0,-10 0,-10 15,-25  a 10,10 0 0 0 -20,0  Z
+				m 15,30  l 10,0  l 0,10  l-10,0  Z
+	            M 0,130";
+}
+
+.leftButton {
+	-fx-alignment: center-left;
+}
+
+.leftButton .rcButton {
+	-fx-shape: "M 0,0
+	            a 4,4 0 0 1 4,4    l 0,20
+	            a 4,4 0 0 1 -4,4   l -38,-2
+	            a 4,4 0 0 1 -4,-4  l 0,-16
+	            a 4,4 0 0 1 4,-4
+	            Z";
+}
+
+.leftButton .picto {
+	-fx-min-width: 26.0px;
+	-fx-min-height: 12.0px;
+	-fx-max-height: 12.0px;
+	-fx-shape: "M 0,0  l 15,-6  l 0,12  Z  M -9,0";
+}
+
+.enterButton .picto {
+	-fx-min-width: 22.0px;
+	-fx-max-width: 22.0px;
+	-fx-min-height: 14.0px;
+	-fx-max-height: 14.0px;
+	-fx-shape: "M 0,0  l 20,0  l 0,4  l -2,0  l 0,-2  l -16,0  l 0,10  l 16,0  l 0,-2  l 2,0  l 0,4  l -20,0  Z
+	            m 7,7  l 6,-3  l 0,2  l 10,0  l 0,-4  l 2,0  l 0,6  l -12,0  l 0,2  Z";
+}
+
+.rightButton {
+	-fx-alignment: center-right;
+}
+
+.rightButton .rcButton {
+	-fx-shape: "M 0,0
+	            a 4,4 0 0 1 4,4    l 0,16
+	            a 4,4 0 0 1 -4,4   l -38,2
+	            a 4,4 0 0 1 -4,-4  l 0,-20
+	            a 4,4 0 0 1 4,-4
+	            Z";
+}
+
+.rightButton .picto {
+	-fx-min-width: 26.0px;
+	-fx-min-height: 12.0px;
+	-fx-max-height: 12.0px;
+	-fx-shape: "M 0,0  l 15,5  l -15,5  Z  M 26,0";
+}
+
+.returnButton .rcButton {
+	-fx-border-radius: 4.0px 10.0px 4.0px 4.0px;
+	-fx-background-radius: 4.0px 10.0px 4.0px 4.0px;
+	-fx-alignment: top-center;
+	-fx-font-family: "TeXGyreHerosCn";
+}
+
+.returnButton .picto {
+	-fx-min-height: 15.0px;
+	-fx-max-height: 15.0px;
+	-fx-min-width: 30.0px;
+	-fx-max-width: 30.0px;
+	-fx-shape: "
+	            M 0,17  l 0,35  l 40,-20
+	            l -12,-6  a 46,38 0 1 1 0,38  l -12,6  a 60,50 0 1 0 0,-50  Z
+	            M 155,0  c 0,-10 150,-10 150,0  c 10,0 10,90 0,90    c 0,10 -150,10 -150,0  c -10,0 -10,-90 0,-90
+	            l 10,10  c -10,0 -10,70 0,70    c 0,10 130,10 130,0  c 10,0 10,-70 0,-70    c 0,-10 -130,-10 -130,0
+	            Z
+	            m 20,20  l 60,0  l 0,10  l -60,0  Z
+	            m 0,20   l 60,0  l 0,10  l -60,0  Z
+	            m 0,20   l 60,0  l 0,10  l -60,0  Z
+	            m 70,-20
+				l 40,0  l 0,10  l -40,0  Z
+				m 0,-20  l 20,20  l 20,-20  Z
+				m 0,50  l 20,-20  l 20,20  Z
+	            M 0,130";
+}
+
+.downButton {
+	-fx-alignment: bottom-center;
+}
+
+.downButton .rcButton {
+	-fx-shape: "M 0,0
+	            a 4,4 0 0 1 4,4    l -2,30
+	            a 4,4 0 0 1 -4,4   l -20,0
+	            a 4,4 0 0 1 -4,-4  l -2,-30
+	            a 4,4 0 0 1 4,-4
+	            Z";
+}
+
+.downButton .picto {
+	-fx-min-width: 12.0px;
+	-fx-min-height: 25.0px;
+	-fx-max-height: 25.0px;
+	-fx-shape: "M 0,0  l 12,0  l -6,17  Z  M 0,25";
+}
+
+.exitButton .rcButton {
+	-fx-border-radius: 10.0px 4.0px 4.0px 4.0px;
+	-fx-background-radius: 10.0px 4.0px 4.0px 4.0px;
+	-fx-alignment: top-center;
+}
+
+.exitButton .picto {
+	-fx-min-height: 15.0px;
+	-fx-max-height: 15.0px;
+	-fx-min-width: 34.0px;
+	-fx-max-width: 34.0px;
+	-fx-shape: "M 0,25  l 40,0  l 0,-10  l 35,20  l -35,20  l 0,-10  l -40,0  Z
+	            M 70,-5   l 90,0  l 0,80  l -90,0  l 0,-80
+	            l 15,15  l 0,50   l 60,0  l 0,-50   l -60,0  Z
+	            m 90,0  l 0,80  l -50,30  l 0,-80  Z
+	            M 200,0  c 0,-10 150,-10 150,0  c 10,0 10,90 0,90    c 0,10 -150,10 -150,0  c -10,0 -10,-90 0,-90
+	            l 10,10  c -10,0 -10,70 0,70    c 0,10 130,10 130,0  c 10,0 10,-70 0,-70    c 0,-10 -130,-10 -130,0
+	            Z
+	            m 20,20  l 60,0  l 0,10  l -60,0  Z
+	            m 0,20   l 60,0  l 0,10  l -60,0  Z
+	            m 0,20   l 60,0  l 0,10  l -60,0  Z
+	            m 80,-35
+	            l 15,15  l 15,-15  l 5,5  l -15,15  l 15,15  l -5,5  l -15,-15  l -15,15  l -5,-5  l 15,-15  l -15,-15  Z
+	            M 0,130";
+}
+
+
+
+/******************************************************************************
+ * A/B/C/D region
+ ******************************************************************************/
+
+.aButton, .bButton, .cButton, .dButton {
+	-fx-font-size: 14.0px;
+}
+
+.aButton {
+	-rc-button-background: rgb(100.0,0.0,0.0);
+}
+
+.bButton {
+	-rc-button-background: rgb(0.0,100.0,0.0);
+}
+
+.cButton {
+	-rc-button-background: rgb(130.0,100.0,0.0);
+}
+
+.dButton {
+	-rc-button-background: rgb(0.0,0.0,100.0);
+}
+
+
+
+/******************************************************************************
+ * Shortcuts region
+ ******************************************************************************/
+
+.historyButton, .cameraButton, .supportButton, .adSubtButton {
+	-fx-font-family: "TeXGyreHerosCn";
+}
+
+.familyStoryButton {
+	-fx-font-size: 13.0px;
+	-fx-font-family: "Helvetica Ultra Compressed";
+}
+
+.threeDButton {
+	-fx-alignment: center;
+}
+
+.threeDButton .picto {
+	-fx-min-height: 14.0px;
+	-fx-max-height: 14.0px;
+	-fx-min-width: 20.0px;
+	-fx-max-width: 20.0px;
+	-fx-shape: "M 0,0
+	            l 100,0  l -6,70  l -44,20  l -44,-20  l -6,-70
+	            l 5,5
+	            l 5,63  l 40,18  l 40,-18  l 5,-63
+	            l -45,10  l -45,-10  Z
+
+                M 11,28
+                c -2,-19 7,-16 15,-14
+                l 7,2
+                c 8,2.5 12,1.5 12,15
+                l 0,6
+
+                c 0,10 -5,8 -8,8
+                c 8,2 8,4 8,14
+
+                l 0,6
+                c 0,10 0,14 -12,9
+                l -10,-4.5
+                c -10.5,-4 -10,-10 -10.5,-20
+
+
+                l 9,3
+                c 0.8,3 -1.8,7.5 7,10
+                c 8,3 7,-2 7,-3.5
+                c 0,-6 0,-10 -13,-12
+                l 0, -10
+                c 12,4 12,-1 12,-7
+                c 0,-6 -4,-6 -7,-7
+                c -5,-1 -7,-3 -7,7.5
+                Z
+
+	            M 50,19  l 48,-12  l -6,62   l -42,17   l 0,-67
+				l 6,5    l 0,58    l 15,-7
+				c 8,-3.5 18,-8 19,-22   l 2,-21
+				c 0,-6 1,-18 -19,-12.5  l -20,5.2
+				Z
+				m 12,10  l 0,44  l 14,-6
+				c 3.5,-1.5 7.5,-6 8,-12  l 2,-20
+                c 1.5,-12 -5,-11.5 -10,-10
+				Z
+	            ";
+}
+
+
+
+/******************************************************************************
+ * Control region
+ ******************************************************************************/
+
+.controlRegion {
+	-fx-padding: 1.0px 4.0px 4.0px 4.0px;
+}
+
+.lastIcon {
+	-fx-background-color: white;
+	-fx-min-height: 5.0px;
+	-fx-max-width: 18.0px;
+	-fx-shape: "M 0,-5  l 5,0  l 0,10  l -5,0  Z
+	            m 3,5   l 15,-5  l 0,10  Z
+	            m 12,0  l 15,-5  l 0,10  Z";
+}
+
+.nextIcon {
+	-fx-background-color: white;
+	-fx-min-height: 8.0px;
+	-fx-min-height: 5.0px;
+	-fx-max-width: 18.0px;
+	-fx-shape: "M 0,0   l 15,5  l -15,5  Z
+	            m 12,0  l 15,5  l -15,5  Z
+	            m 12,0  l 5,0  l 0,10  l -5,0  Z";
+}
+
+.controlRegion .rcPictoButton {
+	-fx-alignment: center;
+}
+
+.rewindButton .picto {
+	-fx-min-width: 27.0px;
+	-fx-max-width: 27.0px;
+	-fx-min-height: 9.0px;
+	-fx-max-height: 9.0px;
+	-fx-shape: "M 0,0   l 15,-5  l 0,10  Z
+	            m 12,0  l 15,-5  l 0,10  Z";
+}
+
+.pauseButton .picto {
+	-fx-min-width: 10.0px;
+	-fx-max-width: 10.0px;
+	-fx-min-height: 10.0px;
+	-fx-max-height: 10.0px;
+	-fx-shape: "M 0,0  l 4,0  l 0,10  l -4,0  Z
+	            m 6,0  l 4,0  l 0,10  l -4,0  Z";
+}
+
+.forwardButton .picto {
+	-fx-min-width: 27.0px;
+	-fx-max-width: 27.0px;
+	-fx-min-height: 9.0px;
+	-fx-max-height: 9.0px;
+	-fx-shape: "M 0,0   l 15,5  l -15,5  Z
+	            m 12,0  l 15,5  l -15,5  Z";
+}
+
+.recordButton .picto {
+	-fx-min-width: 12.0px;
+	-fx-max-width: 12.0px;
+	-fx-min-height: 12.0px;
+	-fx-max-height: 12.0px;
+	-fx-shape: "M 0,0  a 5,5 0 0 1 10,0  a 5,5 0 0 1 -10,0  Z";
+	-fx-background-color: #C82222;
+}
+
+.playButton .picto {
+	-fx-min-width: 12.0px;
+	-fx-max-width: 12.0px;
+	-fx-min-height: 12.0px;
+	-fx-max-height: 12.0px;
+	-fx-shape: "M 0,0  l 15,5  l -15,5  Z";
+}
+
+.stopButton .picto {
+	-fx-min-width: 10.0px;
+	-fx-max-width: 10.0px;
+	-fx-min-height: 10.0px;
+	-fx-max-height: 10.0px;
+	-fx-shape: "M 0,0  l 10,0  l 0,10  l -10,0  Z";
+}
+
+
+
+/*************************************************************
+ * Settings window
+ *************************************************************/
+
+.settingsRoot {
+	-fx-padding: 10.0px;
+	-fx-spacing: 10.0px;
+}
+
+.parametersPane {
+	-fx-vgap: 4.0px;
+	-fx-hgap: 10.0px;
+}
+
+.buttonsRow {
+	-fx-spacing: 10.0px;
+	-fx-alignment: center-right;
+}
+

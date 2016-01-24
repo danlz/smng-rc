@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?scenebuilder-stylesheet ../../../../../../view/main.css?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import pl.danlz.remotecontrol.samsung.gui.control.*?>
+
+<fx:root type="javafx.scene.layout.StackPane" styleClass="rcIntegratedButton" xmlns="http://javafx.com/javafx/8.0.51" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <VBox>
+      <children>
+        <RCPictoButton fx:id="upperButton" styleClass="upperButton" VBox.vgrow="ALWAYS" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pickOnBounds="false" />
+        <RCPictoButton fx:id="lowerButton" styleClass="lowerButton" VBox.vgrow="ALWAYS" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pickOnBounds="false" />
+      </children>
+    </VBox>
+    <Label styleClass="picto, pictoMain" mouseTransparent="true" pickOnBounds="false" />
+  </children>
+</fx:root>
