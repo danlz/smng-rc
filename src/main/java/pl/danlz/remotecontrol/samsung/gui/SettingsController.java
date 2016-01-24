@@ -66,8 +66,13 @@ public class SettingsController extends AbstractController {
 						if (empty) {
 							setText("");
 						} else {
-							setText(item.getAddress() + "   " + item.getName() + "   " + item.getManufacturer());
+							setText(niceNullString(item.getAddress()) + "   " + niceNullString(item.getName()) + "   "
+									+ niceNullString(item.getManufacturer()));
 						}
+					}
+
+					private String niceNullString(String str) {
+						return str == null ? "" : str;
 					}
 				};
 			}
@@ -125,6 +130,7 @@ public class SettingsController extends AbstractController {
 		addressComboBox.requestFocus();
 		Button button = (Button) event.getSource();
 		button.setDisable(true);
+		button.setText("Searching...");
 		executor.execute(new Task<Collection<UPnPDevice>>() {
 
 			@Override
@@ -149,6 +155,7 @@ public class SettingsController extends AbstractController {
 				addressComboBox.getItems().setAll(addresses);
 				addressComboBox.show();
 				button.setDisable(false);
+				button.setText("Find");
 			}
 
 			@Override

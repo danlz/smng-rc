@@ -10,9 +10,9 @@
   <children>
     <GridPane styleClass="parametersPane">
       <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" maxWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="130.0" maxWidth="130.0" />
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="55.0" maxWidth="55.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="130.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" />
       </columnConstraints>
       <rowConstraints>
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -26,8 +26,8 @@
         <ComboBox fx:id="addressComboBox" editable="true" GridPane.columnIndex="1" />
         <Spinner fx:id="portSpinner" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
         <TextField fx:id="controllerNameField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-        <Button onAction="#findButtonAction" text="Find" GridPane.columnIndex="2" />
-        <Button onAction="#defaultPortButtonAction" text="Default" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+        <Button maxWidth="1.7976931348623157E308" onAction="#findButtonAction" text="Find" GridPane.columnIndex="2" />
+        <Button maxWidth="1.7976931348623157E308" onAction="#defaultPortButtonAction" text="Default" GridPane.columnIndex="2" GridPane.rowIndex="1" />
       </children>
     </GridPane>
     <HBox styleClass="buttonsRow">
