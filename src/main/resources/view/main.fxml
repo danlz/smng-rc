@@ -174,9 +174,9 @@
         <RowConstraints minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
       </rowConstraints>
       <children>
-        <RCButton keyCode="KEY_" shortcut="ALT+H" text="HISTORY" styleClass="historyButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-        <RCButton keyCode="KEY_" shortcut="ALT+F" text="Family Story" styleClass="familyStoryButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
-        <RCButton keyCode="KEY_" shortcut="ALT+C" text="CAMERA" styleClass="cameraButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" />
+        <RCButton keyCode="KEY_AUTO_ARC_CAPTION_ENG" shortcut="ALT+H" text="HISTORY" styleClass="historyButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+        <RCButton keyCode="KEY_AUTO_ARC_C_FORCE_AGING" shortcut="ALT+F" text="Family Story" styleClass="familyStoryButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
+        <RCButton keyCode="KEY_AUTO_ARC_USBJACK_INSPECT" shortcut="ALT+C" text="CAMERA" styleClass="cameraButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" />
         <RCButton keyCode="KEY_TOPMENU" shortcut="ALT+S" text="SUPPORT" styleClass="supportButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" />
         <RCButton keyCode="KEY_CAPTION" shortcut="ALT+A" text="AD/SUBT." styleClass="adSubtButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" GridPane.columnIndex="1" />
         <RCPictoButton keyCode="KEY_PANNEL_CHDOWN" shortcut="ALT+3" styleClass="threeDButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" GridPane.columnIndex="2" />
