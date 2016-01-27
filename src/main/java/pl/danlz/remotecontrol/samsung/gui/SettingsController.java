@@ -67,6 +67,7 @@ public class SettingsController extends AbstractController {
 							setText("");
 						} else {
 							setText(niceNullString(item.getAddress()) + "   " + niceNullString(item.getName()) + "   "
+									+ niceNullString(item.getModelName()) + "   "
 									+ niceNullString(item.getManufacturer()));
 						}
 					}
@@ -81,6 +82,9 @@ public class SettingsController extends AbstractController {
 
 			@Override
 			public String toString(TVAddressInfo object) {
+				if (object == null) {
+					return null;
+				}
 				return object.getAddress();
 			}
 
@@ -148,7 +152,7 @@ public class SettingsController extends AbstractController {
 
 					@Override
 					public TVAddressInfo apply(UPnPDevice t) {
-						return new TVAddressInfo(t.getAddress().getHostAddress(), t.getFriendlyName(),
+						return new TVAddressInfo(t.getAddress().getHostAddress(), t.getFriendlyName(), t.getModelName(),
 								t.getManufacturer());
 					}
 				}).collect(Collectors.toList());
@@ -190,15 +194,17 @@ public class SettingsController extends AbstractController {
 	private class TVAddressInfo {
 		private String address;
 		private String name;
+		private String modelName;
 		private String manufacturer;
 
 		public TVAddressInfo(String address) {
-			this(address, null, null);
+			this(address, null, null, null);
 		}
 
-		public TVAddressInfo(String address, String name, String manufacturer) {
+		public TVAddressInfo(String address, String name, String modelName, String manufacturer) {
 			this.address = address;
 			this.name = name;
+			this.modelName = modelName;
 			this.manufacturer = manufacturer;
 		}
 
@@ -210,13 +216,18 @@ public class SettingsController extends AbstractController {
 			return name;
 		}
 
+		public String getModelName() {
+			return modelName;
+		}
+
 		public String getManufacturer() {
 			return manufacturer;
 		}
 
 		@Override
 		public String toString() {
-			return "TVAddressInfo [address=" + address + ", name=" + name + ", manufacturer=" + manufacturer + "]";
+			return "TVAddressInfo [address=" + address + ", name=" + name + ", modelName=" + modelName
+					+ ", manufacturer=" + manufacturer + "]";
 		}
 	}
 }
