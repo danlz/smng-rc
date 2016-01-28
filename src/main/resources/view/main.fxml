@@ -11,13 +11,7 @@
   <children>
     <HBox fx:id="titleBar" styleClass="titleBar" pickOnBounds="false">
       <children>
-        <StackPane styleClass="logo" HBox.hgrow="ALWAYS">
-          <children>
-            <Label text="SAMSUNG" styleClass="logoText" scaleX="1.2"/>
-            <Label styleClass="logoOverlayForeground" />
-            <Label styleClass="logoOverlayBackground" />
-          </children>
-        </StackPane>
+        <fx:include source="logo.fxml" />
         <Button fx:id="minimizeButton" text="_" styleClass="minimizeButton" pickOnBounds="false" />
         <Button fx:id="closeButton" text="X" styleClass="closeButton" pickOnBounds="false" />
       </children>

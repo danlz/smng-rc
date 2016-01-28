@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?scenebuilder-stylesheet rc.css?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane styleClass="logo" HBox.hgrow="ALWAYS">
+  <children>
+    <Label text="SAMSUNG" styleClass="logoText" scaleX="1.2"/>
+    <Label styleClass="logoOverlayForeground" />
+    <Label styleClass="logoOverlayBackground" />
+  </children>
+</StackPane>
