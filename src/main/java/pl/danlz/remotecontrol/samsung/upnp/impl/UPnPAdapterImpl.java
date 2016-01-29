@@ -30,6 +30,7 @@ import pl.danlz.remotecontrol.samsung.upnp.UPnPDevice;
  * @author Leszek
  */
 public class UPnPAdapterImpl implements UPnPAdapter {
+
 	private static final Logger LOG = Logger.getLogger(UPnPAdapterImpl.class);
 
 	private final static Charset ENCODING = StandardCharsets.US_ASCII;
@@ -43,6 +44,9 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 	private final static String USER_AGENT = System.getProperty("os.name") + "/" + System.getProperty("os.version")
 			+ " UPnP/1.1 SamsungRemoteControl/1.0";
 	private final static String OK_STATUS_LINE = "HTTP/1.1 200 OK";
+	private static final String LOCATION_HEADER_NAME = "LOCATION";
+	private static final String UNIQUE_SERVICE_NAME_HEADER_NAME = "USN";
+	private static final String SEARCH_TARGET_HEADER_NAME = "ST";
 
 	private final Unmarshaller unmarshaller;
 
@@ -92,21 +96,21 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 							+ response);
 
 					Map<String, String> headerValues = parseResponse(response);
-					String location = headerValues.get("LOCATION");
+					String location = headerValues.get(LOCATION_HEADER_NAME);
 
 					DeviceDescription description = getDeviceDescription(location);
 					UPnPDevice device;
 					if (description == null) {
 						device = new UPnPDevice( //
 								packet.getAddress(), //
-								headerValues.get("ST"), //
-								headerValues.get("USN") //
+								headerValues.get(SEARCH_TARGET_HEADER_NAME), //
+								headerValues.get(UNIQUE_SERVICE_NAME_HEADER_NAME) //
 						);
 					} else {
 						device = new UPnPDevice( //
 								packet.getAddress(), //
-								headerValues.get("ST"), //
-								headerValues.get("USN"), //
+								headerValues.get(SEARCH_TARGET_HEADER_NAME), //
+								headerValues.get(UNIQUE_SERVICE_NAME_HEADER_NAME), //
 								description.getDevice().getDeviceType(), //
 								description.getDevice().getFriendlyName(), //
 								description.getDevice().getManufacturer(), //
