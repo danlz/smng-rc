@@ -4,7 +4,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.control.ComboBox?>
 
 <VBox styleClass="settingsRoot" xmlns="http://javafx.com/javafx/8.0.51" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.danlz.remotecontrol.samsung.gui.SettingsController">
   <children>
