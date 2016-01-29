@@ -2,8 +2,10 @@ package pl.danlz.remotecontrol.samsung.upnp.impl;
 
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.not;
 
 import java.util.Collection;
 
@@ -12,17 +14,17 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import pl.danlz.remotecontrol.samsung.config.Configuration;
 import pl.danlz.remotecontrol.samsung.upnp.UPnPDevice;
 
 /**
- * {@link UPnPAdapterImpl} tests with a real ES8000 TV.
+ * {@link UPnPAdapterImpl} tests on a real network with a UE46ES8000 TV.
  *
  * @author Leszek
  */
-@Ignore
-public class UPnPAdaterES8000Test {
+public class UPnPAdaterRealNetworkTest {
 
-	private final static int SCAN_TIMEOUT = 0;
+	private final static int SCAN_TIMEOUT = Configuration.SCAN_TIMEOUT;
 
 	private UPnPAdapterImpl testee = new UPnPAdapterImpl();
 
@@ -31,14 +33,14 @@ public class UPnPAdaterES8000Test {
 		System.setProperty("rcLogLevel", "DEBUG");
 	}
 
+	@Ignore
 	@Test
-	public void testFindDevices_RealNetwork() throws Exception {
+	public void testFindDevices_UE46ES8000() throws Exception {
 		String samsungRemoteControllerReceiverTarget = "urn:samsung.com:device:RemoteControlReceiver:1";
-		// "ssdp:all" finds all devices
 
 		Collection<UPnPDevice> devices = testee.findDevices(samsungRemoteControllerReceiverTarget, SCAN_TIMEOUT);
 
-		System.out.println("Devices: " + devices);
+		printDevices(devices);
 
 		Assert.assertThat(devices,
 				contains(allOf( //
@@ -50,4 +52,22 @@ public class UPnPAdaterES8000Test {
 		)));
 	}
 
+	@Test
+	public void testFindDevices_ssdp_all() throws Exception {
+		String searchTarget = "ssdp:all";
+
+		Collection<UPnPDevice> devices = testee.findDevices(searchTarget, SCAN_TIMEOUT);
+
+		printDevices(devices);
+
+		// Windows itself answers with its services
+		Assert.assertThat(devices, not(empty()));
+	}
+
+	private void printDevices(Collection<UPnPDevice> devices) {
+		System.out.println("Devices:");
+		for (UPnPDevice device : devices) {
+			System.out.println(device.toString());
+		}
+	}
 }
