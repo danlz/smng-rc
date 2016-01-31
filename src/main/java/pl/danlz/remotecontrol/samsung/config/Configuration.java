@@ -31,7 +31,12 @@ public class Configuration {
 
 	private static final Logger LOG = Logger.getLogger(Configuration.class);
 
-	private static final String CONFIG_FILE_PATH = System.getProperty("user.home") + "/.samsungRC/config.xml";
+	/**
+	 * Path to directory where configuration files are stored.
+	 */
+	public static final String CONFIG_DIR_PATH = System.getProperty("user.home") + "/.samsungRC";
+
+	private static final String CONFIG_FILE_PATH = CONFIG_DIR_PATH + "/config.xml";
 
 	/**
 	 * Default port.
@@ -47,6 +52,11 @@ public class Configuration {
 	 * Scan timeout.
 	 */
 	public static final int SCAN_TIMEOUT = 10;
+
+	/**
+	 * Delay between keys for macros.
+	 */
+	public static final int MACRO_DELAY = 200;
 
 	private static Configuration config;
 

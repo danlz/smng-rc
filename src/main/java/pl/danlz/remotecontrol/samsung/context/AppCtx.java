@@ -8,7 +8,10 @@ import java.util.concurrent.Executors;
 import pl.danlz.remotecontrol.samsung.adapter.TVAdapter;
 import pl.danlz.remotecontrol.samsung.adapter.impl.DummyTVAdapterImpl;
 import pl.danlz.remotecontrol.samsung.adapter.impl.TVAdapterImpl;
+import pl.danlz.remotecontrol.samsung.channellist.ChannelListProvider;
+import pl.danlz.remotecontrol.samsung.channellist.impl.ChannelListProviderImpl;
 import pl.danlz.remotecontrol.samsung.config.Configuration;
+import pl.danlz.remotecontrol.samsung.gui.ChannelListController;
 import pl.danlz.remotecontrol.samsung.gui.MainController;
 import pl.danlz.remotecontrol.samsung.gui.SettingsController;
 import pl.danlz.remotecontrol.samsung.logger.Logger;
@@ -37,20 +40,26 @@ public final class AppCtx {
 		 * by others beans must be created first.
 		 */
 
-		registerBean(Configuration.class, Configuration.getInstance());
-		registerBean(UPnPAdapter.class, new UPnPAdapterImpl());
+		try {
+			registerBean(Configuration.class, Configuration.getInstance());
+			registerBean(ChannelListProvider.class, new ChannelListProviderImpl());
+			registerBean(UPnPAdapter.class, new UPnPAdapterImpl());
 
-		String dummyStr = System.getProperty("dummyMode");
-		boolean dummyMode = Boolean.valueOf(dummyStr);
-		if (dummyMode) {
-			registerBean(TVAdapter.class, new DummyTVAdapterImpl());
-		} else {
-			registerBean(TVAdapter.class, new TVAdapterImpl());
+			String dummyStr = System.getProperty("dummyMode");
+			boolean dummyMode = Boolean.valueOf(dummyStr);
+			if (dummyMode) {
+				registerBean(TVAdapter.class, new DummyTVAdapterImpl());
+			} else {
+				registerBean(TVAdapter.class, new TVAdapterImpl());
+			}
+
+			registerBean(ExecutorService.class, Executors.newSingleThreadExecutor());
+			registerBean(SettingsController.class, new SettingsController());
+			registerBean(ChannelListController.class, new ChannelListController());
+			registerBean(MainController.class, new MainController());
+		} catch (Exception e) {
+			throw new RuntimeException("Could not create application context", e);
 		}
-
-		registerBean(ExecutorService.class, Executors.newSingleThreadExecutor());
-		registerBean(SettingsController.class, new SettingsController());
-		registerBean(MainController.class, new MainController());
 	}
 
 	/**

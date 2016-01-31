@@ -26,9 +26,11 @@
     src: url('../fonts/Helvetica-UltraCompressed.otf');
 }
 
-.rcRoot {
+* {
 	-rc-background: #323232;
+}
 
+.rcRoot {
 	-fx-background-color: -rc-background;
 	-fx-padding: 8.0px;
 	-fx-background-radius: 20.0px;
@@ -939,3 +941,38 @@
 	-fx-alignment: center-right;
 }
 
+
+
+/*************************************************************
+ * Channel list window
+ *************************************************************/
+
+.channelListRoot {
+	-fx-padding: 2.0px;
+	-fx-spacing: 2.0px;
+
+	-fx-background-color: -rc-background;
+	-fx-padding: 2.0px;
+	-fx-background-radius: 10.0px;
+	-fx-alignment: center;
+	-fx-border-color: black;
+	-fx-border-width: 1.0px;
+	-fx-border-radius: 10.0px;
+}
+
+.channelListRoot .text-field,
+.channelListRoot .list-view {
+	-fx-background-color: derive(-rc-background, 30%);
+	-fx-font-weight: bold;
+	-fx-text-fill: white;
+}
+
+.channelListRoot .list-view .list-cell,
+.channelListRoot .list-view .list-cell .label {
+	-fx-background-color: transparent;
+	-fx-text-fill: white;
+}
+
+.channelListRoot .list-view .list-cell:selected {
+	-fx-background-color: #7594FF;
+}

@@ -30,6 +30,7 @@ public class ControllerInitializer {
 	 */
 	public static void init(Stage primaryStage) {
 		initController("/view/main.fxml", primaryStage, null);
+		initController("/view/channelList.fxml", new Stage(), null);
 		initController("/view/settings.fxml", new Stage(), primaryStage);
 	}
 

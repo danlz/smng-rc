@@ -25,6 +25,10 @@ class Response {
 		 */
 		KEY_CONFIRMED4(new byte[] { 0x0A, 0x00, 0x18, 0x00, 0x00, 0x00 }), //
 		/**
+		 * Observed for macros (channel switch).
+		 */
+		KEY_CONFIRMED5(new byte[] { 0x0A, 0x00, 0x03, 0x00, 0x00, 0x00 }), //
+		/**
 		 * Observed only when in some menu, ie. menu, tools, channel list.
 		 */
 		WAITING_FOR_USER(new byte[] { 0x0A, 0x00, 0x02, 0x00, 0x00, 0x00 });

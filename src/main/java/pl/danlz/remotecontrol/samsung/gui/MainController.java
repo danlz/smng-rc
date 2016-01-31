@@ -6,12 +6,9 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.ClipboardContent;
@@ -30,6 +27,7 @@ import pl.danlz.remotecontrol.samsung.adapter.TVAdapter;
 import pl.danlz.remotecontrol.samsung.config.Configuration;
 import pl.danlz.remotecontrol.samsung.context.AppCtx;
 import pl.danlz.remotecontrol.samsung.gui.control.RCButton;
+import pl.danlz.remotecontrol.samsung.gui.task.SendKeyTask;
 import pl.danlz.remotecontrol.samsung.logger.Logger;
 
 /**
@@ -48,6 +46,7 @@ public class MainController extends AbstractController {
 	private final ExecutorService executor = AppCtx.getBean(ExecutorService.class);
 	private final TVAdapter adapter = AppCtx.getBean(TVAdapter.class);
 	private final Configuration config = AppCtx.getBean(Configuration.class);
+	private final ChannelListController channelListController = AppCtx.getBean(ChannelListController.class);
 	private final SettingsController settingsController = AppCtx.getBean(SettingsController.class);
 
 	@FXML
@@ -114,6 +113,13 @@ public class MainController extends AbstractController {
 				});
 			}
 		}
+		scene.getAccelerators().put(KeyCombination.valueOf("ALT+ENTER"), new Runnable() {
+
+			@Override
+			public void run() {
+				channelListController.show();
+			}
+		});
 	}
 
 	private void initializeTitleBar() {
@@ -227,18 +233,7 @@ public class MainController extends AbstractController {
 			button.setOnAction(e -> {
 				LOG.debug("'" + button.getText() + "' button pressed");
 
-				executor.execute(new CommunicationTask() {
-
-					@Override
-					protected Void call() throws Exception {
-						if (!adapter.isConnected()) {
-							adapter.close();
-							adapter.connect(config.getTvAddress(), config.getTvPort(), config.getControllerName());
-						}
-						adapter.sendKey(button.getKeyCode());
-						return null;
-					}
-				});
+				executor.execute(new SendKeyTask(config, adapter, button.getKeyCode()));
 			});
 		}
 	}
@@ -266,17 +261,4 @@ public class MainController extends AbstractController {
 		config.setRegions(regions);
 		config.save();
 	}
-
-	private abstract class CommunicationTask extends Task<Void> {
-
-		@Override
-		protected void failed() {
-			LOG.error("Communication failed", getException());
-			Alert alert = new Alert(AlertType.ERROR, getException().getMessage());
-			alert.setTitle("Samsung Remote Control");
-			alert.setHeaderText("Communication error");
-			alert.showAndWait();
-		}
-	};
-
 }

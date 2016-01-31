@@ -88,6 +88,7 @@ public class TVAdapterImpl implements TVAdapter {
 					response.payload != Payload.KEY_CONFIRMED2 && //
 					response.payload != Payload.KEY_CONFIRMED3 && //
 					response.payload != Payload.KEY_CONFIRMED4 && //
+					response.payload != Payload.KEY_CONFIRMED5 && //
 					response.payload != Payload.WAITING_FOR_USER) {
 				throw new TVAdapterException("sendKey: not confirmed: " + response);
 			}
