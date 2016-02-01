@@ -14,6 +14,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
@@ -167,4 +168,27 @@ public class ChannelListController extends AbstractController {
 			}
 		});
 	}
+
+	/**
+	 * Shows stage associated with this controller relative to the main stage.
+	 *
+	 * @param mainStage
+	 *            main stage
+	 */
+	public void show(Stage mainStage) {
+		super.show();
+		double mainX = mainStage.getX();
+		double mainWidth = mainStage.getWidth();
+		double screenWidth = Screen.getPrimary().getBounds().getMaxX();
+
+		double thisWidth = stage.getWidth();
+
+		double thisX = mainX + mainWidth;
+		if (mainX + mainWidth + thisWidth >= screenWidth) {
+			thisX = mainX - thisWidth;
+		}
+		stage.setX(thisX);
+		stage.setY(40);
+	}
+
 }
