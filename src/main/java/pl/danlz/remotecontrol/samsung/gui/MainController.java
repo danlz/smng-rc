@@ -165,17 +165,17 @@ public class MainController extends AbstractController {
 	private void initializeRegions() {
 		List<Node> regionList = new ArrayList<>();
 		for (Configuration.Region region : config.getRegions()) {
-			regionList.add(root.lookup("." + region.getName() + "Region"));
+			regionList.add(regionArea.lookup("." + region.getName() + "Region"));
 		}
 		regionArea.getChildren().setAll(regionList);
-		Set<Node> regions = root.lookupAll(".region");
+		Set<Node> regions = regionArea.lookupAll(".region");
 		for (Node node : regions) {
 			Region region = (Region) node;
 			region.setOnDragDetected(e -> {
 				LOG.debug("DragDetected: " + region.getStyleClass());
 				region.getStyleClass().add(MOVING_CLASS);
 
-				int sourceIndex = root.getChildren().indexOf(region);
+				int sourceIndex = regionArea.getChildren().indexOf(region);
 
 				Dragboard db = region.startDragAndDrop(TransferMode.ANY);
 				ClipboardContent cc = new ClipboardContent();
@@ -211,11 +211,11 @@ public class MainController extends AbstractController {
 				LOG.debug("DragDropped: " + region.getStyleClass());
 				Dragboard db = e.getDragboard();
 				int sourceIndex = Integer.valueOf(db.getString());
-				int targetIndex = root.getChildren().indexOf(region);
-				Node movedRegion = root.getChildren().remove(sourceIndex);
+				int targetIndex = regionArea.getChildren().indexOf(region);
+				Node movedRegion = regionArea.getChildren().remove(sourceIndex);
 				LOG.debug("Moving region [" + region.getStyleClass() + "] from index " + sourceIndex + " to index "
 						+ targetIndex);
-				root.getChildren().add(targetIndex, movedRegion);
+				regionArea.getChildren().add(targetIndex, movedRegion);
 
 				e.setDropCompleted(true);
 
