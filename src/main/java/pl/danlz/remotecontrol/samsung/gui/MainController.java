@@ -19,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -43,6 +44,8 @@ public class MainController extends AbstractController {
 
 	private static final String MOVING_CLASS = "regionMoving";
 
+	private static final KeyCombination CHANNEL_LIST_OPEN_KEY = KeyCombination.valueOf("ALT+ENTER");
+
 	private final ExecutorService executor = AppCtx.getBean(ExecutorService.class);
 	private final TVAdapter adapter = AppCtx.getBean(TVAdapter.class);
 	private final Configuration config = AppCtx.getBean(Configuration.class);
@@ -51,6 +54,9 @@ public class MainController extends AbstractController {
 
 	@FXML
 	private Pane root;
+
+	@FXML
+	private VBox regionArea;
 
 	@FXML
 	private Pane titleBar;
@@ -113,7 +119,7 @@ public class MainController extends AbstractController {
 				});
 			}
 		}
-		scene.getAccelerators().put(KeyCombination.valueOf("ALT+ENTER"), new Runnable() {
+		scene.getAccelerators().put(CHANNEL_LIST_OPEN_KEY, new Runnable() {
 
 			@Override
 			public void run() {
@@ -158,11 +164,10 @@ public class MainController extends AbstractController {
 
 	private void initializeRegions() {
 		List<Node> regionList = new ArrayList<>();
-		regionList.add(root.lookup(".titleBar"));
 		for (Configuration.Region region : config.getRegions()) {
 			regionList.add(root.lookup("." + region.getName() + "Region"));
 		}
-		root.getChildren().setAll(regionList);
+		regionArea.getChildren().setAll(regionList);
 		Set<Node> regions = root.lookupAll(".region");
 		for (Node node : regions) {
 			Region region = (Region) node;
@@ -253,7 +258,7 @@ public class MainController extends AbstractController {
 		Configuration.Position position = new Configuration.Position((int) window.getX(), (int) window.getY());
 		config.setPosition(position);
 		List<Configuration.Region> regions = new ArrayList<>();
-		for (Node region : root.getChildren()) {
+		for (Node region : regionArea.getChildren()) {
 			if (region.getStyleClass().contains("region")) {
 				regions.add(new Configuration.Region(region.getStyleClass().get(1).replace("Region", "")));
 			}

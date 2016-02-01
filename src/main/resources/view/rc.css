@@ -40,6 +40,10 @@
 	-fx-border-radius: 20.0px;
 }
 
+.regionArea {
+	-fx-spacing: 0px;
+}
+
 .rcButton, .settingsButton {
 	-fx-padding: 0.0px;
 }
@@ -166,7 +170,7 @@
 	-fx-border-color: derive(-rc-region-moving-background, 60.0%);
 }
 
-.rcRoot .tooltip {
+.regionArea .tooltip {
 	-fx-text-fill: -rc-button-face;
 	-fx-font-weight: bold;
 	-fx-font-family: "Helvetica";

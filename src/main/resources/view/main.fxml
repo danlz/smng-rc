@@ -16,194 +16,198 @@
         <Button fx:id="closeButton" text="X" styleClass="closeButton" pickOnBounds="false" />
       </children>
     </HBox>
-    <GridPane styleClass="region, powerRegion">
-      <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" halignment="CENTER" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
-      </columnConstraints>
-      <rowConstraints>
-        <RowConstraints minHeight="38.0" prefHeight="38.0" vgrow="SOMETIMES" valignment="CENTER"/>
-      </rowConstraints>
+    <VBox fx:id="regionArea" styleClass="regionArea">
       <children>
-        <RCPictoButton keyCode="KEY_POWEROFF" styleClass="offButton" minHeight="38" maxHeight="38" minWidth="38" maxWidth="38" />
-        <Button fx:id="settingsButton" text="SETTINGS" styleClass="settingsButton" minHeight="30" minWidth="46" GridPane.columnIndex="2" />
-      </children>
-    </GridPane>
-    <GridPane styleClass="region, sourceRegion">
-      <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" halignment="CENTER" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
-      </columnConstraints>
-      <rowConstraints>
-        <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" valignment="CENTER"/>
-      </rowConstraints>
-      <children>
-        <RCPictoButton keyCode="KEY_SOURCE" shortcut="S" text="SOURCE" styleClass="sourceButton" GridPane.columnIndex="1" />
-      </children>
-    </GridPane>
-    <GridPane styleClass="region, numberRegion">
-      <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
-      </columnConstraints>
-      <rowConstraints>
-        <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      </rowConstraints>
-      <children>
-        <RCButton keyCode="KEY_1" shortcut="1" text="1" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-        <RCButton keyCode="KEY_2" shortcut="2" text="2" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
-        <RCButton keyCode="KEY_3" shortcut="3" text="3" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" />
-        <RCButton keyCode="KEY_4" shortcut="4" text="4" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" />
-        <RCButton keyCode="KEY_5" shortcut="5" text="5" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-        <RCButton keyCode="KEY_6" shortcut="6" text="6" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-        <RCButton keyCode="KEY_7" shortcut="7" text="7" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="2" />
-        <RCButton keyCode="KEY_8" shortcut="8" text="8" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-        <RCButton keyCode="KEY_9" shortcut="9" text="9" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-        <RCPictoButton keyCode="KEY_TTX_MIX" shortcut="X" text="TTX/MIX" styleClass="ttxMixButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="3" />
-        <RCButton keyCode="KEY_0" shortcut="0" text="0" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-        <RCPictoButton keyCode="KEY_PRECH" shortcut="P" text="PRE-CH" styleClass="preChButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-      </children>
-    </GridPane>
-    <GridPane styleClass="region, volProgRegion">
-      <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="38.0" minWidth="38.0" prefWidth="38.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
-      </columnConstraints>
-      <rowConstraints>
-        <RowConstraints minHeight="96.0" prefHeight="96.0" vgrow="SOMETIMES" valignment="TOP"/>
-      </rowConstraints>
-      <children>
-        <RCIntegratedButton upperKeyCode="KEY_VOLUP" upperShortcut="EQUALS" lowerKeyCode="KEY_VOLDOWN" lowerShortcut="MINUS" styleClass="volPlusMinusButton" />
-        <VBox spacing="18" GridPane.columnIndex="1">
-          <children>
-            <RCPictoButton keyCode="KEY_MUTE" shortcut="U" text="MUTE" styleClass="muteButton" minHeight="35" maxHeight="35" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
-            <RCPictoButton keyCode="KEY_CH_LIST" shortcut="L" text="CH LIST" styleClass="chListButton" minHeight="35" maxHeight="35" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" GridPane.columnIndex="1" />
-          </children>
-        </VBox>
-        <RCIntegratedButton upperKeyCode="KEY_CHUP" upperShortcut="PERIOD" lowerKeyCode="KEY_CHDOWN" lowerShortcut="COMMA" styleClass="progPlusMinusButton" GridPane.columnIndex="2" />
-      </children>
-    </GridPane>
-    <GridPane styleClass="region, menuSmartGuideRegion">
-      <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
-      </columnConstraints>
-      <rowConstraints>
-        <RowConstraints minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-      </rowConstraints>
-      <children>
-        <RCPictoButton keyCode="KEY_MENU" shortcut="M" text="MENU" styleClass="menuButton" maxHeight="30" maxWidth="1.7976931348623157E308" />
-        <AnchorPane styleClass="smartButton" GridPane.columnIndex="1" pickOnBounds="false">
-          <children>
-            <RCButton keyCode="KEY_CONTENTS" shortcut="Q" minWidth="46" minHeight="50" />
-            <Label styleClass="top" layoutX="1" layoutY="1.2" minWidth="44" minHeight="16" maxHeight="16" mouseTransparent="true" pickOnBounds="false" />
-            <Label styleClass="left" layoutX="5" layoutY="17.5" minWidth="18" minHeight="33" mouseTransparent="true" pickOnBounds="false" />
-            <Label styleClass="right" layoutX="23" layoutY="17.5" minWidth="18" minHeight="33" mouseTransparent="true" pickOnBounds="false" />
-          </children>
-        </AnchorPane>
-        <RCButton keyCode="KEY_GUIDE" shortcut="G" text="GUIDE" styleClass="guideButton" maxHeight="30" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" />
-      </children>
-    </GridPane>
-    <StackPane styleClass="region, arrowsRegion">
-      <children>
-        <Label styleClass="frame" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-        <GridPane styleClass="buttonsLayout">
+        <GridPane styleClass="region, powerRegion">
           <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="48.0" minWidth="48.0" prefWidth="48.0" halignment="LEFT" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" halignment="CENTER"/>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="48.0" minWidth="48.0" prefWidth="48.0" halignment="RIGHT" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" halignment="CENTER" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
           </columnConstraints>
           <rowConstraints>
-            <RowConstraints minHeight="38.0" prefHeight="38.0" vgrow="SOMETIMES" valignment="TOP"/>
-            <RowConstraints minHeight="28.0" prefHeight="28.0" maxHeight="28.0" vgrow="NEVER" valignment="CENTER" />
-            <RowConstraints minHeight="38.0" prefHeight="38.0" vgrow="SOMETIMES" valignment="BOTTOM"/>
+            <RowConstraints minHeight="38.0" prefHeight="38.0" vgrow="SOMETIMES" valignment="CENTER"/>
           </rowConstraints>
           <children>
-            <RCPictoButton keyCode="KEY_TOOLS" shortcut="T" text="TOOLS" styleClass="toolsButton" maxHeight="30" maxWidth="46" />
-            <RCPictoButton keyCode="KEY_UP" shortcut="UP" styleClass="upButton" maxHeight="1.7976931348623157E308" maxWidth="26" GridPane.columnIndex="1" />
-            <RCPictoButton keyCode="KEY_INFO" shortcut="I" text="INFO" styleClass="infoButton" maxHeight="30" maxWidth="46" GridPane.columnIndex="2" />
-            <RCPictoButton keyCode="KEY_LEFT" shortcut="LEFT" styleClass="leftButton" maxHeight="26" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" />
-            <RCPictoButton keyCode="KEY_ENTER" shortcut="ENTER" styleClass="enterButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <RCPictoButton keyCode="KEY_RIGHT" shortcut="RIGHT" styleClass="rightButton" maxHeight="26" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <RCPictoButton keyCode="KEY_RETURN" shortcut="R" text="RETURN" styleClass="returnButton" maxHeight="30" maxWidth="46" GridPane.rowIndex="2" />
-            <RCPictoButton keyCode="KEY_DOWN" shortcut="DOWN" styleClass="downButton" maxHeight="1.7976931348623157E308" maxWidth="26" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <RCPictoButton keyCode="KEY_EXIT" shortcut="E" text="EXIT" styleClass="exitButton" maxHeight="30" maxWidth="46" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <RCPictoButton keyCode="KEY_POWEROFF" styleClass="offButton" minHeight="38" maxHeight="38" minWidth="38" maxWidth="38" />
+            <Button fx:id="settingsButton" text="SETTINGS" styleClass="settingsButton" minHeight="30" minWidth="46" GridPane.columnIndex="2" />
+          </children>
+        </GridPane>
+        <GridPane styleClass="region, sourceRegion">
+          <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" halignment="CENTER" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
+          </columnConstraints>
+          <rowConstraints>
+            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" valignment="CENTER"/>
+          </rowConstraints>
+          <children>
+            <RCPictoButton keyCode="KEY_SOURCE" shortcut="S" text="SOURCE" styleClass="sourceButton" GridPane.columnIndex="1" />
+          </children>
+        </GridPane>
+        <GridPane styleClass="region, numberRegion">
+          <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
+          </columnConstraints>
+          <rowConstraints>
+            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          </rowConstraints>
+          <children>
+            <RCButton keyCode="KEY_1" shortcut="1" text="1" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+            <RCButton keyCode="KEY_2" shortcut="2" text="2" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
+            <RCButton keyCode="KEY_3" shortcut="3" text="3" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" />
+            <RCButton keyCode="KEY_4" shortcut="4" text="4" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" />
+            <RCButton keyCode="KEY_5" shortcut="5" text="5" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <RCButton keyCode="KEY_6" shortcut="6" text="6" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <RCButton keyCode="KEY_7" shortcut="7" text="7" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="2" />
+            <RCButton keyCode="KEY_8" shortcut="8" text="8" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <RCButton keyCode="KEY_9" shortcut="9" text="9" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <RCPictoButton keyCode="KEY_TTX_MIX" shortcut="X" text="TTX/MIX" styleClass="ttxMixButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="3" />
+            <RCButton keyCode="KEY_0" shortcut="0" text="0" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <RCPictoButton keyCode="KEY_PRECH" shortcut="P" text="PRE-CH" styleClass="preChButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+          </children>
+        </GridPane>
+        <GridPane styleClass="region, volProgRegion">
+          <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="38.0" minWidth="38.0" prefWidth="38.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+          </columnConstraints>
+          <rowConstraints>
+            <RowConstraints minHeight="96.0" prefHeight="96.0" vgrow="SOMETIMES" valignment="TOP"/>
+          </rowConstraints>
+          <children>
+            <RCIntegratedButton upperKeyCode="KEY_VOLUP" upperShortcut="EQUALS" lowerKeyCode="KEY_VOLDOWN" lowerShortcut="MINUS" styleClass="volPlusMinusButton" />
+            <VBox spacing="18" GridPane.columnIndex="1">
+              <children>
+                <RCPictoButton keyCode="KEY_MUTE" shortcut="U" text="MUTE" styleClass="muteButton" minHeight="35" maxHeight="35" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
+                <RCPictoButton keyCode="KEY_CH_LIST" shortcut="L" text="CH LIST" styleClass="chListButton" minHeight="35" maxHeight="35" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+              </children>
+            </VBox>
+            <RCIntegratedButton upperKeyCode="KEY_CHUP" upperShortcut="PERIOD" lowerKeyCode="KEY_CHDOWN" lowerShortcut="COMMA" styleClass="progPlusMinusButton" GridPane.columnIndex="2" />
+          </children>
+        </GridPane>
+        <GridPane styleClass="region, menuSmartGuideRegion">
+          <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
+          </columnConstraints>
+          <rowConstraints>
+            <RowConstraints minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+          </rowConstraints>
+          <children>
+            <RCPictoButton keyCode="KEY_MENU" shortcut="M" text="MENU" styleClass="menuButton" maxHeight="30" maxWidth="1.7976931348623157E308" />
+            <AnchorPane styleClass="smartButton" GridPane.columnIndex="1" pickOnBounds="false">
+              <children>
+                <RCButton keyCode="KEY_CONTENTS" shortcut="Q" minWidth="46" minHeight="50" />
+                <Label styleClass="top" layoutX="1" layoutY="1.2" minWidth="44" minHeight="16" maxHeight="16" mouseTransparent="true" pickOnBounds="false" />
+                <Label styleClass="left" layoutX="5" layoutY="17.5" minWidth="18" minHeight="33" mouseTransparent="true" pickOnBounds="false" />
+                <Label styleClass="right" layoutX="23" layoutY="17.5" minWidth="18" minHeight="33" mouseTransparent="true" pickOnBounds="false" />
+              </children>
+            </AnchorPane>
+            <RCButton keyCode="KEY_GUIDE" shortcut="G" text="GUIDE" styleClass="guideButton" maxHeight="30" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" />
+          </children>
+        </GridPane>
+        <StackPane styleClass="region, arrowsRegion">
+          <children>
+            <Label styleClass="frame" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+            <GridPane styleClass="buttonsLayout">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="48.0" minWidth="48.0" prefWidth="48.0" halignment="LEFT" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" halignment="CENTER"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="48.0" minWidth="48.0" prefWidth="48.0" halignment="RIGHT" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="38.0" prefHeight="38.0" vgrow="SOMETIMES" valignment="TOP"/>
+                <RowConstraints minHeight="28.0" prefHeight="28.0" maxHeight="28.0" vgrow="NEVER" valignment="CENTER" />
+                <RowConstraints minHeight="38.0" prefHeight="38.0" vgrow="SOMETIMES" valignment="BOTTOM"/>
+              </rowConstraints>
+              <children>
+                <RCPictoButton keyCode="KEY_TOOLS" shortcut="T" text="TOOLS" styleClass="toolsButton" maxHeight="30" maxWidth="46" />
+                <RCPictoButton keyCode="KEY_UP" shortcut="UP" styleClass="upButton" maxHeight="1.7976931348623157E308" maxWidth="26" GridPane.columnIndex="1" />
+                <RCPictoButton keyCode="KEY_INFO" shortcut="I" text="INFO" styleClass="infoButton" maxHeight="30" maxWidth="46" GridPane.columnIndex="2" />
+                <RCPictoButton keyCode="KEY_LEFT" shortcut="LEFT" styleClass="leftButton" maxHeight="26" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" />
+                <RCPictoButton keyCode="KEY_ENTER" shortcut="ENTER" styleClass="enterButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <RCPictoButton keyCode="KEY_RIGHT" shortcut="RIGHT" styleClass="rightButton" maxHeight="26" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                <RCPictoButton keyCode="KEY_RETURN" shortcut="R" text="RETURN" styleClass="returnButton" maxHeight="30" maxWidth="46" GridPane.rowIndex="2" />
+                <RCPictoButton keyCode="KEY_DOWN" shortcut="DOWN" styleClass="downButton" maxHeight="1.7976931348623157E308" maxWidth="26" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <RCPictoButton keyCode="KEY_EXIT" shortcut="E" text="EXIT" styleClass="exitButton" maxHeight="30" maxWidth="46" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+              </children>
+            </GridPane>
+          </children>
+        </StackPane>
+        <GridPane styleClass="region, abcdRegion">
+          <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="33.0" minWidth="33.0" prefWidth="33.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="33.0" minWidth="33.0" prefWidth="33.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="33.0" minWidth="33.0" prefWidth="33.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="33.0" minWidth="33.0" prefWidth="33.0" />
+          </columnConstraints>
+          <rowConstraints>
+            <RowConstraints minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+          </rowConstraints>
+          <children>
+            <RCButton keyCode="KEY_RED" shortcut="A" text="A" styleClass="aButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+            <RCButton keyCode="KEY_GREEN" shortcut="B" text="B" styleClass="bButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
+            <RCButton keyCode="KEY_YELLOW" shortcut="C" text="C" styleClass="cButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" />
+            <RCButton keyCode="KEY_CYAN" shortcut="D" text="D" styleClass="dButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" />
+          </children>
+        </GridPane>
+        <GridPane styleClass="region, shortcutsRegion">
+          <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
+          </columnConstraints>
+          <rowConstraints>
+            <RowConstraints minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+          </rowConstraints>
+          <children>
+            <RCButton keyCode="KEY_AUTO_ARC_CAPTION_ENG" shortcut="ALT+H" text="HISTORY" styleClass="historyButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+            <RCButton keyCode="KEY_AUTO_ARC_C_FORCE_AGING" shortcut="ALT+F" text="Family Story" styleClass="familyStoryButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
+            <RCButton keyCode="KEY_AUTO_ARC_USBJACK_INSPECT" shortcut="ALT+C" text="CAMERA" styleClass="cameraButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" />
+            <RCButton keyCode="KEY_TOPMENU" shortcut="ALT+S" text="SUPPORT" styleClass="supportButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" />
+            <RCButton keyCode="KEY_CAPTION" shortcut="ALT+A" text="AD/SUBT." styleClass="adSubtButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+            <RCPictoButton keyCode="KEY_PANNEL_CHDOWN" shortcut="ALT+3" styleClass="threeDButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" GridPane.columnIndex="2" />
+          </children>
+        </GridPane>
+        <GridPane styleClass="region, controlRegion">
+          <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" halignment="CENTER" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" halignment="CENTER" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" halignment="CENTER" />
+          </columnConstraints>
+          <rowConstraints>
+            <RowConstraints minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" valignment="BOTTOM" />
+            <RowConstraints minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+          </rowConstraints>
+          <children>
+            <VBox alignment="BOTTOM_CENTER" spacing="1">
+              <children>
+                <Label styleClass="lastIcon" maxHeight="5" />
+                <RCPictoButton keyCode="KEY_REWIND" shortcut="CTRL+R" styleClass="rewindButton" minHeight="20" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" />
+              </children>
+            </VBox>
+            <RCPictoButton keyCode="KEY_PAUSE" shortcut="CTRL+A" styleClass="pauseButton" maxHeight="20" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
+            <VBox alignment="BOTTOM_CENTER" spacing="1" GridPane.columnIndex="2">
+              <children>
+                <Label styleClass="nextIcon" GridPane.columnIndex="2" maxHeight="5" />
+                <RCPictoButton keyCode="KEY_FF" shortcut="CTRL+F" styleClass="forwardButton" minHeight="20" maxWidth="1.7976931348623157E308" />
+              </children>
+            </VBox>
+            <RCPictoButton keyCode="KEY_REC" shortcut="CTRL+C" styleClass="recordButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" />
+            <RCPictoButton keyCode="KEY_PLAY" shortcut="CTRL+P" styleClass="playButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+            <RCPictoButton keyCode="KEY_STOP" shortcut="CTRL+S" styleClass="stopButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" GridPane.columnIndex="2" />
           </children>
         </GridPane>
       </children>
-    </StackPane>
-    <GridPane styleClass="region, abcdRegion">
-      <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="33.0" minWidth="33.0" prefWidth="33.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="33.0" minWidth="33.0" prefWidth="33.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="33.0" minWidth="33.0" prefWidth="33.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="33.0" minWidth="33.0" prefWidth="33.0" />
-      </columnConstraints>
-      <rowConstraints>
-        <RowConstraints minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
-      </rowConstraints>
-      <children>
-        <RCButton keyCode="KEY_RED" shortcut="A" text="A" styleClass="aButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-        <RCButton keyCode="KEY_GREEN" shortcut="B" text="B" styleClass="bButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
-        <RCButton keyCode="KEY_YELLOW" shortcut="C" text="C" styleClass="cButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" />
-        <RCButton keyCode="KEY_CYAN" shortcut="D" text="D" styleClass="dButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" />
-      </children>
-    </GridPane>
-    <GridPane styleClass="region, shortcutsRegion">
-      <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" />
-      </columnConstraints>
-      <rowConstraints>
-        <RowConstraints minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
-      </rowConstraints>
-      <children>
-        <RCButton keyCode="KEY_AUTO_ARC_CAPTION_ENG" shortcut="ALT+H" text="HISTORY" styleClass="historyButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-        <RCButton keyCode="KEY_AUTO_ARC_C_FORCE_AGING" shortcut="ALT+F" text="Family Story" styleClass="familyStoryButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
-        <RCButton keyCode="KEY_AUTO_ARC_USBJACK_INSPECT" shortcut="ALT+C" text="CAMERA" styleClass="cameraButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" />
-        <RCButton keyCode="KEY_TOPMENU" shortcut="ALT+S" text="SUPPORT" styleClass="supportButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" />
-        <RCButton keyCode="KEY_CAPTION" shortcut="ALT+A" text="AD/SUBT." styleClass="adSubtButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" GridPane.columnIndex="1" />
-        <RCPictoButton keyCode="KEY_PANNEL_CHDOWN" shortcut="ALT+3" styleClass="threeDButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" GridPane.columnIndex="2" />
-      </children>
-    </GridPane>
-    <GridPane styleClass="region, controlRegion">
-      <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" halignment="CENTER" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" halignment="CENTER" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="46.0" minWidth="46.0" prefWidth="46.0" halignment="CENTER" />
-      </columnConstraints>
-      <rowConstraints>
-        <RowConstraints minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" valignment="BOTTOM" />
-        <RowConstraints minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
-      </rowConstraints>
-      <children>
-        <VBox alignment="BOTTOM_CENTER" spacing="1">
-          <children>
-            <Label styleClass="lastIcon" maxHeight="5" />
-            <RCPictoButton keyCode="KEY_REWIND" shortcut="CTRL+R" styleClass="rewindButton" minHeight="20" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" />
-          </children>
-        </VBox>
-        <RCPictoButton keyCode="KEY_PAUSE" shortcut="CTRL+A" styleClass="pauseButton" maxHeight="20" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
-        <VBox alignment="BOTTOM_CENTER" spacing="1" GridPane.columnIndex="2">
-          <children>
-            <Label styleClass="nextIcon" GridPane.columnIndex="2" maxHeight="5" />
-            <RCPictoButton keyCode="KEY_FF" shortcut="CTRL+F" styleClass="forwardButton" minHeight="20" maxWidth="1.7976931348623157E308" />
-          </children>
-        </VBox>
-        <RCPictoButton keyCode="KEY_REC" shortcut="CTRL+C" styleClass="recordButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" />
-        <RCPictoButton keyCode="KEY_PLAY" shortcut="CTRL+P" styleClass="playButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" GridPane.columnIndex="1" />
-        <RCPictoButton keyCode="KEY_STOP" shortcut="CTRL+S" styleClass="stopButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" GridPane.columnIndex="2" />
-      </children>
-    </GridPane>
+    </VBox>
   </children>
 </VBox>
