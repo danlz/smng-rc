@@ -17,6 +17,7 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       </rowConstraints>
       <children>
         <Label text="TV address:" />
@@ -27,6 +28,8 @@
         <TextField fx:id="controllerNameField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         <Button maxWidth="1.7976931348623157E308" onAction="#findButtonAction" text="Find" GridPane.columnIndex="2" />
         <Button maxWidth="1.7976931348623157E308" onAction="#defaultPortButtonAction" text="Default" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+        <Label text="Channel sorting:" GridPane.rowIndex="3" />
+        <ComboBox fx:id="channelSortingComboBox" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       </children>
     </GridPane>
     <HBox styleClass="buttonsRow">

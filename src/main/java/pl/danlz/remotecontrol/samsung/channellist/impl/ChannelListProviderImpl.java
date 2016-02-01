@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
@@ -61,14 +60,6 @@ public class ChannelListProviderImpl implements ChannelListProvider {
 			LOG.info("No settings file found at [" + configDir + "]");
 		} else {
 			channels = readChannelList(files[0]);
-			// TODO configurable sorting: names or channel numbers
-			channels.sort(new Comparator<Channel>() {
-
-				@Override
-				public int compare(Channel o1, Channel o2) {
-					return o1.getName().compareToIgnoreCase(o2.getName());
-				}
-			});
 			LOG.debug("Channels:");
 			for (Channel ch : channels) {
 				LOG.debug(ch.toString());

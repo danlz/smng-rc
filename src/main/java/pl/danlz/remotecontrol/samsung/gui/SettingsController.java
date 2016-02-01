@@ -22,6 +22,7 @@ import javafx.util.Callback;
 import javafx.util.StringConverter;
 import pl.danlz.remotecontrol.samsung.adapter.TVAdapter;
 import pl.danlz.remotecontrol.samsung.config.Configuration;
+import pl.danlz.remotecontrol.samsung.config.Configuration.ChannelSorting;
 import pl.danlz.remotecontrol.samsung.context.AppCtx;
 import pl.danlz.remotecontrol.samsung.logger.Logger;
 import pl.danlz.remotecontrol.samsung.upnp.UPnPAdapter;
@@ -51,6 +52,9 @@ public class SettingsController extends AbstractController {
 
 	@FXML
 	private TextField controllerNameField;
+
+	@FXML
+	private ComboBox<ChannelSorting> channelSortingComboBox;
 
 	@FXML
 	private void initialize() {
@@ -110,6 +114,9 @@ public class SettingsController extends AbstractController {
 		// }
 		// }
 		// });
+		for (ChannelSorting channelSorting : ChannelSorting.values()) {
+			channelSortingComboBox.getItems().add(channelSorting);
+		}
 	}
 
 	@Override
@@ -124,6 +131,7 @@ public class SettingsController extends AbstractController {
 		addressComboBox.setValue(new TVAddressInfo(config.getTvAddress()));
 		portSpinner.getValueFactory().setValue(config.getTvPort());
 		controllerNameField.setText(config.getControllerName());
+		channelSortingComboBox.setValue(config.getChannelSorting());
 		super.show();
 	}
 
@@ -180,6 +188,7 @@ public class SettingsController extends AbstractController {
 		config.setTvAddress(addressComboBox.getValue().getAddress());
 		config.setTvPort(portSpinner.getValue());
 		config.setControllerName(controllerNameField.getText());
+		config.setChannelSorting(channelSortingComboBox.getValue());
 		LOG.debug("Current configuration: " + config);
 		config.save();
 		tvAdapter.close();

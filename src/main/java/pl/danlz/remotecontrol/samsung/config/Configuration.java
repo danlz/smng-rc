@@ -58,6 +58,10 @@ public class Configuration {
 	 */
 	public static final int MACRO_DELAY = 200;
 
+	public enum ChannelSorting {
+		NUMBER, NAME;
+	}
+
 	private static Configuration config;
 
 	@XmlElement(name = "tv-address")
@@ -72,6 +76,9 @@ public class Configuration {
 	@XmlElement(name = "scan-timeout")
 	private int scanTimeout;
 
+	@XmlElement(name = "channel-sorting")
+	private ChannelSorting channelSorting;
+
 	@XmlElement
 	private Position position;
 
@@ -80,14 +87,16 @@ public class Configuration {
 	private List<Region> regions;
 
 	private Configuration() {
-		this(null, DEFAULT_PORT, DEFAULT_CONTROLLER_NAME, SCAN_TIMEOUT);
+		this(null, DEFAULT_PORT, DEFAULT_CONTROLLER_NAME, SCAN_TIMEOUT, ChannelSorting.NUMBER);
 	}
 
-	private Configuration(String tvAddress, int tvPort, String controllerName, int scanTimeout) {
+	private Configuration(String tvAddress, int tvPort, String controllerName, int scanTimeout,
+			ChannelSorting channelSorting) {
 		this.tvAddress = tvAddress;
 		this.tvPort = tvPort;
 		this.controllerName = controllerName;
 		this.scanTimeout = scanTimeout;
+		this.channelSorting = channelSorting;
 		this.regions = new ArrayList<>();
 		regions.add(new Region("power"));
 		regions.add(new Region("source"));
@@ -181,6 +190,14 @@ public class Configuration {
 		this.scanTimeout = scanTimeout;
 	}
 
+	public ChannelSorting getChannelSorting() {
+		return channelSorting;
+	}
+
+	public void setChannelSorting(ChannelSorting channelSorting) {
+		this.channelSorting = channelSorting;
+	}
+
 	public Position getPosition() {
 		return position;
 	}
@@ -200,7 +217,8 @@ public class Configuration {
 	@Override
 	public String toString() {
 		return "Configuration [tvAddress=" + tvAddress + ", tvPort=" + tvPort + ", controllerName=" + controllerName
-				+ ", scanTimeout=" + scanTimeout + ", position=" + position + ", regions=" + regions + "]";
+				+ ", scanTimeout=" + scanTimeout + ", channelSorting=" + channelSorting + ", position=" + position
+				+ ", regions=" + regions + "]";
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package pl.danlz.remotecontrol.samsung.gui;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
@@ -22,6 +23,7 @@ import pl.danlz.remotecontrol.samsung.adapter.TVAdapter;
 import pl.danlz.remotecontrol.samsung.channellist.Channel;
 import pl.danlz.remotecontrol.samsung.channellist.ChannelListProvider;
 import pl.danlz.remotecontrol.samsung.config.Configuration;
+import pl.danlz.remotecontrol.samsung.config.Configuration.ChannelSorting;
 import pl.danlz.remotecontrol.samsung.context.AppCtx;
 import pl.danlz.remotecontrol.samsung.gui.task.SendKeyTask;
 import pl.danlz.remotecontrol.samsung.logger.Logger;
@@ -39,6 +41,22 @@ public class ChannelListController extends AbstractController {
 	private final ExecutorService executor = AppCtx.getBean(ExecutorService.class);
 	private final TVAdapter adapter = AppCtx.getBean(TVAdapter.class);
 	private final Configuration config = AppCtx.getBean(Configuration.class);
+
+	private final static Comparator<Channel> CHANNEL_NAME_COMPARATOR = new Comparator<Channel>() {
+
+		@Override
+		public int compare(Channel o1, Channel o2) {
+			return o1.getName().compareToIgnoreCase(o2.getName());
+		}
+	};
+
+	private final static Comparator<Channel> CHANNEL_NUMBER_COMPARATOR = new Comparator<Channel>() {
+
+		@Override
+		public int compare(Channel o1, Channel o2) {
+			return o1.getNumber() - o2.getNumber();
+		}
+	};
 
 	@FXML
 	private TextField queryField;
@@ -98,15 +116,7 @@ public class ChannelListController extends AbstractController {
 
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				List<Channel> channels = channelListProvider.find(newValue.toLowerCase());
-				LOG.debug("Found channels:");
-				for (Channel channel : channels) {
-					LOG.debug(channel.toString());
-				}
-				resultList.getItems().setAll(channels);
-				if (!channels.isEmpty()) {
-					resultList.getSelectionModel().select(0);
-				}
+				fillChannelList(newValue);
 			}
 		});
 		queryField.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
@@ -169,6 +179,23 @@ public class ChannelListController extends AbstractController {
 		});
 	}
 
+	private void fillChannelList(String query) {
+		List<Channel> channels = channelListProvider.find(query.toLowerCase());
+		if (config.getChannelSorting() == ChannelSorting.NAME) {
+			channels.sort(CHANNEL_NAME_COMPARATOR);
+		} else {
+			channels.sort(CHANNEL_NUMBER_COMPARATOR);
+		}
+		LOG.debug("Found channels:");
+		for (Channel channel : channels) {
+			LOG.debug(channel.toString());
+		}
+		resultList.getItems().setAll(channels);
+		if (!channels.isEmpty()) {
+			resultList.getSelectionModel().select(0);
+		}
+	}
+
 	/**
 	 * Shows stage associated with this controller relative to the main stage.
 	 *
@@ -176,6 +203,7 @@ public class ChannelListController extends AbstractController {
 	 *            main stage
 	 */
 	public void show(Stage mainStage) {
+		fillChannelList(queryField.getText());
 		super.show();
 		double mainX = mainStage.getX();
 		double mainWidth = mainStage.getWidth();
@@ -190,5 +218,4 @@ public class ChannelListController extends AbstractController {
 		stage.setX(thisX);
 		stage.setY(40);
 	}
-
 }
