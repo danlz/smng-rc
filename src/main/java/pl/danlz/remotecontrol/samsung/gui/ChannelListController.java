@@ -128,6 +128,8 @@ public class ChannelListController extends AbstractController {
 					handleDownKey();
 					event.consume();
 					break;
+				default:
+					break;
 				}
 			}
 		});
