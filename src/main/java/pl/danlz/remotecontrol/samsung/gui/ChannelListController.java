@@ -45,8 +45,6 @@ public class ChannelListController extends AbstractController {
 	@FXML
 	private ListView<Channel> resultList;
 
-	private String lastQuery = "";
-
 	@Override
 	protected void initStage(Stage stage) {
 		stage.initStyle(StageStyle.TRANSPARENT);
@@ -56,29 +54,16 @@ public class ChannelListController extends AbstractController {
 	}
 
 	private void handleEnterKey() {
-		if (lastQuery.equals(queryField.getText())) {
-			if (resultList.getSelectionModel().getSelectedItem() != null) {
-				int channel = resultList.getSelectionModel().getSelectedItem().getNumber();
-				LOG.info("Switching to channel: " + channel);
+		if (resultList.getSelectionModel().getSelectedItem() != null) {
+			int channel = resultList.getSelectionModel().getSelectedItem().getNumber();
+			LOG.info("Switching to channel: " + channel);
 
-				String channelStr = String.valueOf(channel);
-				for (int i = 0; i < channelStr.length(); i++) {
-					String keyCode = "KEY_" + channelStr.charAt(i);
-					executor.execute(new SendKeyTask(config, adapter, keyCode, Configuration.MACRO_DELAY));
-				}
-				executor.execute(new SendKeyTask(config, adapter, "KEY_ENTER"));
+			String channelStr = String.valueOf(channel);
+			for (int i = 0; i < channelStr.length(); i++) {
+				String keyCode = "KEY_" + channelStr.charAt(i);
+				executor.execute(new SendKeyTask(config, adapter, keyCode, Configuration.MACRO_DELAY));
 			}
-		} else {
-			List<Channel> channels = channelListProvider.find(queryField.getText().toLowerCase());
-			LOG.debug("Found channels:");
-			for (Channel channel : channels) {
-				LOG.debug(channel.toString());
-			}
-			resultList.getItems().setAll(channels);
-			if (!channels.isEmpty()) {
-				resultList.getSelectionModel().select(0);
-			}
-			lastQuery = queryField.getText();
+			executor.execute(new SendKeyTask(config, adapter, "KEY_ENTER"));
 		}
 	}
 
@@ -108,6 +93,21 @@ public class ChannelListController extends AbstractController {
 
 	@FXML
 	private void initialize() {
+		queryField.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				List<Channel> channels = channelListProvider.find(newValue.toLowerCase());
+				LOG.debug("Found channels:");
+				for (Channel channel : channels) {
+					LOG.debug(channel.toString());
+				}
+				resultList.getItems().setAll(channels);
+				if (!channels.isEmpty()) {
+					resultList.getSelectionModel().select(0);
+				}
+			}
+		});
 		queryField.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 
 			@Override
