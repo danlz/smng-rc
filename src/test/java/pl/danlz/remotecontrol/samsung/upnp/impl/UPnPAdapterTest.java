@@ -139,5 +139,4 @@ public class UPnPAdapterTest {
 
 		testee.parseResponse(response);
 	}
-
 }

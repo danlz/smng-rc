@@ -240,5 +240,4 @@ public class Logger {
 	public boolean isFatalEnabled() {
 		return isLevelEnabled(Level.FATAL);
 	}
-
 }

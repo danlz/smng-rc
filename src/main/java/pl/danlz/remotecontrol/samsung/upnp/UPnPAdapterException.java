@@ -30,5 +30,4 @@ public class UPnPAdapterException extends Exception {
 	public UPnPAdapterException(String message, Throwable cause) {
 		super(message, cause);
 	}
-
 }

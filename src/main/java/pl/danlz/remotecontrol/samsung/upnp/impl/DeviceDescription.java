@@ -20,5 +20,4 @@ class DeviceDescription {
 	public Device getDevice() {
 		return device;
 	}
-
 }

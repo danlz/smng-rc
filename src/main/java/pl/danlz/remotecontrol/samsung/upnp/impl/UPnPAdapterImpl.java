@@ -181,5 +181,4 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 
 		return result;
 	}
-
 }

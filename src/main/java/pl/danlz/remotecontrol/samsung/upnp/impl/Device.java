@@ -81,5 +81,4 @@ class Device {
 	public String getUdn() {
 		return udn;
 	}
-
 }

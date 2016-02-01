@@ -27,5 +27,4 @@ public class Startup extends Application {
 
 		primaryStage.show();
 	}
-
 }

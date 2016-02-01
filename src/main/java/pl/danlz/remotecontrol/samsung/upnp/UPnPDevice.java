@@ -106,5 +106,4 @@ public class UPnPDevice {
 				+ ", modelNumber=" + modelNumber + ", modelURL=" + modelURL + ", serialNumber=" + serialNumber
 				+ ", udn=" + udn + "]";
 	}
-
 }

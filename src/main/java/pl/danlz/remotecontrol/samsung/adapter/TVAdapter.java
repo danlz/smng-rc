@@ -44,5 +44,4 @@ public interface TVAdapter {
 	 * Closes connection to the TV.
 	 */
 	void close();
-
 }
