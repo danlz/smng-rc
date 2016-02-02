@@ -213,6 +213,7 @@ public class ChannelListController extends AbstractController {
 		resultList.getItems().setAll(channels);
 		if (!channels.isEmpty()) {
 			resultList.getSelectionModel().select(0);
+			resultList.scrollTo(0);
 		}
 	}
 

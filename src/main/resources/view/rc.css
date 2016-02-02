@@ -1011,6 +1011,7 @@
 .channelListRoot .list-view .list-cell .label {
 	-fx-background-color: transparent;
 	-fx-text-fill: white;
+	-fx-background-radius: 4px;
 }
 
 .channelListRoot .list-view .list-cell:odd {
