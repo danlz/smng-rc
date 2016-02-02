@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -14,6 +15,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -70,9 +72,18 @@ public class ChannelListController extends AbstractController {
 		stage.setTitle("Channel list");
 		stage.setResizable(false);
 		stage.getScene().setFill(Color.TRANSPARENT);
+		stage.focusedProperty().addListener(new ChangeListener<Boolean>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if (!newValue) {
+					hide();
+				}
+			}
+		});
 	}
 
-	private void handleEnterKey() {
+	private void changeChannel() {
 		if (resultList.getSelectionModel().getSelectedItem() != null) {
 			int channel = resultList.getSelectionModel().getSelectedItem().getNumber();
 			LOG.info("Switching to channel: " + channel);
@@ -129,7 +140,8 @@ public class ChannelListController extends AbstractController {
 					hide();
 					break;
 				case ENTER:
-					handleEnterKey();
+					changeChannel();
+					hide();
 					break;
 				case UP:
 					handleUpKey();
@@ -141,6 +153,15 @@ public class ChannelListController extends AbstractController {
 					break;
 				default:
 					break;
+				}
+			}
+		});
+		queryField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if (!newValue) {
+					queryField.requestFocus();
 				}
 			}
 		});
@@ -168,13 +189,12 @@ public class ChannelListController extends AbstractController {
 				};
 			}
 		});
-		queryField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+		resultList.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override
-			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if (!newValue) {
-					hide();
-				}
+			public void handle(MouseEvent event) {
+				changeChannel();
+				hide();
 			}
 		});
 	}
@@ -203,7 +223,6 @@ public class ChannelListController extends AbstractController {
 	 *            main stage
 	 */
 	public void show(Stage mainStage) {
-		fillChannelList(queryField.getText());
 		super.show();
 		double mainX = mainStage.getX();
 		double mainWidth = mainStage.getWidth();
@@ -217,5 +236,16 @@ public class ChannelListController extends AbstractController {
 		}
 		stage.setX(thisX);
 		stage.setY(40);
+
+		fillChannelList(queryField.getText());
+		queryField.requestFocus();
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				// deselect must be executed after focus is set
+				queryField.deselect();
+			}
+		});
 	}
 }
