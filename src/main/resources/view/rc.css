@@ -987,6 +987,7 @@
 
 .channelListRoot .list-view {
 	-fx-background-radius: 0px 0px 6px 6px;
+	-fx-padding: 0px;
 }
 
 .channelListRoot .list-view .scroll-bar {
@@ -997,7 +998,13 @@
 .channelListRoot .list-view .increment-button,
 .channelListRoot .list-view .decrement-button {
 	-fx-background-color: -rc-control-light;
-	-fx-background-radius: 2px;
+	-fx-background-radius: 4px;
+	-fx-padding: 8px;
+}
+
+.channelListRoot .list-view .scroll-bar > .increment-button > .increment-arrow,
+.channelListRoot .list-view .scroll-bar > .decrement-button > .decrement-arrow {
+    -fx-background-color: white;
 }
 
 .channelListRoot .list-view .list-cell,
