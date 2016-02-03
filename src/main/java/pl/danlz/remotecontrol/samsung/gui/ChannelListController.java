@@ -236,7 +236,7 @@ public class ChannelListController extends AbstractController {
 			thisX = mainX - thisWidth;
 		}
 		stage.setX(thisX);
-		stage.setY(40);
+		stage.setY(mainStage.getY() + 40);
 
 		fillChannelList(queryField.getText());
 		queryField.requestFocus();
