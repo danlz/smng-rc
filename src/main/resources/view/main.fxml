@@ -11,7 +11,7 @@
   <children>
     <HBox fx:id="titleBar" styleClass="titleBar" pickOnBounds="false">
       <children>
-        <fx:include source="logo.fxml" />
+        <fx:include source="smng-logo.fxml" />
         <Button fx:id="minimizeButton" text="_" styleClass="minimizeButton" pickOnBounds="false" />
         <Button fx:id="closeButton" text="X" styleClass="closeButton" pickOnBounds="false" />
       </children>
