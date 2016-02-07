@@ -81,7 +81,7 @@ public class SendKeyTask extends CommunicationTask {
 	protected void failed() {
 		if (getException() instanceof TVAuthenticationException) {
 			Alert alert = new Alert(AlertType.INFORMATION, resources.getString("confirmation.text"));
-			alert.setTitle(resources.getString("confirmation.title"));
+			alert.setTitle(resources.getString("title"));
 			alert.setHeaderText(resources.getString("confirmation.header"));
 			alert.showAndWait();
 		} else {

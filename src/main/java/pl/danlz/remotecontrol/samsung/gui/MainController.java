@@ -91,7 +91,7 @@ public class MainController extends AbstractController {
 	protected void initStage(Stage stage) {
 		stage.initStyle(StageStyle.TRANSPARENT);
 		stage.setResizable(false);
-		stage.setTitle(resources.getString("main.title"));
+		stage.setTitle(resources.getString("title"));
 		stage.getScene().setFill(Color.TRANSPARENT);
 		stage.setOnCloseRequest(v -> {
 			close();

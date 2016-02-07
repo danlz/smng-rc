@@ -31,8 +31,8 @@ public abstract class CommunicationTask extends Task<Void> {
 	protected void failed() {
 		LOG.error("Communication failed", getException());
 		Alert alert = new Alert(AlertType.ERROR, getException().getMessage());
-		alert.setTitle(resources.getString("communicationError.title"));
-		alert.setHeaderText(resources.getString("communication.error"));
+		alert.setTitle(resources.getString("title"));
+		alert.setHeaderText(resources.getString("communicationError.header"));
 		alert.showAndWait();
 	}
 }
