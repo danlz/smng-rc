@@ -2,6 +2,7 @@ package pl.danlz.remotecontrol.samsung.gui;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.ResourceBundle;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,6 +22,8 @@ import pl.danlz.remotecontrol.samsung.context.AppCtx;
 public class ControllerInitializer {
 
 	private static final String CSS_PATH = "/view/rc.css";
+	
+	private static final String BUNDLE_BASE = "bundle/rc";
 
 	/**
 	 * Initializes the controllers.
@@ -45,6 +48,7 @@ public class ControllerInitializer {
 				}
 			});
 			loader.setLocation(ControllerInitializer.class.getResource(fxmlPath));
+			loader.setResources(ResourceBundle.getBundle(BUNDLE_BASE));
 			Parent root = loader.load();
 
 			if (owner != null) {

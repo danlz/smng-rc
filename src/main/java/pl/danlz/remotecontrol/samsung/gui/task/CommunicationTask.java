@@ -1,5 +1,7 @@
 package pl.danlz.remotecontrol.samsung.gui.task;
 
+import java.util.ResourceBundle;
+
 import javafx.concurrent.Task;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -13,13 +15,24 @@ import pl.danlz.remotecontrol.samsung.logger.Logger;
 public abstract class CommunicationTask extends Task<Void> {
 
 	private static final Logger LOG = Logger.getLogger(CommunicationTask.class);
+	
+	private ResourceBundle resources;
+	
+	/**
+	 * Creates a new instance.
+	 * 
+	 * @param resources resources
+	 */
+	public CommunicationTask(ResourceBundle resources) {
+		this.resources = resources;
+	}
 
 	@Override
 	protected void failed() {
 		LOG.error("Communication failed", getException());
 		Alert alert = new Alert(AlertType.ERROR, getException().getMessage());
-		alert.setTitle("Samsung Remote Control");
-		alert.setHeaderText("Communication error");
+		alert.setTitle(resources.getString("communicationError.title"));
+		alert.setHeaderText(resources.getString("communication.error"));
 		alert.showAndWait();
 	}
 }

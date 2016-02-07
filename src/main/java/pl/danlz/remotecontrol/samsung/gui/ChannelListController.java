@@ -2,6 +2,7 @@ package pl.danlz.remotecontrol.samsung.gui;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 
 import javafx.application.Platform;
@@ -44,6 +45,9 @@ public class ChannelListController extends AbstractController {
 	private final TVAdapter adapter = AppCtx.getBean(TVAdapter.class);
 	private final Configuration config = AppCtx.getBean(Configuration.class);
 
+	@FXML
+	private ResourceBundle resources;
+
 	private final static Comparator<Channel> CHANNEL_NAME_COMPARATOR = new Comparator<Channel>() {
 
 		@Override
@@ -69,7 +73,7 @@ public class ChannelListController extends AbstractController {
 	@Override
 	protected void initStage(Stage stage) {
 		stage.initStyle(StageStyle.TRANSPARENT);
-		stage.setTitle("Channel list");
+		stage.setTitle(resources.getString("channelList.title"));
 		stage.setResizable(false);
 		stage.getScene().setFill(Color.TRANSPARENT);
 		stage.focusedProperty().addListener(new ChangeListener<Boolean>() {
@@ -91,9 +95,9 @@ public class ChannelListController extends AbstractController {
 			String channelStr = String.valueOf(channel);
 			for (int i = 0; i < channelStr.length(); i++) {
 				String keyCode = "KEY_" + channelStr.charAt(i);
-				executor.execute(new SendKeyTask(config, adapter, keyCode, Configuration.MACRO_DELAY));
+				executor.execute(new SendKeyTask(resources, config, adapter, keyCode, Configuration.MACRO_DELAY));
 			}
-			executor.execute(new SendKeyTask(config, adapter, "KEY_ENTER"));
+			executor.execute(new SendKeyTask(resources, config, adapter, "KEY_ENTER"));
 		}
 	}
 

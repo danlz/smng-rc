@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?scenebuilder-stylesheet rc.css?>
+<?scenebuilder-preview-i18n-resource ../bundle/rc.properties?>
+
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -20,22 +22,22 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       </rowConstraints>
       <children>
-        <Label text="TV address:" />
-        <Label text="TV port:" GridPane.rowIndex="1" />
-        <Label text="Controller name:" GridPane.rowIndex="2" />
+        <Label text="%tv.address" />
+        <Label text="%tv.port" GridPane.rowIndex="1" />
+        <Label text="%controller.name" GridPane.rowIndex="2" />
+        <Label text="%channel.sorting" GridPane.rowIndex="3" />
         <ComboBox fx:id="addressComboBox" editable="true" GridPane.columnIndex="1" />
         <Spinner fx:id="portSpinner" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
         <TextField fx:id="controllerNameField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-        <Button maxWidth="1.7976931348623157E308" onAction="#findButtonAction" text="Find" GridPane.columnIndex="2" />
-        <Button maxWidth="1.7976931348623157E308" onAction="#defaultPortButtonAction" text="Default" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-        <Label text="Channel sorting:" GridPane.rowIndex="3" />
+        <Button maxWidth="1.7976931348623157E308" onAction="#findButtonAction" text="%button.find" GridPane.columnIndex="2" />
+        <Button maxWidth="1.7976931348623157E308" onAction="#defaultPortButtonAction" text="%button.default" GridPane.columnIndex="2" GridPane.rowIndex="1" />
         <ComboBox fx:id="channelSortingComboBox" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       </children>
     </GridPane>
     <HBox styleClass="buttonsRow">
       <children>
-        <Button defaultButton="true" onAction="#okButtonAction" text="OK" />
-        <Button cancelButton="true" onAction="#cancelButtonAction" text="Cancel" />
+        <Button defaultButton="true" onAction="#okButtonAction" text="%button.OK" />
+        <Button cancelButton="true" onAction="#cancelButtonAction" text="%button.cancel" />
       </children>
     </HBox>
   </children>

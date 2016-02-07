@@ -2,6 +2,7 @@ package pl.danlz.remotecontrol.samsung.gui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
@@ -53,6 +54,9 @@ public class MainController extends AbstractController {
 	private final SettingsController settingsController = AppCtx.getBean(SettingsController.class);
 
 	@FXML
+	private ResourceBundle resources;
+	
+	@FXML
 	private Pane root;
 
 	@FXML
@@ -87,7 +91,7 @@ public class MainController extends AbstractController {
 	protected void initStage(Stage stage) {
 		stage.initStyle(StageStyle.TRANSPARENT);
 		stage.setResizable(false);
-		stage.setTitle("Samsung Remote Control");
+		stage.setTitle(resources.getString("main.title"));
 		stage.getScene().setFill(Color.TRANSPARENT);
 		stage.setOnCloseRequest(v -> {
 			close();
@@ -109,7 +113,7 @@ public class MainController extends AbstractController {
 			RCButton button = (RCButton) node;
 			String shortcut = button.getShortcut();
 			if (shortcut != null) {
-				button.setTooltip(new Tooltip("Shortcut key: " + shortcut));
+				button.setTooltip(new Tooltip(resources.getString("shortcut.key") + " " + shortcut));
 				scene.getAccelerators().put(KeyCombination.valueOf(shortcut), new Runnable() {
 
 					@Override
@@ -238,7 +242,7 @@ public class MainController extends AbstractController {
 			button.setOnAction(e -> {
 				LOG.debug("'" + button.getText() + "' button pressed");
 
-				executor.execute(new SendKeyTask(config, adapter, button.getKeyCode()));
+				executor.execute(new SendKeyTask(resources, config, adapter, button.getKeyCode()));
 			});
 		}
 	}

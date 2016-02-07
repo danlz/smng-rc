@@ -1,5 +1,7 @@
 package pl.danlz.remotecontrol.samsung.gui.task;
 
+import java.util.ResourceBundle;
+
 import pl.danlz.remotecontrol.samsung.adapter.TVAdapter;
 import pl.danlz.remotecontrol.samsung.config.Configuration;
 
@@ -21,6 +23,8 @@ public class SendKeyTask extends CommunicationTask {
 	/**
 	 * Creates a new instance.
 	 *
+	 * @param resources
+	 *            resources
 	 * @param config
 	 *            configuration
 	 * @param adapter
@@ -28,13 +32,15 @@ public class SendKeyTask extends CommunicationTask {
 	 * @param keyCode
 	 *            key code
 	 */
-	public SendKeyTask(Configuration config, TVAdapter adapter, String keyCode) {
-		this(config, adapter, keyCode, 0);
+	public SendKeyTask(ResourceBundle resources, Configuration config, TVAdapter adapter, String keyCode) {
+		this(resources, config, adapter, keyCode, 0);
 	}
 
 	/**
 	 * Creates a new instance.
 	 *
+	 * @param resources
+	 *            resources
 	 * @param config
 	 *            configuration
 	 * @param adapter
@@ -44,7 +50,8 @@ public class SendKeyTask extends CommunicationTask {
 	 * @param delay
 	 *            delay (in ms) added after sending the key
 	 */
-	public SendKeyTask(Configuration config, TVAdapter adapter, String keyCode, int delay) {
+	public SendKeyTask(ResourceBundle resources, Configuration config, TVAdapter adapter, String keyCode, int delay) {
+		super(resources);
 		this.config = config;
 		this.adapter = adapter;
 		this.keyCode = keyCode;

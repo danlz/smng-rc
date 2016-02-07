@@ -2,6 +2,7 @@ package pl.danlz.remotecontrol.samsung.gui;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -44,6 +45,9 @@ public class SettingsController extends AbstractController {
 	private final TVAdapter tvAdapter = AppCtx.getBean(TVAdapter.class);
 	private final Configuration config = AppCtx.getBean(Configuration.class);
 
+	@FXML
+	private ResourceBundle resources;
+	
 	@FXML
 	private ComboBox<TVAddressInfo> addressComboBox;
 
@@ -122,7 +126,7 @@ public class SettingsController extends AbstractController {
 	@Override
 	protected void initStage(Stage stage) {
 		stage.initStyle(StageStyle.UTILITY);
-		stage.setTitle("Settings");
+		stage.setTitle(resources.getString("settings.title"));
 		stage.setResizable(false);
 	}
 
@@ -142,7 +146,7 @@ public class SettingsController extends AbstractController {
 		addressComboBox.requestFocus();
 		Button button = (Button) event.getSource();
 		button.setDisable(true);
-		button.setText("Searching...");
+		button.setText(resources.getString("button.searching"));
 		executor.execute(new Task<Collection<UPnPDevice>>() {
 
 			@Override
@@ -167,7 +171,7 @@ public class SettingsController extends AbstractController {
 				addressComboBox.getItems().setAll(addresses);
 				addressComboBox.show();
 				button.setDisable(false);
-				button.setText("Find");
+				button.setText(resources.getString("button.find"));
 			}
 
 			@Override
