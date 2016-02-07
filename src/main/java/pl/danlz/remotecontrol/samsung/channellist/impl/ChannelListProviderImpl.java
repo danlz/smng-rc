@@ -56,7 +56,7 @@ public class ChannelListProviderImpl implements ChannelListProvider {
 				return pathname.isFile() && pathname.getName().toLowerCase().endsWith("." + SETTINGS_FILE_EXTENSION);
 			}
 		});
-		if (files.length == 0) {
+		if (files == null || files.length == 0) {
 			LOG.info("No settings file found at [" + configDir + "]");
 		} else {
 			channels = readChannelList(files[0]);
