@@ -34,7 +34,7 @@ public class Configuration {
 	/**
 	 * Path to directory where configuration files are stored.
 	 */
-	public static final String CONFIG_DIR_PATH = System.getProperty("user.home") + "/.samsungRC";
+	public static final String CONFIG_DIR_PATH = System.getProperty("user.home") + "/.smng-rc";
 
 	private static final String CONFIG_FILE_PATH = CONFIG_DIR_PATH + "/config.xml";
 
@@ -46,7 +46,7 @@ public class Configuration {
 	/**
 	 * Default controller name.
 	 */
-	public static final String DEFAULT_CONTROLLER_NAME = "SamsungRC";
+	public static final String DEFAULT_CONTROLLER_NAME = "SMNG-RC";
 
 	/**
 	 * Scan timeout.

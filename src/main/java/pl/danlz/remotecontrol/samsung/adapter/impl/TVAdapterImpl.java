@@ -41,7 +41,7 @@ public class TVAdapterImpl implements TVAdapter {
 	/**
 	 * Some string. Exact meaning is not known.
 	 */
-	private static final String A_STRING = "samsung.remotecontrol.danlz.pl";
+	private static final String A_STRING = "smng-rc.danlz.pl";
 
 	private Socket socket;
 

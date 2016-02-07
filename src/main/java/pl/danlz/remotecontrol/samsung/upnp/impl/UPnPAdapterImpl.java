@@ -42,7 +42,7 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 	private final static String MAN = "\"ssdp:discover\"";
 	private final static int RESPONSE_TIMEOUT = 2;
 	private final static String USER_AGENT = System.getProperty("os.name") + "/" + System.getProperty("os.version")
-			+ " UPnP/1.1 SamsungRemoteControl/1.0";
+			+ " UPnP/1.1 SMNG-RC/1.0";
 	private final static String OK_STATUS_LINE = "HTTP/1.1 200 OK";
 	private static final String LOCATION_HEADER_NAME = "LOCATION";
 	private static final String UNIQUE_SERVICE_NAME_HEADER_NAME = "USN";
