@@ -16,7 +16,7 @@ public abstract class CommunicationTask extends Task<Void> {
 
 	private static final Logger LOG = Logger.getLogger(CommunicationTask.class);
 	
-	private ResourceBundle resources;
+	protected ResourceBundle resources;
 	
 	/**
 	 * Creates a new instance.

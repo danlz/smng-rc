@@ -15,6 +15,7 @@ import java.util.Arrays;
 
 import pl.danlz.remotecontrol.samsung.adapter.TVAdapter;
 import pl.danlz.remotecontrol.samsung.adapter.TVAdapterException;
+import pl.danlz.remotecontrol.samsung.adapter.TVAuthenticationException;
 import pl.danlz.remotecontrol.samsung.adapter.impl.Request.PayloadType;
 import pl.danlz.remotecontrol.samsung.adapter.impl.Response.Payload;
 import pl.danlz.remotecontrol.samsung.logger.Logger;
@@ -69,8 +70,11 @@ public class TVAdapterImpl implements TVAdapter {
 			Request request = new Request(A_STRING, PayloadType.AUTHENTICATE, //
 					clientAddress.getHostAddress(), clientMac, controllerName);
 			Response response = sendRequest(request);
-			if (response.payload != Payload.ACCESS_GRANTED && //
-					response.payload != Payload.WAITING_FOR_USER) {
+			if (response.payload == Payload.WAITING_FOR_USER) {
+				close();
+				throw new TVAuthenticationException("Confirmation needed");
+			}
+			if (response.payload != Payload.ACCESS_GRANTED) {
 				throw new TVAdapterException("authenticate: Access denied: " + response);
 			}
 		} catch (IOException e) {
@@ -185,6 +189,7 @@ public class TVAdapterImpl implements TVAdapter {
 			result = appendBytes(result, new byte[] { (byte) byteRead });
 		}
 		if (byteRead == -1) {
+			close();
 			throw new TVAdapterException("Stream closed - bytes read: " + bytesRead);
 		}
 

@@ -2,7 +2,10 @@ package pl.danlz.remotecontrol.samsung.gui.task;
 
 import java.util.ResourceBundle;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import pl.danlz.remotecontrol.samsung.adapter.TVAdapter;
+import pl.danlz.remotecontrol.samsung.adapter.TVAuthenticationException;
 import pl.danlz.remotecontrol.samsung.config.Configuration;
 
 /**
@@ -72,5 +75,17 @@ public class SendKeyTask extends CommunicationTask {
 			Thread.sleep(delay);
 		}
 		return null;
+	}
+
+	@Override
+	protected void failed() {
+		if (getException() instanceof TVAuthenticationException) {
+			Alert alert = new Alert(AlertType.INFORMATION, resources.getString("confirmation.text"));
+			alert.setTitle(resources.getString("confirmation.title"));
+			alert.setHeaderText(resources.getString("confirmation.header"));
+			alert.showAndWait();
+		} else {
+			super.failed();
+		}
 	}
 }
