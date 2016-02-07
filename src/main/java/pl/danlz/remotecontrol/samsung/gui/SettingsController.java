@@ -121,6 +121,19 @@ public class SettingsController extends AbstractController {
 		for (ChannelSorting channelSorting : ChannelSorting.values()) {
 			channelSortingComboBox.getItems().add(channelSorting);
 		}
+		channelSortingComboBox.setConverter(new StringConverter<Configuration.ChannelSorting>() {
+
+			@Override
+			public String toString(ChannelSorting object) {
+				return resources.getString("channel.sorting." + object.name());
+			}
+
+			@Override
+			public ChannelSorting fromString(String string) {
+				// not used, read only combobox
+				return null;
+			}
+		});
 	}
 
 	@Override
