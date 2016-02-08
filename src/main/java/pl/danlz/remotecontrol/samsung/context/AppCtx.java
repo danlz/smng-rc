@@ -2,8 +2,6 @@ package pl.danlz.remotecontrol.samsung.context;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import pl.danlz.remotecontrol.samsung.adapter.TVAdapter;
 import pl.danlz.remotecontrol.samsung.adapter.impl.DummyTVAdapterImpl;
@@ -11,6 +9,8 @@ import pl.danlz.remotecontrol.samsung.adapter.impl.TVAdapterImpl;
 import pl.danlz.remotecontrol.samsung.channellist.ChannelListProvider;
 import pl.danlz.remotecontrol.samsung.channellist.impl.ChannelListProviderImpl;
 import pl.danlz.remotecontrol.samsung.config.Configuration;
+import pl.danlz.remotecontrol.samsung.executor.DirectExecutorService;
+import pl.danlz.remotecontrol.samsung.executor.SkippingExecutorService;
 import pl.danlz.remotecontrol.samsung.gui.ChannelListController;
 import pl.danlz.remotecontrol.samsung.gui.MainController;
 import pl.danlz.remotecontrol.samsung.gui.SettingsController;
@@ -53,7 +53,7 @@ public final class AppCtx {
 				registerBean(TVAdapter.class, new TVAdapterImpl());
 			}
 
-			registerBean(ExecutorService.class, Executors.newSingleThreadExecutor());
+			registerBean(DirectExecutorService.class, new SkippingExecutorService());
 			registerBean(SettingsController.class, new SettingsController());
 			registerBean(ChannelListController.class, new ChannelListController());
 			registerBean(MainController.class, new MainController());

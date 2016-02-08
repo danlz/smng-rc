@@ -3,7 +3,6 @@ package pl.danlz.remotecontrol.samsung.gui;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.concurrent.ExecutorService;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -25,6 +24,7 @@ import pl.danlz.remotecontrol.samsung.adapter.TVAdapter;
 import pl.danlz.remotecontrol.samsung.config.Configuration;
 import pl.danlz.remotecontrol.samsung.config.Configuration.ChannelSorting;
 import pl.danlz.remotecontrol.samsung.context.AppCtx;
+import pl.danlz.remotecontrol.samsung.executor.DirectExecutorService;
 import pl.danlz.remotecontrol.samsung.logger.Logger;
 import pl.danlz.remotecontrol.samsung.upnp.UPnPAdapter;
 import pl.danlz.remotecontrol.samsung.upnp.UPnPDevice;
@@ -40,7 +40,7 @@ public class SettingsController extends AbstractController {
 
 	private static final String SEARCH_TARGET = "urn:samsung.com:device:RemoteControlReceiver:1";
 
-	private final ExecutorService executor = AppCtx.getBean(ExecutorService.class);
+	private final DirectExecutorService executor = AppCtx.getBean(DirectExecutorService.class);
 	private final UPnPAdapter upnpAdapter = AppCtx.getBean(UPnPAdapter.class);
 	private final TVAdapter tvAdapter = AppCtx.getBean(TVAdapter.class);
 	private final Configuration config = AppCtx.getBean(Configuration.class);

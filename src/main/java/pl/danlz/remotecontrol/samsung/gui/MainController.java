@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -28,6 +27,7 @@ import javafx.stage.Window;
 import pl.danlz.remotecontrol.samsung.adapter.TVAdapter;
 import pl.danlz.remotecontrol.samsung.config.Configuration;
 import pl.danlz.remotecontrol.samsung.context.AppCtx;
+import pl.danlz.remotecontrol.samsung.executor.DirectExecutorService;
 import pl.danlz.remotecontrol.samsung.gui.control.RCButton;
 import pl.danlz.remotecontrol.samsung.gui.task.SendKeyTask;
 import pl.danlz.remotecontrol.samsung.logger.Logger;
@@ -47,7 +47,7 @@ public class MainController extends AbstractController {
 
 	private static final KeyCombination CHANNEL_LIST_OPEN_KEY = KeyCombination.valueOf("ALT+ENTER");
 
-	private final ExecutorService executor = AppCtx.getBean(ExecutorService.class);
+	private final DirectExecutorService executor = AppCtx.getBean(DirectExecutorService.class);
 	private final TVAdapter adapter = AppCtx.getBean(TVAdapter.class);
 	private final Configuration config = AppCtx.getBean(Configuration.class);
 	private final ChannelListController channelListController = AppCtx.getBean(ChannelListController.class);
@@ -55,7 +55,7 @@ public class MainController extends AbstractController {
 
 	@FXML
 	private ResourceBundle resources;
-	
+
 	@FXML
 	private Pane root;
 
@@ -242,7 +242,8 @@ public class MainController extends AbstractController {
 			button.setOnAction(e -> {
 				LOG.debug("'" + button.getText() + "' button pressed");
 
-				executor.execute(new SendKeyTask(resources, config, adapter, button.getKeyCode()));
+				executor.execute(new SendKeyTask(resources, config, adapter, button.getKeyCode(),
+						Configuration.SEND_KEY_QUIET_PERIOD));
 			});
 		}
 	}

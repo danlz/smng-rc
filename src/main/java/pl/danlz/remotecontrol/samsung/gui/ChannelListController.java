@@ -3,7 +3,6 @@ package pl.danlz.remotecontrol.samsung.gui;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.concurrent.ExecutorService;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -28,6 +27,7 @@ import pl.danlz.remotecontrol.samsung.channellist.ChannelListProvider;
 import pl.danlz.remotecontrol.samsung.config.Configuration;
 import pl.danlz.remotecontrol.samsung.config.Configuration.ChannelSorting;
 import pl.danlz.remotecontrol.samsung.context.AppCtx;
+import pl.danlz.remotecontrol.samsung.executor.DirectExecutorService;
 import pl.danlz.remotecontrol.samsung.gui.task.SendKeyTask;
 import pl.danlz.remotecontrol.samsung.logger.Logger;
 
@@ -41,7 +41,7 @@ public class ChannelListController extends AbstractController {
 	private static final Logger LOG = Logger.getLogger(ChannelListController.class);
 
 	private final ChannelListProvider channelListProvider = AppCtx.getBean(ChannelListProvider.class);
-	private final ExecutorService executor = AppCtx.getBean(ExecutorService.class);
+	private final DirectExecutorService executor = AppCtx.getBean(DirectExecutorService.class);
 	private final TVAdapter adapter = AppCtx.getBean(TVAdapter.class);
 	private final Configuration config = AppCtx.getBean(Configuration.class);
 
@@ -95,9 +95,11 @@ public class ChannelListController extends AbstractController {
 			String channelStr = String.valueOf(channel);
 			for (int i = 0; i < channelStr.length(); i++) {
 				String keyCode = "KEY_" + channelStr.charAt(i);
-				executor.execute(new SendKeyTask(resources, config, adapter, keyCode, Configuration.MACRO_DELAY));
+				executor.execute(
+						new SendKeyTask(resources, config, adapter, keyCode, Configuration.SEND_KEY_QUIET_PERIOD));
 			}
-			executor.execute(new SendKeyTask(resources, config, adapter, "KEY_ENTER"));
+			executor.execute(
+					new SendKeyTask(resources, config, adapter, "KEY_ENTER", Configuration.SEND_KEY_QUIET_PERIOD));
 		}
 	}
 

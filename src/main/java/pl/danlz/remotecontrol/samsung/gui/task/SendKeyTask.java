@@ -21,7 +21,7 @@ public class SendKeyTask extends CommunicationTask {
 
 	private String keyCode;
 
-	private int delay;
+	private int quietPeried;
 
 	/**
 	 * Creates a new instance.
@@ -50,18 +50,18 @@ public class SendKeyTask extends CommunicationTask {
 	 *            TV adapter
 	 * @param keyCode
 	 *            key code
-	 * @param delay
+	 * @param quietPeriod
 	 *            delay (in ms) added after sending the key
 	 */
-	public SendKeyTask(ResourceBundle resources, Configuration config, TVAdapter adapter, String keyCode, int delay) {
+	public SendKeyTask(ResourceBundle resources, Configuration config, TVAdapter adapter, String keyCode, int quietPeriod) {
 		super(resources);
 		this.config = config;
 		this.adapter = adapter;
 		this.keyCode = keyCode;
-		if (delay < 0) {
+		if (quietPeriod < 0) {
 			throw new IllegalArgumentException("delay must be > 0");
 		}
-		this.delay = delay;
+		this.quietPeried = quietPeriod;
 	}
 
 	@Override
@@ -71,8 +71,8 @@ public class SendKeyTask extends CommunicationTask {
 			adapter.connect(config.getTvAddress(), config.getTvPort(), config.getControllerName());
 		}
 		adapter.sendKey(keyCode);
-		if (delay > 0) {
-			Thread.sleep(delay);
+		if (quietPeried > 0) {
+			Thread.sleep(quietPeried);
 		}
 		return null;
 	}

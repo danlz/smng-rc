@@ -54,9 +54,10 @@ public class Configuration {
 	public static final int SCAN_TIMEOUT = 10;
 
 	/**
-	 * Delay between keys for macros.
+	 * An amount of time to wait after sending a key to TV. This is needed,
+	 * because TV needs some time to process the key.
 	 */
-	public static final int MACRO_DELAY = 200;
+	public static final int SEND_KEY_QUIET_PERIOD = 200;
 
 	public enum ChannelSorting {
 		NUMBER, NAME;
