@@ -66,5 +66,4 @@ public class RCPictoButton extends StackPane {
 	public void setText(String text) {
 		button.setText(text);
 	}
-
 }

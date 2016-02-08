@@ -71,6 +71,9 @@ public final class AppCtx {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <I> I getBean(Class<I> iface) {
+		if (iface == null) {
+			throw new IllegalArgumentException("iface may not be null");
+		}
 		LOG.debug("Getting bean for: " + iface);
 		Object bean = REGISTRY.get(iface);
 		if (bean == null) {

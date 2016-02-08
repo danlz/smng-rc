@@ -55,10 +55,16 @@ public class Logger {
 	 * @return {@link Logger} instance
 	 */
 	public static Logger getLogger(Class<?> clazz) {
+		if (clazz == null) {
+			throw new IllegalArgumentException("clazz may not be null");
+		}
 		return new Logger(clazz, GLOBAL_THRESHOLD);
 	}
 
 	void log(Level level, String message, Throwable throwable) {
+		if (level == null) {
+			throw new IllegalArgumentException("level may not be null");
+		}
 		if (isLevelEnabled(level)) {
 			synchronized (MUTEX) {
 				String logEntry = DATE_TIME_FORMATTER.format(LocalDateTime.now()) + " " + String.format("%-5s", level)
@@ -188,6 +194,9 @@ public class Logger {
 	}
 
 	boolean isLevelEnabled(Level level) {
+		if (level == null) {
+			throw new IllegalArgumentException("level may not be null");
+		}
 		return level.ordinal() >= threshold.ordinal();
 	}
 

@@ -288,5 +288,4 @@ public class Configuration {
 			return "Region [name=" + name + "]";
 		}
 	}
-
 }

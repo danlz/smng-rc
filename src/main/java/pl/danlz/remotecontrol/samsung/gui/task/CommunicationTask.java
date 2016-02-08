@@ -15,15 +15,19 @@ import pl.danlz.remotecontrol.samsung.logger.Logger;
 public abstract class CommunicationTask extends Task<Void> {
 
 	private static final Logger LOG = Logger.getLogger(CommunicationTask.class);
-	
+
 	protected ResourceBundle resources;
-	
+
 	/**
 	 * Creates a new instance.
 	 * 
-	 * @param resources resources
+	 * @param resources
+	 *            resources
 	 */
 	public CommunicationTask(ResourceBundle resources) {
+		if (resources == null) {
+			throw new IllegalArgumentException("resources may not be null");
+		}
 		this.resources = resources;
 	}
 

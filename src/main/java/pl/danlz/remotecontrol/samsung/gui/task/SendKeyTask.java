@@ -53,13 +53,23 @@ public class SendKeyTask extends CommunicationTask {
 	 * @param quietPeriod
 	 *            delay (in ms) added after sending the key
 	 */
-	public SendKeyTask(ResourceBundle resources, Configuration config, TVAdapter adapter, String keyCode, int quietPeriod) {
+	public SendKeyTask(ResourceBundle resources, Configuration config, TVAdapter adapter, String keyCode,
+			int quietPeriod) {
 		super(resources);
+		if (config == null) {
+			throw new IllegalArgumentException("config must not be null");
+		}
 		this.config = config;
+		if (adapter == null) {
+			throw new IllegalArgumentException("adapter must not be null");
+		}
 		this.adapter = adapter;
+		if (keyCode == null) {
+			throw new IllegalArgumentException("keyCode must not be null");
+		}
 		this.keyCode = keyCode;
 		if (quietPeriod < 0) {
-			throw new IllegalArgumentException("delay must be > 0");
+			throw new IllegalArgumentException("quietPeriod must be > 0");
 		}
 		this.quietPeried = quietPeriod;
 	}

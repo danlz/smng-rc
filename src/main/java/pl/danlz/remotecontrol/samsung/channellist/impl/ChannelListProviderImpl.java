@@ -42,8 +42,6 @@ public class ChannelListProviderImpl implements ChannelListProvider {
 
 	private List<Channel> channels;
 
-	// TODO code cleanup, constants, variables, etc.
-
 	/**
 	 * Creates a new instance.
 	 */
