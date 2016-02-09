@@ -47,7 +47,7 @@ public class SettingsController extends AbstractController {
 
 	@FXML
 	private ResourceBundle resources;
-	
+
 	@FXML
 	private ComboBox<TVAddressInfo> addressComboBox;
 
@@ -181,7 +181,10 @@ public class SettingsController extends AbstractController {
 								t.getManufacturer());
 					}
 				}).collect(Collectors.toList());
+				TVAddressInfo currentValue = addressComboBox.getValue();
 				addressComboBox.getItems().setAll(addresses);
+				// if no addresses are found the value gets cleared
+				addressComboBox.setValue(currentValue);
 				addressComboBox.show();
 				button.setDisable(false);
 				button.setText(resources.getString("button.find"));
