@@ -114,13 +114,11 @@ public class MainController extends AbstractController {
 			String shortcut = button.getShortcut();
 			if (shortcut != null) {
 				button.setTooltip(new Tooltip(resources.getString("shortcut.key") + " " + shortcut));
-				scene.getAccelerators().put(KeyCombination.valueOf(shortcut), new Runnable() {
-
-					@Override
-					public void run() {
-						button.fire();
-					}
-				});
+				scene.getAccelerators().put(KeyCombination.valueOf(shortcut), () -> button.fire());
+			}
+			String additionalShortcut = button.getAdditionalShortcut();
+			if (additionalShortcut != null) {
+				scene.getAccelerators().put(KeyCombination.valueOf(additionalShortcut), () -> button.fire());
 			}
 		}
 		scene.getAccelerators().put(CHANNEL_LIST_OPEN_KEY, new Runnable() {

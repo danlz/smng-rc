@@ -58,17 +58,17 @@
             <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
           </rowConstraints>
           <children>
-            <RCButton keyCode="KEY_1" shortcut="1" text="1" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-            <RCButton keyCode="KEY_2" shortcut="2" text="2" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
-            <RCButton keyCode="KEY_3" shortcut="3" text="3" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" />
-            <RCButton keyCode="KEY_4" shortcut="4" text="4" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" />
-            <RCButton keyCode="KEY_5" shortcut="5" text="5" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <RCButton keyCode="KEY_6" shortcut="6" text="6" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <RCButton keyCode="KEY_7" shortcut="7" text="7" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="2" />
-            <RCButton keyCode="KEY_8" shortcut="8" text="8" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <RCButton keyCode="KEY_9" shortcut="9" text="9" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <RCButton keyCode="KEY_1" shortcut="1" additionalShortcut="Numpad 1" text="1" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+            <RCButton keyCode="KEY_2" shortcut="2" additionalShortcut="Numpad 2" text="2" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
+            <RCButton keyCode="KEY_3" shortcut="3" additionalShortcut="Numpad 3" text="3" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" />
+            <RCButton keyCode="KEY_4" shortcut="4" additionalShortcut="Numpad 4" text="4" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" />
+            <RCButton keyCode="KEY_5" shortcut="5" additionalShortcut="Numpad 5" text="5" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <RCButton keyCode="KEY_6" shortcut="6" additionalShortcut="Numpad 6" text="6" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <RCButton keyCode="KEY_7" shortcut="7" additionalShortcut="Numpad 7" text="7" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="2" />
+            <RCButton keyCode="KEY_8" shortcut="8" additionalShortcut="Numpad 8" text="8" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <RCButton keyCode="KEY_9" shortcut="9" additionalShortcut="Numpad 9" text="9" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <RCPictoButton keyCode="KEY_TTX_MIX" shortcut="X" text="TTX/MIX" styleClass="ttxMixButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="3" />
-            <RCButton keyCode="KEY_0" shortcut="0" text="0" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <RCButton keyCode="KEY_0" shortcut="0" additionalShortcut="Numpad 0" text="0" styleClass="numberButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <RCPictoButton keyCode="KEY_PRECH" shortcut="P" text="PRE-CH" styleClass="preChButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="3" />
           </children>
         </GridPane>
@@ -82,14 +82,14 @@
             <RowConstraints minHeight="96.0" prefHeight="96.0" vgrow="SOMETIMES" valignment="TOP"/>
           </rowConstraints>
           <children>
-            <RCIntegratedButton upperKeyCode="KEY_VOLUP" upperShortcut="EQUALS" lowerKeyCode="KEY_VOLDOWN" lowerShortcut="MINUS" styleClass="volPlusMinusButton" />
+            <RCIntegratedButton upperKeyCode="KEY_VOLUP" upperShortcut="EQUALS" upperAdditionalShortcut="ADD" lowerKeyCode="KEY_VOLDOWN" lowerShortcut="SUBTRACT" lowerAdditionalShortcut="MINUS" styleClass="volPlusMinusButton" />
             <VBox spacing="18" GridPane.columnIndex="1">
               <children>
                 <RCPictoButton keyCode="KEY_MUTE" shortcut="U" text="MUTE" styleClass="muteButton" minHeight="35" maxHeight="35" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
                 <RCPictoButton keyCode="KEY_CH_LIST" shortcut="L" text="CH LIST" styleClass="chListButton" minHeight="35" maxHeight="35" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" GridPane.columnIndex="1" />
               </children>
             </VBox>
-            <RCIntegratedButton upperKeyCode="KEY_CHUP" upperShortcut="PERIOD" lowerKeyCode="KEY_CHDOWN" lowerShortcut="COMMA" styleClass="progPlusMinusButton" GridPane.columnIndex="2" />
+            <RCIntegratedButton upperKeyCode="KEY_CHUP" upperShortcut="PERIOD" upperAdditionalShortcut="MULTIPLY" lowerKeyCode="KEY_CHDOWN" lowerShortcut="COMMA" lowerAdditionalShortcut="DIVIDE" styleClass="progPlusMinusButton" GridPane.columnIndex="2" />
           </children>
         </GridPane>
         <GridPane styleClass="region, menuSmartGuideRegion">

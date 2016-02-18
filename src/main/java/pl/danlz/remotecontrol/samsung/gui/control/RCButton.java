@@ -11,6 +11,7 @@ public class RCButton extends Button {
 
 	private String keyCode;
 	private String shortcut;
+	private String additionalShortcut;
 
 	/**
 	 * Creates a new instance.
@@ -35,5 +36,13 @@ public class RCButton extends Button {
 
 	public void setShortcut(String shortcut) {
 		this.shortcut = shortcut;
+	}
+
+	public String getAdditionalShortcut() {
+		return additionalShortcut;
+	}
+
+	public void setAdditionalShortcut(String additionalShortcut) {
+		this.additionalShortcut = additionalShortcut;
 	}
 }

@@ -73,4 +73,20 @@ public class RCIntegratedButton extends StackPane {
 	public String getLowerShortcut() {
 		return lowerButton.getShortcut();
 	}
+
+	public String getLowerAdditionalShortcut() {
+		return lowerButton.getAdditionalShortcut();
+	}
+
+	public void setLowerAdditionalShortcut(String additionalShortcut) {
+		lowerButton.setAdditionalShortcut(additionalShortcut);
+	}
+
+	public String getUpperAdditionalShortcut() {
+		return upperButton.getAdditionalShortcut();
+	}
+
+	public void setUpperAdditionalShortcut(String additionalShortcut) {
+		upperButton.setAdditionalShortcut(additionalShortcut);
+	}
 }
