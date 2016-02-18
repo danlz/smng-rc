@@ -24,8 +24,9 @@ import pl.danlz.remotecontrol.samsung.logger.Logger;
  * Adapter for communicating with the TV.
  * <p>
  * Based on <a href=
- * "http://sc0ty.pl/2012/02/samsung-tv-network-remote-control-protocol>http://sc0ty.pl/2012/02/samsung-tv-network-remote-control-protocol</a>
- * .</p>
+ * "http://sc0ty.pl/2012/02/samsung-tv-network-remote-control-protocol>http://
+ * sc0ty.pl/2012/02/samsung-tv-network-remote-control-protocol</a> .
+ * </p>
  *
  * @author Leszek
  */
@@ -132,16 +133,21 @@ public class TVAdapterImpl implements TVAdapter {
 	}
 
 	private Response sendRequest(Request request) throws IOException, TVAdapterException {
-		LOG.debug("Sending " + request);
-		OutputStream out = socket.getOutputStream();
-		byte[] bytes = serializeRequest(request);
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("Sending bytes: " + bytesToString(bytes));
-		}
-		out.write(bytes);
-		out.flush();
+		try {
+			LOG.debug("Sending " + request);
+			OutputStream out = socket.getOutputStream();
+			byte[] bytes = serializeRequest(request);
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("Sending bytes: " + bytesToString(bytes));
+			}
+			out.write(bytes);
+			out.flush();
 
-		return receiveResponse();
+			return receiveResponse();
+		} catch (IOException | TVAdapterException e) {
+			close();
+			throw e;
+		}
 	}
 
 	private Response receiveResponse() throws IOException, TVAdapterException {
