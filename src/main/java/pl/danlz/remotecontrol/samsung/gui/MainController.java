@@ -2,6 +2,7 @@ package pl.danlz.remotecontrol.samsung.gui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -113,7 +114,13 @@ public class MainController extends AbstractController {
 			RCButton button = (RCButton) node;
 			String shortcut = button.getShortcut();
 			if (shortcut != null) {
-				button.setTooltip(new Tooltip(resources.getString("shortcut.key") + " " + shortcut));
+				String localizedShortcut = shortcut;
+				try {
+					localizedShortcut = resources.getString("shortcut.key." + shortcut);
+				} catch (MissingResourceException e) {
+					// nothing
+				}
+				button.setTooltip(new Tooltip(resources.getString("shortcut.key") + " " + localizedShortcut));
 				scene.getAccelerators().put(KeyCombination.valueOf(shortcut), () -> button.fire());
 			}
 			String additionalShortcut = button.getAdditionalShortcut();
