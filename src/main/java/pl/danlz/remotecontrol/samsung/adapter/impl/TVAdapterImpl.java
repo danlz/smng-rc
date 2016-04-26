@@ -84,10 +84,10 @@ public class TVAdapterImpl implements TVAdapter {
 	}
 
 	@Override
-	public void sendKey(String keyCode) throws TVAdapterException {
+	public void sendKeys(String... keyCodes) throws TVAdapterException {
 		try {
-			LOG.info("Sending key \"" + keyCode + "\"...");
-			Request request = new Request(A_STRING, PayloadType.SEND_KEY, keyCode);
+			LOG.info("Sending keys " + Arrays.toString(keyCodes) + "...");
+			Request request = new Request(A_STRING, PayloadType.SEND_KEY, keyCodes);
 			Response response = sendRequest(request);
 			if (response.payload != Payload.KEY_CONFIRMED && //
 					response.payload != Payload.KEY_CONFIRMED2 && //
@@ -98,7 +98,7 @@ public class TVAdapterImpl implements TVAdapter {
 				throw new TVAdapterException("sendKey: not confirmed: " + response);
 			}
 		} catch (IOException e) {
-			throw new TVAdapterException("Could not send key \"" + keyCode + "\"", e);
+			throw new TVAdapterException("Could not send key \"" + keyCodes + "\"", e);
 		}
 	}
 

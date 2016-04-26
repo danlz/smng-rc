@@ -19,7 +19,7 @@ public class SendKeyTask extends CommunicationTask {
 
 	private TVAdapter adapter;
 
-	private String keyCode;
+	private String[] keyCodes;
 
 	private int quietPeried;
 
@@ -32,11 +32,11 @@ public class SendKeyTask extends CommunicationTask {
 	 *            configuration
 	 * @param adapter
 	 *            TV adapter
-	 * @param keyCode
-	 *            key code
+	 * @param keyCodes
+	 *            key codes
 	 */
-	public SendKeyTask(ResourceBundle resources, Configuration config, TVAdapter adapter, String keyCode) {
-		this(resources, config, adapter, keyCode, 0);
+	public SendKeyTask(ResourceBundle resources, Configuration config, TVAdapter adapter, String keyCodes) {
+		this(resources, config, adapter, 0, keyCodes);
 	}
 
 	/**
@@ -48,13 +48,13 @@ public class SendKeyTask extends CommunicationTask {
 	 *            configuration
 	 * @param adapter
 	 *            TV adapter
-	 * @param keyCode
-	 *            key code
 	 * @param quietPeriod
 	 *            delay (in ms) added after sending the key
+	 * @param keyCodes
+	 *            key codes
 	 */
-	public SendKeyTask(ResourceBundle resources, Configuration config, TVAdapter adapter, String keyCode,
-			int quietPeriod) {
+	public SendKeyTask(ResourceBundle resources, Configuration config, TVAdapter adapter, int quietPeriod,
+			String... keyCodes) {
 		super(resources);
 		if (config == null) {
 			throw new IllegalArgumentException("config must not be null");
@@ -64,14 +64,14 @@ public class SendKeyTask extends CommunicationTask {
 			throw new IllegalArgumentException("adapter must not be null");
 		}
 		this.adapter = adapter;
-		if (keyCode == null) {
-			throw new IllegalArgumentException("keyCode must not be null");
-		}
-		this.keyCode = keyCode;
 		if (quietPeriod < 0) {
 			throw new IllegalArgumentException("quietPeriod must be > 0");
 		}
 		this.quietPeried = quietPeriod;
+		if (keyCodes == null) {
+			throw new IllegalArgumentException("keyCodes must not be null");
+		}
+		this.keyCodes = keyCodes;
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class SendKeyTask extends CommunicationTask {
 			adapter.close();
 			adapter.connect(config.getTvAddress(), config.getTvPort(), config.getControllerName());
 		}
-		adapter.sendKey(keyCode);
+		adapter.sendKeys(keyCodes);
 		if (quietPeried > 0) {
 			Thread.sleep(quietPeried);
 		}

@@ -247,8 +247,8 @@ public class MainController extends AbstractController {
 			button.setOnAction(e -> {
 				LOG.debug("'" + button.getText() + "' button pressed");
 
-				executor.execute(new SendKeyTask(resources, config, adapter, button.getKeyCode(),
-						Configuration.SEND_KEY_QUIET_PERIOD));
+				executor.execute(new SendKeyTask(resources, config, adapter, Configuration.SEND_KEY_QUIET_PERIOD,
+						button.getKeyCode()));
 			});
 		}
 	}

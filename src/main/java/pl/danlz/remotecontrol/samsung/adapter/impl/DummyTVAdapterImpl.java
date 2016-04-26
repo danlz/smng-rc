@@ -1,5 +1,7 @@
 package pl.danlz.remotecontrol.samsung.adapter.impl;
 
+import java.util.Arrays;
+
 import pl.danlz.remotecontrol.samsung.adapter.TVAdapter;
 import pl.danlz.remotecontrol.samsung.adapter.TVAdapterException;
 import pl.danlz.remotecontrol.samsung.logger.Logger;
@@ -19,8 +21,8 @@ public class DummyTVAdapterImpl implements TVAdapter {
 	}
 
 	@Override
-	public void sendKey(String keyCode) throws TVAdapterException {
-		LOG.info("Key code \"" + keyCode + "\"");
+	public void sendKeys(String... keyCodes) throws TVAdapterException {
+		LOG.info("Key codes " + Arrays.toString(keyCodes) + "");
 	}
 
 	@Override

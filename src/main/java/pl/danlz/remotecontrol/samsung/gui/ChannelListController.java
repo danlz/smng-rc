@@ -1,5 +1,6 @@
 package pl.danlz.remotecontrol.samsung.gui;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -93,13 +94,18 @@ public class ChannelListController extends AbstractController {
 			LOG.info("Switching to channel: " + channel);
 
 			String channelStr = String.valueOf(channel);
+			List<String> keyCodes = new ArrayList<>(channelStr.length() + 1);
 			for (int i = 0; i < channelStr.length(); i++) {
 				String keyCode = "KEY_" + channelStr.charAt(i);
-				executor.execute(
-						new SendKeyTask(resources, config, adapter, keyCode, Configuration.SEND_KEY_QUIET_PERIOD));
+				keyCodes.add(keyCode);
+
+				// executor.execute(
+				// new SendKeyTask(resources, config, adapter, keyCode,
+				// Configuration.SEND_KEY_QUIET_PERIOD));
 			}
-			executor.execute(
-					new SendKeyTask(resources, config, adapter, "KEY_ENTER", Configuration.SEND_KEY_QUIET_PERIOD));
+			keyCodes.add("KEY_ENTER");
+			executor.execute(new SendKeyTask(resources, config, adapter, Configuration.SEND_KEY_QUIET_PERIOD,
+					keyCodes.toArray(new String[] {})));
 		}
 	}
 

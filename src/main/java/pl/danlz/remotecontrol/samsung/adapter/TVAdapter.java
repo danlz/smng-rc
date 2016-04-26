@@ -23,14 +23,14 @@ public interface TVAdapter {
 	void connect(String address, int port, String controllerName) throws TVAdapterException;
 
 	/**
-	 * Sends a key to the TV.
+	 * Sends keys to the TV.
 	 *
-	 * @param keyCode
-	 *            key code
+	 * @param keyCodes
+	 *            key codes
 	 * @throws TVAdapterException
 	 *             if send fails
 	 */
-	void sendKey(String keyCode) throws TVAdapterException;
+	void sendKeys(String... keyCodes) throws TVAdapterException;
 
 	/**
 	 * Tells if this adapter is connected to TV.
