@@ -7,6 +7,8 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -45,6 +47,8 @@ public class MainController extends AbstractController {
 	private static final String OVER_DRAG_TARGET_CLASS = "regionOverDragTarget";
 
 	private static final String MOVING_CLASS = "regionMoving";
+
+	private static final String WINDOW_FOCUSED_CLASS = "windowFocused";
 
 	private static final KeyCombination CHANNEL_LIST_OPEN_KEY = KeyCombination.valueOf("ALT+ENTER");
 
@@ -96,6 +100,17 @@ public class MainController extends AbstractController {
 		stage.getScene().setFill(Color.TRANSPARENT);
 		stage.setOnCloseRequest(v -> {
 			close();
+		});
+		stage.focusedProperty().addListener(new ChangeListener<Boolean>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if (newValue) {
+					root.getStyleClass().add(WINDOW_FOCUSED_CLASS);
+				} else {
+					root.getStyleClass().remove(WINDOW_FOCUSED_CLASS);
+				}
+			}
 		});
 		initializeShortcuts(stage.getScene());
 		if (config.getPosition() != null) {

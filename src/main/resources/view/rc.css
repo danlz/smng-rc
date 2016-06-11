@@ -113,6 +113,10 @@
 	-fx-spacing: 4.0px;
 }
 
+.rcRoot.windowFocused .titleBar {
+	-fx-background-color: rgb(57,50,125);
+}
+
 .titleBar .logo .logoText {
 	-fx-font-size: 16.0px;
 	-fx-font-family: "Helvetica Condensed Black";
