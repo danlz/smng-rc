@@ -148,16 +148,13 @@ public class TVAdapterImpl implements TVAdapter {
 	}
 
 	private Response receiveResponse() throws IOException, TVAdapterException {
-		InputStream in = socket.getInputStream();
+		ByteStoringInputStream in = new ByteStoringInputStream(socket.getInputStream());
 		byte[] prefix = readBytes(in, 1);
 		byte[] aString = readField(in);
 		byte[] payload = readField(in);
 
 		if (LOG.isDebugEnabled()) {
-			byte[] result = prefix;
-			result = appendBytes(result, aString);
-			result = appendBytes(result, payload);
-			LOG.debug("Received bytes: " + bytesToString(result));
+			LOG.debug("Received bytes: " + bytesToString(in.getBytes()));
 		}
 
 		Response response = new Response();
