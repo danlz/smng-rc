@@ -18,28 +18,26 @@ class Response {
 		ACCESS_DENIED(new byte[] { 0x64, 0x00, 0x00, 0x00 }), //
 		ABORT(new byte[] { 0x65, 0x00 }), //
 		KEY_CONFIRMED(new byte[] { 0x00, 0x00, 0x00, 0x00 }), //
-		KEY_CONFIRMED3(new byte[] { 0x0A, 0x00, 0x01, 0x00, 0x00, 0x00 }), //
 		/**
-		 * Observed only when in some menu or inside application.
+		 * Observed in menus, inside SmartHub applications or for macros
+		 * (channel switch). Consecutive 4 bytes in the response contain
+		 * additional information.
 		 */
-		KEY_CONFIRMED4(new byte[] { 0x0A, 0x00, 0x18, 0x00, 0x00, 0x00 }), //
-		/**
-		 * Observed for macros (channel switch).
-		 */
-		KEY_CONFIRMED5(new byte[] { 0x0A, 0x00, 0x03, 0x00, 0x00, 0x00 }), //
+		KEY_CONFIRMED_EXT(new byte[] { 0x0A, 0x00 }), //
 		/**
 		 * Observed only when in some menu, ie. menu, tools, channel list.
 		 */
 		WAITING_FOR_USER(new byte[] { 0x0A, 0x00, 0x02, 0x00, 0x00, 0x00 });
 
-		private byte[] bytes;
+		private byte[] prefix;
 
-		private Payload(byte[] bytes) {
-			this.bytes = bytes;
+		private Payload(byte[] prefix) {
+			this.prefix = prefix;
 		}
 
 		/**
-		 * Converts given bytes to specific constant.
+		 * Converts given bytes to specific constant. The constants are matched
+		 * by their prefixes.
 		 *
 		 * @param bytes
 		 *            bytes
@@ -47,12 +45,25 @@ class Response {
 		 */
 		public static Payload fromBytes(byte[] bytes) {
 			for (Payload item : values()) {
-				if (Arrays.equals(bytes, item.bytes)) {
+				if (isPrefixMatched(item.prefix, bytes)) {
 
 					return item;
 				}
 			}
 			throw new IllegalArgumentException("Unsupported payload - bytes: " + Arrays.toString(bytes));
+		}
+
+		private static boolean isPrefixMatched(byte[] prefix, byte[] bytes) {
+			if (prefix.length > bytes.length) {
+				return false;
+			}
+			for (int i = 0; i < prefix.length; i++) {
+				if (prefix[i] != bytes[i]) {
+					return false;
+				}
+			}
+
+			return true;
 		}
 	}
 
