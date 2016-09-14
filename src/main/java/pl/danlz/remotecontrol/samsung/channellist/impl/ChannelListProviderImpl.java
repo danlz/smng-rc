@@ -14,10 +14,15 @@ import pl.danlz.remotecontrol.samsung.config.Configuration;
 import pl.danlz.remotecontrol.samsung.logger.Logger;
 
 /**
- * Provides information about channels. This implementation reads channel data
- * from TV settings file.
+ * Provides information about channels. This implementation reads the channel
+ * data from TV settings file.
  * <p>
- * Currently only map-CableD and map-AirA lists are supported.
+ * The following channel lists are supported:
+ * <ul>
+ * <li>map-CableD
+ * <li>map-AirD
+ * <li>map-AirA
+ * </ul>
  * </p>
  *
  * @author Leszek
@@ -73,6 +78,8 @@ public class ChannelListProviderImpl implements ChannelListProvider {
 			AbstractListLoader loader = new CableDListLoader(zip);
 			channels.addAll(loader.load());
 			loader = new AirAListLoader(zip);
+			channels.addAll(loader.load());
+			loader = new AirDListLoader(zip);
 			channels.addAll(loader.load());
 		} catch (IOException e) {
 			LOG.warn("Could not read channel lists from [" + file + "]", e);

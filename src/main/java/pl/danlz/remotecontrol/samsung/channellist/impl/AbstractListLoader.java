@@ -12,7 +12,7 @@ import pl.danlz.remotecontrol.samsung.channellist.Channel;
 import pl.danlz.remotecontrol.samsung.logger.Logger;
 
 /**
- * Base class for channel loaders.
+ * Base class for channel list loaders.
  * <p>
  * Additional information:
  * <ul>
@@ -123,7 +123,7 @@ abstract class AbstractListLoader {
 			}
 			LOG.info("Read " + channels.size() + " channels from '" + entryName + "'");
 		} else {
-			LOG.warn("Channel list '" + entryName + "' entry not found");
+			LOG.warn("Entry '" + entryName + "' not found");
 		}
 
 		return channels;

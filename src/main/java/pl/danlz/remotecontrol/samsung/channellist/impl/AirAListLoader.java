@@ -20,7 +20,8 @@ class AirAListLoader extends AbstractListLoader {
 	@Override
 	protected Channel parseRecord(List<Byte> record) {
 		byte inUse = record.get(1);
-		if (inUse == 0) {
+		byte deleted = record.get(2);
+		if (inUse == 0 || deleted == 1) {
 			return null;
 		}
 		int number = getInt(record, 9);
