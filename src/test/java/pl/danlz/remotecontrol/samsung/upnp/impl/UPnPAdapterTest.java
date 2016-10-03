@@ -33,7 +33,7 @@ public class UPnPAdapterTest {
 				allOf( //
 						hasEntry(equalTo("HEADER1"), equalTo("value1")), //
 						hasEntry(equalTo("HEADER2"), equalTo("value2")), //
-						hasEntry(equalTo("header3"), equalTo("VALUE3")) //
+						hasEntry(equalTo("HEADER3"), equalTo("VALUE3")) //
 		));
 	}
 
