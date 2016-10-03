@@ -76,7 +76,7 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 				HTTP_NEW_LINE;
 
 		try (DatagramSocket socket = new DatagramSocket()) {
-			Collection<UPnPDevice> result = new HashSet<>();
+			Map<UPnPDevice, Map<String, String>> deviceToHeadersMap = new HashMap<>();
 
 			InetAddress inetAddress = InetAddress.getByName(QUERY_ADDRESS);
 			// 500ms additionally to make sure we receive the packet
@@ -102,39 +102,48 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 							+ response);
 
 					Map<String, String> headerValues = parseResponse(response);
-					String location = headerValues.get(LOCATION_HEADER_NAME);
 
-					DeviceDescription description = getDeviceDescription(location);
-					UPnPDevice device;
-					if (description == null) {
-						device = new UPnPDevice( //
-								receivedPacket.getAddress(), //
-								headerValues.get(SEARCH_TARGET_HEADER_NAME), //
-								headerValues.get(UNIQUE_SERVICE_NAME_HEADER_NAME) //
-						);
-					} else {
-						device = new UPnPDevice( //
-								receivedPacket.getAddress(), //
-								headerValues.get(SEARCH_TARGET_HEADER_NAME), //
-								headerValues.get(UNIQUE_SERVICE_NAME_HEADER_NAME), //
-								description.getDevice().getDeviceType(), //
-								description.getDevice().getFriendlyName(), //
-								description.getDevice().getManufacturer(), //
-								description.getDevice().getManufacturerURL(), //
-								description.getDevice().getModelDescription(), //
-								description.getDevice().getModelName(), //
-								description.getDevice().getModelNumber(), //
-								description.getDevice().getModelURL(), //
-								description.getDevice().getSerialNumber(), //
-								description.getDevice().getUdn() //
-						);
-					}
-					result.add(device);
+					UPnPDevice device = new UPnPDevice( //
+							receivedPacket.getAddress(), //
+							headerValues.get(SEARCH_TARGET_HEADER_NAME), //
+							headerValues.get(UNIQUE_SERVICE_NAME_HEADER_NAME) //
+					);
+
+					deviceToHeadersMap.put(device, headerValues);
 				} catch (SocketTimeoutException e) {
 					LOG.debug("Search response timeout");
 
 					LOG.debug("Resending request...");
 					socket.send(packetToSend);
+				}
+			}
+			LOG.info("Search finished");
+
+			Collection<UPnPDevice> result = new HashSet<>();
+			for (Map.Entry<UPnPDevice, Map<String, String>> entry : deviceToHeadersMap.entrySet()) {
+				Map<String, String> headerValues = entry.getValue();
+				String location = headerValues.get(LOCATION_HEADER_NAME);
+
+				LOG.info("Getting description for " + entry.getKey());
+				DeviceDescription description = getDeviceDescription(location);
+				if (description == null) {
+					result.add(entry.getKey());
+				} else {
+					result.add(new UPnPDevice( //
+							entry.getKey().getAddress(), //
+							entry.getKey().getSt(), //
+							entry.getKey().getUsn(), //
+							description.getDevice().getDeviceType(), //
+							description.getDevice().getFriendlyName(), //
+							description.getDevice().getManufacturer(), //
+							description.getDevice().getManufacturerURL(), //
+							description.getDevice().getModelDescription(), //
+							description.getDevice().getModelName(), //
+							description.getDevice().getModelNumber(), //
+							description.getDevice().getModelURL(), //
+							description.getDevice().getSerialNumber(), //
+							description.getDevice().getUdn() //
+					));
 				}
 			}
 
