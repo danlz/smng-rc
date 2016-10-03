@@ -10,9 +10,9 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
@@ -40,7 +40,10 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 	private final static String QUERY_ADDRESS = "239.255.255.250";
 	private final static int QUERY_PORT = 1900;
 	private final static String MAN = "\"ssdp:discover\"";
-	private final static int RESPONSE_TIMEOUT = 2;
+	/**
+	 * Response delay in seconds. Should be between 1 and 5.
+	 */
+	private final static int RESPONSE_DELAY = 2;
 	private final static String USER_AGENT = System.getProperty("os.name") + "/" + System.getProperty("os.version")
 			+ " UPnP/1.1 SMNG-RC/1.0";
 	private final static String OK_STATUS_LINE = "HTTP/1.1 200 OK";
@@ -67,32 +70,35 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 		String message = "M-SEARCH * HTTP/1.1" + HTTP_NEW_LINE + //
 				"HOST: " + QUERY_ADDRESS + ":" + QUERY_PORT + HTTP_NEW_LINE + //
 				"MAN: " + MAN + HTTP_NEW_LINE + //
-				"MX: " + RESPONSE_TIMEOUT + HTTP_NEW_LINE + //
+				"MX: " + RESPONSE_DELAY + HTTP_NEW_LINE + //
 				"ST: " + searchTarget + HTTP_NEW_LINE + //
 				"USER-AGENT: " + USER_AGENT + HTTP_NEW_LINE + //
 				HTTP_NEW_LINE;
 
 		try (DatagramSocket socket = new DatagramSocket()) {
-			Collection<UPnPDevice> result = new ArrayList<>();
+			Collection<UPnPDevice> result = new HashSet<>();
 
 			InetAddress inetAddress = InetAddress.getByName(QUERY_ADDRESS);
-			socket.setSoTimeout(RESPONSE_TIMEOUT * 1000);
+			// 500ms additionally to make sure we receive the packet
+			socket.setSoTimeout(RESPONSE_DELAY * 1000 + 500);
 			LOG.info("Socket bound to [" + socket.getLocalAddress() + ":" + socket.getLocalPort() + "]");
 
 			LOG.info("Sending request... " + System.lineSeparator() + message);
 			byte[] bytes = message.getBytes(ENCODING);
-			DatagramPacket packet = new DatagramPacket(bytes, bytes.length, inetAddress, QUERY_PORT);
-			socket.send(packet);
+			DatagramPacket packetToSend = new DatagramPacket(bytes, bytes.length, inetAddress, QUERY_PORT);
+			socket.send(packetToSend);
 
 			LocalDateTime endTime = LocalDateTime.now().plusSeconds(scanTimeout);
 			while (LocalDateTime.now().isBefore(endTime)) {
 				try {
 					byte[] buffer = new byte[RECEIVE_BUFFER_SIZE];
-					packet = new DatagramPacket(buffer, buffer.length);
-					socket.receive(packet);
+					DatagramPacket receivedPacket = new DatagramPacket(buffer, buffer.length);
 
-					String response = new String(packet.getData(), ENCODING);
-					LOG.info("Received response from [" + packet.getAddress() + "]: " + System.lineSeparator()
+					LOG.debug("Waiting for response...");
+					socket.receive(receivedPacket);
+
+					String response = new String(receivedPacket.getData(), ENCODING);
+					LOG.info("Received response from [" + receivedPacket.getAddress() + "]: " + System.lineSeparator()
 							+ response);
 
 					Map<String, String> headerValues = parseResponse(response);
@@ -102,13 +108,13 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 					UPnPDevice device;
 					if (description == null) {
 						device = new UPnPDevice( //
-								packet.getAddress(), //
+								receivedPacket.getAddress(), //
 								headerValues.get(SEARCH_TARGET_HEADER_NAME), //
 								headerValues.get(UNIQUE_SERVICE_NAME_HEADER_NAME) //
 						);
 					} else {
 						device = new UPnPDevice( //
-								packet.getAddress(), //
+								receivedPacket.getAddress(), //
 								headerValues.get(SEARCH_TARGET_HEADER_NAME), //
 								headerValues.get(UNIQUE_SERVICE_NAME_HEADER_NAME), //
 								description.getDevice().getDeviceType(), //
@@ -126,6 +132,9 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 					result.add(device);
 				} catch (SocketTimeoutException e) {
 					LOG.debug("Search response timeout");
+
+					LOG.debug("Resending request...");
+					socket.send(packetToSend);
 				}
 			}
 
@@ -174,7 +183,7 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 			if (separatorIndex == -1) {
 				continue;
 			}
-			String header = line.substring(0, separatorIndex).trim();
+			String header = line.substring(0, separatorIndex).trim().toUpperCase();
 			String value = line.substring(separatorIndex + 1).trim();
 			result.put(header, value);
 		}

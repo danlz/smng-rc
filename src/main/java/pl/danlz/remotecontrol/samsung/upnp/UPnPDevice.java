@@ -106,4 +106,29 @@ public class UPnPDevice {
 				+ ", modelNumber=" + modelNumber + ", modelURL=" + modelURL + ", serialNumber=" + serialNumber
 				+ ", udn=" + udn + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((usn == null) ? 0 : usn.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UPnPDevice other = (UPnPDevice) obj;
+		if (usn == null) {
+			if (other.usn != null)
+				return false;
+		} else if (!usn.equals(other.usn))
+			return false;
+		return true;
+	}
 }
