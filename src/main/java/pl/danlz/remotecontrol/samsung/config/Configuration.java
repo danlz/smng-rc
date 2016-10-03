@@ -49,13 +49,13 @@ public class Configuration {
 	public static final String DEFAULT_CONTROLLER_NAME = "SMNG-RC";
 
 	/**
-	 * Scan timeout.
+	 * Scan timeout in seconds.
 	 */
 	public static final int SCAN_TIMEOUT = 10;
 
 	/**
-	 * An amount of time to wait after sending a key to TV. This is needed,
-	 * because TV needs some time to process the key.
+	 * An amount of time in milliseconds to wait after sending a key to TV. This
+	 * is needed, because TV needs some time to process the key.
 	 */
 	public static final int SEND_KEY_QUIET_PERIOD = 200;
 

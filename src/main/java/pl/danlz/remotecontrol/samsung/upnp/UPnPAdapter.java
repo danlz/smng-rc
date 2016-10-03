@@ -15,7 +15,7 @@ public interface UPnPAdapter {
 	 * @param searchTarget
 	 *            search target string
 	 * @param scanTimeout
-	 *            scan timeout
+	 *            scan timeout in seconds
 	 * @return collection of UPnP devices
 	 *
 	 * @throws UPnPAdapterException
