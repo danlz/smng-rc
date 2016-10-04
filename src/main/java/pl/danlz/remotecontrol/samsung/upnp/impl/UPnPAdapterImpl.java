@@ -84,7 +84,8 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 			socket.setSoTimeout(RESPONSE_DELAY * 1000 + 500);
 			LOG.info("Socket bound to [" + socket.getLocalAddress() + ":" + socket.getLocalPort() + "]");
 
-			LOG.info("Sending request... " + System.lineSeparator() + message);
+			LOG.info("Sending request... ");
+			LOG.debug(System.lineSeparator() + message);
 			byte[] bytes = message.getBytes(ENCODING);
 			DatagramPacket packetToSend = new DatagramPacket(bytes, bytes.length, inetAddress, QUERY_PORT);
 			socket.send(packetToSend);
@@ -100,8 +101,8 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 
 					byte[] receivedBytes = Arrays.copyOf(receivedPacket.getData(), receivedPacket.getLength());
 					String response = new String(receivedBytes, ENCODING);
-					LOG.info("Received response from [" + receivedPacket.getAddress() + "]: " + System.lineSeparator()
-							+ response);
+					LOG.info("Received response from [" + receivedPacket.getAddress() + "]");
+					LOG.debug(System.lineSeparator() + response);
 
 					Map<String, String> headerValues = parseResponse(response);
 
@@ -115,7 +116,7 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 				} catch (SocketTimeoutException e) {
 					LOG.debug("Search response timeout");
 
-					LOG.debug("Resending request...");
+					LOG.info("Resending request...");
 					socket.send(packetToSend);
 				}
 			}
@@ -162,7 +163,7 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 
 			return (DeviceDescription) unmarshaller.unmarshal(inputStream);
 		} catch (IOException | JAXBException e) {
-			LOG.info("Could not get device description from: " + location, e);
+			LOG.error("Could not get device description from: " + location, e);
 		}
 
 		return null;
