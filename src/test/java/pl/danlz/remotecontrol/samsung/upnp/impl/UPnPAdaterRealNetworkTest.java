@@ -48,6 +48,25 @@ public class UPnPAdaterRealNetworkTest {
 		Assert.assertThat(devices, contains(getTVMatcher()));
 	}
 
+	@Ignore
+	@Test
+	public void testFindDevices_RT_AC68U() throws Exception {
+		String searchTarget = "urn:schemas-upnp-org:device:InternetGatewayDevice:1";
+
+		Collection<UPnPDevice> devices = testee.findDevices(searchTarget, SCAN_TIMEOUT);
+
+		printDevices(devices);
+
+		Assert.assertThat(devices,
+				contains(allOf( //
+						hasProperty("st", equalTo(searchTarget)), //
+						hasProperty("manufacturer", equalTo("ASUSTeK Computer Inc.")), //
+						hasProperty("manufacturerURL", equalTo("http://www.asus.com/")), //
+						hasProperty("modelDescription", equalTo("RT-AC68U")), //
+						hasProperty("modelName", equalTo("RT-AC68U")) //
+		)));
+	}
+
 	@Test
 	public void testFindDevices_ssdp_all() throws Exception {
 		String searchTarget = "ssdp:all";
