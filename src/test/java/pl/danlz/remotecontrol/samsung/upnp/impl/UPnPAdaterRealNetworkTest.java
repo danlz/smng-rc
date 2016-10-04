@@ -59,7 +59,6 @@ public class UPnPAdaterRealNetworkTest {
 		// Windows itself answers with its services
 		Assert.assertThat(devices, not(empty()));
 
-		// TODO: there should be only one matching device
 		Matcher<Iterable<? super Object>> tvMatcher = hasItem(getTVMatcher());
 		if (tvMatcher.matches(devices)) {
 			System.out.println("TV found");
