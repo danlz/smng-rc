@@ -44,7 +44,7 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 	/**
 	 * Response delay in seconds. Should be between 1 and 5.
 	 */
-	private final static int RESPONSE_DELAY = 2;
+	private final static int RESPONSE_DELAY = 1;
 	private final static String USER_AGENT = System.getProperty("os.name") + "/" + System.getProperty("os.version")
 			+ " UPnP/1.1 SMNG-RC/1.0";
 	private final static String OK_STATUS_LINE = "HTTP/1.1 200 OK";
