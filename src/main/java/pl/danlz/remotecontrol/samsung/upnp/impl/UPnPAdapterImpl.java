@@ -10,6 +10,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -97,7 +98,8 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 					LOG.debug("Waiting for response...");
 					socket.receive(receivedPacket);
 
-					String response = new String(receivedPacket.getData(), ENCODING);
+					byte[] receivedBytes = Arrays.copyOf(receivedPacket.getData(), receivedPacket.getLength());
+					String response = new String(receivedBytes, ENCODING);
 					LOG.info("Received response from [" + receivedPacket.getAddress() + "]: " + System.lineSeparator()
 							+ response);
 
