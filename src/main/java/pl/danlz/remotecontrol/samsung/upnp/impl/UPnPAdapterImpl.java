@@ -5,13 +5,19 @@ import java.io.InputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.NetworkInterface;
+import java.net.SocketAddress;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -66,8 +72,41 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 		}
 	}
 
+	private Collection<InetAddress> resolveOutgoingAddresses() throws UPnPAdapterException {
+		Collection<InetAddress> result = new ArrayList<>();
+		try {
+			Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+			while (networkInterfaces.hasMoreElements()) {
+				NetworkInterface ni = networkInterfaces.nextElement();
+
+				if (ni.isUp() && ni.supportsMulticast() && !ni.isLoopback()) {
+					Enumeration<InetAddress> addresses = ni.getInetAddresses();
+
+					while (addresses.hasMoreElements()) {
+						result.add(addresses.nextElement());
+					}
+				}
+			}
+			LOG.debug("Resolved outgoing addresses: " + result);
+
+			return result;
+		} catch (SocketException e) {
+			throw new UPnPAdapterException("Could not get list of network interfaces", e);
+		}
+	}
+
 	@Override
 	public Collection<UPnPDevice> findDevices(String searchTarget, int scanTimeout) throws UPnPAdapterException {
+		Collection<UPnPDevice> result = new HashSet<>();
+		for (InetAddress address : resolveOutgoingAddresses()) {
+			result.addAll(findDevices(address, searchTarget, scanTimeout));
+		}
+
+		return result;
+	}
+
+	private Collection<UPnPDevice> findDevices(InetAddress outgoingAddress, String searchTarget, int scanTimeout)
+			throws UPnPAdapterException {
 		String message = "M-SEARCH * HTTP/1.1" + HTTP_NEW_LINE + //
 				"HOST: " + QUERY_ADDRESS + ":" + QUERY_PORT + HTTP_NEW_LINE + //
 				"MAN: " + MAN + HTTP_NEW_LINE + //
@@ -76,7 +115,14 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 				"USER-AGENT: " + USER_AGENT + HTTP_NEW_LINE + //
 				HTTP_NEW_LINE;
 
-		try (DatagramSocket socket = new DatagramSocket()) {
+		/*
+		 * We bind to specific address to avoid problem with broadcast packets
+		 * in Windows 7. See:
+		 * http://stackoverflow.com/questions/3229317/send-udp-broadcast-on-
+		 * windows-7
+		 */
+		SocketAddress socketAddress = new InetSocketAddress(outgoingAddress, 0);
+		try (DatagramSocket socket = new DatagramSocket(socketAddress)) {
 			Map<UPnPDevice, Map<String, String>> deviceToHeadersMap = new HashMap<>();
 
 			InetAddress inetAddress = InetAddress.getByName(QUERY_ADDRESS);
