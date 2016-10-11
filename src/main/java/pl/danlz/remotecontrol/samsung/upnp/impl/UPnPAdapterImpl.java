@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
@@ -44,7 +45,8 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 	private final static int RECEIVE_BUFFER_SIZE = 1024;
 	private final static String HTTP_NEW_LINE = "\r\n";
 	private final static String HEADER_VALUE_SEPARATOR = ":";
-	private final static String QUERY_ADDRESS = "239.255.255.250";
+	private final static String INET4_QUERY_ADDRESS = "239.255.255.250";
+	private final static String INET6_QUERY_ADDRESS = "[ff02::c]";
 	private final static int QUERY_PORT = 1900;
 	private final static String MAN = "\"ssdp:discover\"";
 	/**
@@ -107,8 +109,15 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 
 	private Collection<UPnPDevice> findDevices(InetAddress outgoingAddress, String searchTarget, int scanTimeout)
 			throws UPnPAdapterException {
+		String queryAddress = null;
+		if (outgoingAddress instanceof Inet6Address) {
+			queryAddress = INET6_QUERY_ADDRESS;
+		} else {
+			queryAddress = INET4_QUERY_ADDRESS;
+		}
+
 		String message = "M-SEARCH * HTTP/1.1" + HTTP_NEW_LINE + //
-				"HOST: " + QUERY_ADDRESS + ":" + QUERY_PORT + HTTP_NEW_LINE + //
+				"HOST: " + queryAddress + ":" + QUERY_PORT + HTTP_NEW_LINE + //
 				"MAN: " + MAN + HTTP_NEW_LINE + //
 				"MX: " + RESPONSE_DELAY + HTTP_NEW_LINE + //
 				"ST: " + searchTarget + HTTP_NEW_LINE + //
@@ -125,7 +134,7 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 		try (DatagramSocket socket = new DatagramSocket(socketAddress)) {
 			Map<UPnPDevice, Map<String, String>> deviceToHeadersMap = new HashMap<>();
 
-			InetAddress inetAddress = InetAddress.getByName(QUERY_ADDRESS);
+			InetAddress inetAddress = InetAddress.getByName(queryAddress);
 			// 500ms additionally to make sure we receive the packet
 			socket.setSoTimeout(RESPONSE_DELAY * 1000 + 500);
 			LOG.info("Socket bound to [" + socket.getLocalAddress() + ":" + socket.getLocalPort() + "]");
