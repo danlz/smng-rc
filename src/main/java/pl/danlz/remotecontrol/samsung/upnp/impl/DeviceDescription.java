@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Leszek
  */
-@XmlRootElement(name = "root", namespace = "urn:schemas-upnp-org:device-1-0")
+@XmlRootElement(name = "root")
 @XmlAccessorType(XmlAccessType.FIELD)
 class DeviceDescription {
 

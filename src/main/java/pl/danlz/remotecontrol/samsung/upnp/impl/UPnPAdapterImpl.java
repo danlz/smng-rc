@@ -1,7 +1,9 @@
 package pl.danlz.remotecontrol.samsung.upnp.impl;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.Inet6Address;
@@ -22,6 +24,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -182,7 +185,7 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 				Map<String, String> headerValues = entry.getValue();
 				String location = headerValues.get(LOCATION_HEADER_NAME);
 
-				LOG.info("Getting description for " + entry.getKey());
+				LOG.info("Getting description for " + entry.getKey().getUsn() + " from " + location);
 				DeviceDescription description = getDeviceDescription(location);
 				if (description == null) {
 					result.add(entry.getKey());
@@ -216,7 +219,25 @@ public class UPnPAdapterImpl implements UPnPAdapter {
 			URL url = new URL(location);
 			InputStream inputStream = url.openStream();
 
-			return (DeviceDescription) unmarshaller.unmarshal(inputStream);
+			if (LOG.isDebugEnabled()) {
+				inputStream.mark(1000000);
+
+				String response = new BufferedReader(new InputStreamReader(inputStream)).lines()
+						.collect(Collectors.joining("\n"));
+				LOG.debug("Device description response:");
+				LOG.debug(response);
+
+				inputStream.reset();
+			}
+
+			DeviceDescription deviceDesc = (DeviceDescription) unmarshaller.unmarshal(inputStream);
+			if (deviceDesc.getDevice() == null) {
+				LOG.error("Could not get device description from: " + location);
+
+				return null;
+			}
+
+			return deviceDesc;
 		} catch (IOException | JAXBException e) {
 			LOG.error("Could not get device description from: " + location, e);
 		}
