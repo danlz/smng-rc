@@ -21,7 +21,9 @@ public class SkippingExecutorService implements DirectExecutorService {
 
 		@Override
 		public Thread newThread(Runnable r) {
-			return new Thread(r, "Background Thread");
+			Thread thread = new Thread(r, "Background Thread");
+			thread.setDaemon(true);
+			return thread;
 		}
 	});
 

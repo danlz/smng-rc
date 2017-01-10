@@ -3,11 +3,16 @@ package pl.danlz.remotecontrol.samsung.gui;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,7 +33,6 @@ import pl.danlz.remotecontrol.samsung.adapter.TVAdapter;
 import pl.danlz.remotecontrol.samsung.config.Configuration;
 import pl.danlz.remotecontrol.samsung.config.Configuration.ChannelSorting;
 import pl.danlz.remotecontrol.samsung.context.AppCtx;
-import pl.danlz.remotecontrol.samsung.executor.DirectExecutorService;
 import pl.danlz.remotecontrol.samsung.logger.Logger;
 import pl.danlz.remotecontrol.samsung.upnp.UPnPAdapter;
 import pl.danlz.remotecontrol.samsung.upnp.UPnPDevice;
@@ -44,16 +48,59 @@ public class SettingsController extends AbstractController {
 
 	private static final String SEARCH_TARGET = "urn:samsung.com:device:RemoteControlReceiver:1";
 
-	private final DirectExecutorService executor = AppCtx.getBean(DirectExecutorService.class);
 	private final UPnPAdapter upnpAdapter = AppCtx.getBean(UPnPAdapter.class);
 	private final TVAdapter tvAdapter = AppCtx.getBean(TVAdapter.class);
 	private final Configuration config = AppCtx.getBean(Configuration.class);
+
+	private final Service<Collection<UPnPDevice>> upnpSearchService = new Service<Collection<UPnPDevice>>() {
+
+		@Override
+		protected Task<Collection<UPnPDevice>> createTask() {
+			return new Task<Collection<UPnPDevice>>() {
+
+				@Override
+				protected Collection<UPnPDevice> call() throws Exception {
+					Collection<UPnPDevice> devices = upnpAdapter.findDevices(SEARCH_TARGET, config.getScanTimeout());
+					LOG.debug("Found devices: " + devices);
+
+					return devices;
+				}
+
+				@Override
+				protected void succeeded() {
+					Collection<UPnPDevice> devices = getValue();
+					Collection<TVAddressInfo> addresses = devices.stream()
+							.map(new Function<UPnPDevice, TVAddressInfo>() {
+
+								@Override
+								public TVAddressInfo apply(UPnPDevice t) {
+									return new TVAddressInfo(t.getAddress().getHostAddress(), t.getFriendlyName(),
+											t.getModelName(), t.getManufacturer());
+								}
+							}).collect(Collectors.toList());
+					TVAddressInfo currentValue = addressComboBox.getValue();
+					addressComboBox.getItems().setAll(addresses);
+					// if no addresses are found the value gets cleared
+					addressComboBox.setValue(currentValue);
+					addressComboBox.show();
+				}
+
+				@Override
+				protected void failed() {
+					LOG.error("Device search failed", getException());
+				}
+			};
+		}
+	};
 
 	@FXML
 	private ResourceBundle resources;
 
 	@FXML
 	private ComboBox<TVAddressInfo> addressComboBox;
+
+	@FXML
+	private Button findButton;
 
 	@FXML
 	private Spinner<Integer> portSpinner;
@@ -63,6 +110,18 @@ public class SettingsController extends AbstractController {
 
 	@FXML
 	private ComboBox<ChannelSorting> channelSortingComboBox;
+
+	public SettingsController() {
+		this.upnpSearchService.setExecutor(Executors.newSingleThreadExecutor(new ThreadFactory() {
+
+			@Override
+			public Thread newThread(Runnable r) {
+				Thread thread = new Thread(r, "UPnP Search Thread");
+				thread.setDaemon(true);
+				return thread;
+			}
+		}));
+	}
 
 	@FXML
 	private void initialize() {
@@ -140,6 +199,11 @@ public class SettingsController extends AbstractController {
 				return null;
 			}
 		});
+		findButton.disableProperty().bind(upnpSearchService.runningProperty());
+		findButton.textProperty()
+				.bind(Bindings.when(upnpSearchService.runningProperty()) //
+						.then(new ReadOnlyStringWrapper(resources.getString("button.searching"))) //
+						.otherwise(resources.getString("button.find")));
 	}
 
 	@Override
@@ -163,45 +227,7 @@ public class SettingsController extends AbstractController {
 		LOG.debug("'FIND' button pressed");
 
 		addressComboBox.requestFocus();
-		Button button = (Button) event.getSource();
-		button.setDisable(true);
-		button.setText(resources.getString("button.searching"));
-		executor.execute(new Task<Collection<UPnPDevice>>() {
-
-			@Override
-			protected Collection<UPnPDevice> call() throws Exception {
-				Collection<UPnPDevice> devices = upnpAdapter.findDevices(SEARCH_TARGET, config.getScanTimeout());
-				LOG.debug("Found devices: " + devices);
-
-				return devices;
-			}
-
-			@Override
-			protected void succeeded() {
-				Collection<UPnPDevice> devices = getValue();
-				Collection<TVAddressInfo> addresses = devices.stream().map(new Function<UPnPDevice, TVAddressInfo>() {
-
-					@Override
-					public TVAddressInfo apply(UPnPDevice t) {
-						return new TVAddressInfo(t.getAddress().getHostAddress(), t.getFriendlyName(), t.getModelName(),
-								t.getManufacturer());
-					}
-				}).collect(Collectors.toList());
-				TVAddressInfo currentValue = addressComboBox.getValue();
-				addressComboBox.getItems().setAll(addresses);
-				// if no addresses are found the value gets cleared
-				addressComboBox.setValue(currentValue);
-				addressComboBox.show();
-				button.setDisable(false);
-				button.setText(resources.getString("button.find"));
-			}
-
-			@Override
-			protected void failed() {
-				LOG.error("Device search failed", getException());
-				button.setDisable(false);
-			}
-		});
+		upnpSearchService.restart();
 	}
 
 	@FXML
