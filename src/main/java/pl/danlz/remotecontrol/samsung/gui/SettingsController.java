@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import javafx.concurrent.Task;
@@ -16,6 +18,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.control.TextFormatter.Change;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
@@ -107,17 +111,19 @@ public class SettingsController extends AbstractController {
 			}
 		});
 		portSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 65535));
-		// portSpinner.addEventFilter(KeyEvent.KEY_PRESSED, new
-		// EventHandler<KeyEvent>() {
-		//
-		// @Override
-		// public void handle(KeyEvent event) {
-		// LOG.debug(event.getCode() + " " + event.getCode().isDigitKey());
-		// if (!event.getCode().isDigitKey()) {
-		// event.consume();
-		// }
-		// }
-		// });
+		portSpinner.getEditor().setTextFormatter(new TextFormatter<String>(TextFormatter.IDENTITY_STRING_CONVERTER,
+				null, new UnaryOperator<TextFormatter.Change>() {
+
+					private Pattern portPattern = Pattern.compile("\\d{1,5}");
+
+					@Override
+					public Change apply(Change change) {
+						if (!portPattern.matcher(change.getControlNewText()).matches()) {
+							change.setText("");
+						}
+						return change;
+					}
+				}));
 		for (ChannelSorting channelSorting : ChannelSorting.values()) {
 			channelSortingComboBox.getItems().add(channelSorting);
 		}
@@ -200,7 +206,12 @@ public class SettingsController extends AbstractController {
 
 	@FXML
 	public void defaultPortButtonAction(ActionEvent event) {
+		/*
+		 * if the editor contains invalid value, the new value must be set in
+		 * the editor and the value factory
+		 */
 		portSpinner.getValueFactory().setValue(Configuration.DEFAULT_PORT);
+		portSpinner.getEditor().setText(Integer.toString(Configuration.DEFAULT_PORT));
 	}
 
 	@FXML
