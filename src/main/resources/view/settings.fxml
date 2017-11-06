@@ -11,9 +11,9 @@
   <children>
     <GridPane styleClass="parametersPane">
       <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.0" minWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="130.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.0" minWidth="140.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="160.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="100.0" />
       </columnConstraints>
       <rowConstraints>
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
