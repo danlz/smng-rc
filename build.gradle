@@ -1,0 +1,51 @@
+apply plugin: 'java'
+
+repositories {
+	mavenCentral()
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+compileJava.options.encoding = 'UTF-8'
+
+def appName = 'SMNG-RC'
+def mainClass = 'pl.danlz.remotecontrol.samsung.Startup'
+
+
+
+dependencies {
+	testCompile 'junit:junit:4.12'
+	testCompile 'org.hamcrest:hamcrest-all:1.3'
+}
+
+
+
+jar {
+	manifest {
+		attributes(
+			"Implementation-Title": appName,
+			"Implementation-Version": project.version,
+			"Main-Class": mainClass,
+			"Class-Path": configurations.runtime.collect { it.getName() }.join(' ')
+		)
+	}
+}
+
+task buildInstaller(type: Exec, dependsOn: build) {
+	executable 'javapackager'
+	args '-deploy',
+		'-native', 'exe',
+		'-srcdir', "${jar.destinationDir}",
+		'-srcfiles', "${jar.archiveName}",
+		'-appclass', "${mainClass}",
+		'-outdir', "${buildDir}/installer",
+		'-outfile', 'smng-rc-installer',
+		'-Bruntime="' + "${System.env.JAVA_HOME}" + '/jre"',
+		'-name', "${appName}",
+		'-BappVersion="' + "${project.version}" + '"',
+		'-Bcopyright="Copyright"',
+		'-Bvendor="danlz"',
+		'-Bwin.menuGroup="' + "${appName}" + '"',
+		"-Bicon=${projectDir}/package/windows/${appName}.ico"
+//		'-v'
+}
