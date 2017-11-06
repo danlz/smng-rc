@@ -33,7 +33,7 @@ public class ChannelListProviderImpl implements ChannelListProvider {
 
 	private static final String SETTINGS_FILE_EXTENSION = "scm";
 
-	private List<Channel> channels;
+	private List<Channel> channels = new ArrayList<>(0);
 
 	/**
 	 * Creates a new instance.
