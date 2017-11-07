@@ -994,7 +994,8 @@
 	-fx-padding: 0px;
 }
 
-.channelListRoot .list-view .scroll-bar {
+.channelListRoot .list-view .scroll-bar,
+.channelListRoot .list-view .corner {
 	-fx-background-color: transparent;
 }
 
