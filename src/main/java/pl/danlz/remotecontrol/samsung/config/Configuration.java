@@ -54,13 +54,17 @@ public class Configuration {
 	public static final int SCAN_TIMEOUT = 10;
 
 	/**
-	 * An amount of time in milliseconds to wait after sending a key to TV. This
-	 * is needed, because TV needs some time to process the key.
+	 * An amount of time in milliseconds to wait after sending a key to TV. This is
+	 * needed, because TV needs some time to process the key.
 	 */
 	public static final int SEND_KEY_QUIET_PERIOD = 200;
 
 	public enum ChannelSorting {
 		NUMBER, NAME;
+	}
+
+	public enum ChannelListType {
+		CABLE_D, AIR_D, AIR_A;
 	}
 
 	private static Configuration config;
@@ -79,6 +83,9 @@ public class Configuration {
 
 	@XmlElement(name = "channel-sorting")
 	private ChannelSorting channelSorting;
+
+	@XmlElement(name = "channel-list")
+	private ChannelListType channelListType;
 
 	@XmlElement
 	private Position position;
@@ -199,6 +206,14 @@ public class Configuration {
 		this.channelSorting = channelSorting;
 	}
 
+	public ChannelListType getChannelListType() {
+		return channelListType;
+	}
+
+	public void setChannelListType(ChannelListType channelListType) {
+		this.channelListType = channelListType;
+	}
+
 	public Position getPosition() {
 		return position;
 	}
@@ -218,8 +233,8 @@ public class Configuration {
 	@Override
 	public String toString() {
 		return "Configuration [tvAddress=" + tvAddress + ", tvPort=" + tvPort + ", controllerName=" + controllerName
-				+ ", scanTimeout=" + scanTimeout + ", channelSorting=" + channelSorting + ", position=" + position
-				+ ", regions=" + regions + "]";
+				+ ", scanTimeout=" + scanTimeout + ", channelSorting=" + channelSorting + ", channelListType="
+				+ channelListType + ", position=" + position + ", regions=" + regions + "]";
 	}
 
 	/**

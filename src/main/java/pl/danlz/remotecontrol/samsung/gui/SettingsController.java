@@ -30,7 +30,9 @@ import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import pl.danlz.remotecontrol.samsung.adapter.TVAdapter;
+import pl.danlz.remotecontrol.samsung.channellist.ChannelListProvider;
 import pl.danlz.remotecontrol.samsung.config.Configuration;
+import pl.danlz.remotecontrol.samsung.config.Configuration.ChannelListType;
 import pl.danlz.remotecontrol.samsung.config.Configuration.ChannelSorting;
 import pl.danlz.remotecontrol.samsung.context.AppCtx;
 import pl.danlz.remotecontrol.samsung.logger.Logger;
@@ -50,6 +52,7 @@ public class SettingsController extends AbstractController {
 
 	private final UPnPAdapter upnpAdapter = AppCtx.getBean(UPnPAdapter.class);
 	private final TVAdapter tvAdapter = AppCtx.getBean(TVAdapter.class);
+	private final ChannelListProvider channelListProvider = AppCtx.getBean(ChannelListProvider.class);
 	private final Configuration config = AppCtx.getBean(Configuration.class);
 
 	private final Service<Collection<UPnPDevice>> upnpSearchService = new Service<Collection<UPnPDevice>>() {
@@ -110,6 +113,9 @@ public class SettingsController extends AbstractController {
 
 	@FXML
 	private ComboBox<ChannelSorting> channelSortingComboBox;
+	
+	@FXML
+	private ComboBox<ChannelListType> channelListComboBox;
 
 	public SettingsController() {
 		this.upnpSearchService.setExecutor(Executors.newSingleThreadExecutor(new ThreadFactory() {
@@ -199,6 +205,22 @@ public class SettingsController extends AbstractController {
 				return null;
 			}
 		});
+		for (ChannelListType channelList : ChannelListType.values()) {
+			channelListComboBox.getItems().add(channelList);
+		}
+		channelListComboBox.setConverter(new StringConverter<Configuration.ChannelListType>() {
+
+			@Override
+			public String toString(ChannelListType object) {
+				return resources.getString("channel.list." + object.name());
+			}
+
+			@Override
+			public ChannelListType fromString(String string) {
+				// not used, read only combobox
+				return null;
+			}
+		});
 		findButton.disableProperty().bind(upnpSearchService.runningProperty());
 		findButton.textProperty()
 				.bind(Bindings.when(upnpSearchService.runningProperty()) //
@@ -219,6 +241,7 @@ public class SettingsController extends AbstractController {
 		portSpinner.getValueFactory().setValue(config.getTvPort());
 		controllerNameField.setText(config.getControllerName());
 		channelSortingComboBox.setValue(config.getChannelSorting());
+		channelListComboBox.setValue(config.getChannelListType());
 		super.show();
 	}
 
@@ -246,7 +269,9 @@ public class SettingsController extends AbstractController {
 		config.setTvPort(portSpinner.getValue());
 		config.setControllerName(controllerNameField.getText());
 		config.setChannelSorting(channelSortingComboBox.getValue());
+		config.setChannelListType(channelListComboBox.getValue());
 		LOG.debug("Current configuration: " + config);
+		channelListProvider.selectChannelList(config.getChannelListType());
 		config.save();
 		tvAdapter.close();
 		hide();

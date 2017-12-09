@@ -11,6 +11,8 @@ import java.util.zip.ZipFile;
 import pl.danlz.remotecontrol.samsung.channellist.Channel;
 import pl.danlz.remotecontrol.samsung.channellist.ChannelListProvider;
 import pl.danlz.remotecontrol.samsung.config.Configuration;
+import pl.danlz.remotecontrol.samsung.config.Configuration.ChannelListType;
+import pl.danlz.remotecontrol.samsung.context.AppCtx;
 import pl.danlz.remotecontrol.samsung.logger.Logger;
 
 /**
@@ -33,7 +35,13 @@ public class ChannelListProviderImpl implements ChannelListProvider {
 
 	private static final String SETTINGS_FILE_EXTENSION = "scm";
 
-	private List<Channel> channels = new ArrayList<>(0);
+	private final Configuration config = AppCtx.getBean(Configuration.class);
+
+	private List<Channel> cableDChannels = new ArrayList<>(0);
+	private List<Channel> airDChannels = new ArrayList<>(0);
+	private List<Channel> airAChannels = new ArrayList<>(0);
+
+	private List<Channel> currentChannelList = new ArrayList<>(0);
 
 	/**
 	 * Creates a new instance.
@@ -50,41 +58,62 @@ public class ChannelListProviderImpl implements ChannelListProvider {
 		if (files == null || files.length == 0) {
 			LOG.info("No settings file found at [" + configDir + "]");
 		} else {
-			channels = readChannelListEntries(files[0]);
-			LOG.debug("Channels:");
-			for (Channel ch : channels) {
-				LOG.debug(ch.toString());
+			readChannelListEntries(files[0]);
+			if (config.getChannelListType() != null) {
+				selectChannelList(config.getChannelListType());
 			}
 		}
 	}
 
 	@Override
+	public void selectChannelList(ChannelListType listType) {
+		switch (listType) {
+		case CABLE_D:
+			currentChannelList = cableDChannels;
+			break;
+		case AIR_D:
+			currentChannelList = airDChannels;
+			break;
+		case AIR_A:
+			currentChannelList = airAChannels;
+		default:
+			throw new IllegalArgumentException("Unknown channel list type: " + listType);
+		}
+		LOG.debug("'" + listType + "' list selected");
+	}
+
+	@Override
 	public List<Channel> find(String text) {
 		if (text == null || text.isEmpty()) {
-			return new ArrayList<Channel>(channels);
+			return new ArrayList<Channel>(currentChannelList);
 		}
-		return channels.stream().filter(p -> //
+		return currentChannelList.stream().filter(p -> //
 		p.getName() != null && p.getName().toLowerCase().contains(text) || //
 				String.valueOf(p.getNumber()).contains(text) //
 		).collect(Collectors.toList());
 	}
 
-	private List<Channel> readChannelListEntries(File file) {
+	private void readChannelListEntries(File file) {
 		LOG.info("Reading channel lists from file [" + file + "]");
 
-		List<Channel> channels = new ArrayList<>();
-
 		try (ZipFile zip = new ZipFile(file)) {
-			AbstractListLoader loader = new CableDListLoader(zip);
-			channels.addAll(loader.load());
-			loader = new AirAListLoader(zip);
-			channels.addAll(loader.load());
-			loader = new AirDListLoader(zip);
-			channels.addAll(loader.load());
+			cableDChannels.addAll(new CableDListLoader(zip).load());
+			logChannels("CableD", cableDChannels);
+			airDChannels.addAll(new AirDListLoader(zip).load());
+			logChannels("AirD", airDChannels);
+			airAChannels.addAll(new AirAListLoader(zip).load());
+			logChannels("AirA", airAChannels);
 		} catch (IOException e) {
 			LOG.warn("Could not read channel lists from [" + file + "]", e);
 		}
+	}
 
-		return channels;
+	private void logChannels(String listName, List<Channel> channels) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(listName + " channels:");
+			for (Channel ch : channels) {
+				LOG.debug(ch.toString());
+			}
+		}
 	}
 }
