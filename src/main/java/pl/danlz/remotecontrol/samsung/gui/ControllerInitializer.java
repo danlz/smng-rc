@@ -22,7 +22,7 @@ import pl.danlz.remotecontrol.samsung.context.AppCtx;
 public class ControllerInitializer {
 
 	private static final String CSS_PATH = "/view/rc.css";
-	
+
 	private static final String BUNDLE_BASE = "bundle/rc";
 
 	/**
@@ -30,14 +30,17 @@ public class ControllerInitializer {
 	 *
 	 * @param primaryStage
 	 *            primary stage
+	 * @return the main controller
 	 */
-	public static void init(Stage primaryStage) {
-		initController("/view/main.fxml", primaryStage, null);
+	public static AbstractController init(Stage primaryStage) {
+		AbstractController controller = initController("/view/main.fxml", primaryStage, null);
 		initController("/view/channelList.fxml", new Stage(), null);
 		initController("/view/settings.fxml", new Stage(), primaryStage);
+
+		return controller;
 	}
 
-	private static Stage initController(String fxmlPath, Stage stage, Window owner) {
+	private static AbstractController initController(String fxmlPath, Stage stage, Window owner) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setControllerFactory(new Callback<Class<?>, Object>() {
@@ -67,7 +70,7 @@ public class ControllerInitializer {
 			field.set(controller, stage);
 			controller.initStage(stage);
 
-			return stage;
+			return controller;
 		} catch (IOException | NoSuchFieldException | SecurityException | IllegalArgumentException
 				| IllegalAccessException e) {
 			throw new RuntimeException("Could not initialize controller for FXML: " + fxmlPath, e);

@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -24,6 +25,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
@@ -121,6 +123,25 @@ public class MainController extends AbstractController {
 				stage.setY(config.getPosition().getY());
 			}
 		}
+	}
+	
+	@Override
+	public void show() {
+		Rectangle2D bounds = Screen.getPrimary().getBounds();
+
+		super.show();
+
+		double newX = stage.getX();
+		newX = newX < 0 ? 0 : newX;
+		double maxX = bounds.getMaxX() - stage.getWidth();
+		newX = newX > maxX ? maxX : newX;
+		stage.setX(newX);
+
+		double newY = stage.getY();
+		newY = newY < 0 ? 0 : newY;
+		double maxY = bounds.getMaxY() - stage.getHeight();
+		newY = newY > maxY ? maxY : newY;
+		stage.setY(newY);
 	}
 
 	private void initializeShortcuts(Scene scene) {

@@ -2,6 +2,7 @@ package pl.danlz.remotecontrol.samsung;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import pl.danlz.remotecontrol.samsung.gui.AbstractController;
 import pl.danlz.remotecontrol.samsung.gui.ControllerInitializer;
 
 /**
@@ -23,8 +24,8 @@ public class Startup extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		ControllerInitializer.init(primaryStage);
+		AbstractController mainController = ControllerInitializer.init(primaryStage);
 
-		primaryStage.show();
+		mainController.show();
 	}
 }
