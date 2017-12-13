@@ -1,5 +1,9 @@
 package pl.danlz.remotecontrol.samsung.gui.control;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import javafx.scene.control.Button;
 
 /**
@@ -11,7 +15,7 @@ public class RCButton extends Button {
 
 	private String keyCode;
 	private String shortcut;
-	private String additionalShortcut;
+	private String additionalShortcuts;
 
 	/**
 	 * Creates a new instance.
@@ -34,15 +38,33 @@ public class RCButton extends Button {
 		return shortcut;
 	}
 
+	/**
+	 * Sets a shortcut key. See {@link javafx.scene.input.KeyCode} for key codes.
+	 * 
+	 * @param shortcut shortcut key code
+	 */
 	public void setShortcut(String shortcut) {
 		this.shortcut = shortcut;
 	}
 
-	public String getAdditionalShortcut() {
-		return additionalShortcut;
+	public String getAdditionalShortcuts() {
+		return additionalShortcuts;
+	}
+	
+	/**
+	 * Sets additional shortcut keys. See {@link javafx.scene.input.KeyCode} for key codes. They must be separated with comma.
+	 * 
+	 * @param additionalShortcuts additional shortcuts
+	 */
+	public void setAdditionalShortcuts(String additionalShortcuts) {
+		this.additionalShortcuts = additionalShortcuts;
 	}
 
-	public void setAdditionalShortcut(String additionalShortcut) {
-		this.additionalShortcut = additionalShortcut;
+	public Set<String> getParsedAdditionalShortcuts() {
+		if (additionalShortcuts == null) {
+			return null;
+		}
+		return Stream.of(additionalShortcuts.split(",")).map(s -> s.trim()).collect(Collectors.toSet());
 	}
+
 }

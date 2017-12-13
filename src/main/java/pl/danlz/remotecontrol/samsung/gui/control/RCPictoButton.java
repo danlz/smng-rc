@@ -67,11 +67,11 @@ public class RCPictoButton extends StackPane {
 		button.setText(text);
 	}
 
-	public String getAdditionalShortcut() {
-		return button.getAdditionalShortcut();
+	public String getAdditionalShortcuts() {
+		return button.getAdditionalShortcuts();
 	}
 
-	public void setAdditionalShortcut(String additionalShortcut) {
-		button.setAdditionalShortcut(additionalShortcut);
+	public void setAdditionalShortcuts(String additionalShortcuts) {
+		button.setAdditionalShortcuts(additionalShortcuts);
 	}
 }
