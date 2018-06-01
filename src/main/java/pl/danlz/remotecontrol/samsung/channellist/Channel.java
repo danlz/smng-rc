@@ -12,8 +12,8 @@ public class Channel {
 	 */
 	public enum ServiceType {
 
-		EMPTY(0x00), SD_TV(0x01), RADIO(0x02), TELETEXT(0x03), FM_RADIO(0x07), AAC_RADIO(0x0A), DATA(0x0C), //
-		HD_TV2(0x11), SD_TV2(0x16), HD_TV(0x19), UHD_TV(0x1F), OPTION(0xDD), //
+		EMPTY(0x00), SD_TV_MPEG_2(0x01), RADIO(0x02), TELETEXT(0x03), FM_RADIO(0x07), AAC_RADIO(0x0A), DATA(0x0C), //
+		HD_TV_2(0x11), SD_TV_MPEG_4(0x16), HD_TV_MPEG_4(0x19), UHD_TV(0x1F), OPTION(0xDD), //
 
 		/**
 		 * Data channel on DVB-C list.
