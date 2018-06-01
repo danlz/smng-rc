@@ -24,6 +24,7 @@ import pl.danlz.remotecontrol.samsung.logger.Logger;
  * <li>map-CableD
  * <li>map-AirD
  * <li>map-AirA
+ * <li>map-SateD
  * </ul>
  * </p>
  *
@@ -40,6 +41,7 @@ public class ChannelListProviderImpl implements ChannelListProvider {
 	private List<Channel> cableDChannels = new ArrayList<>(0);
 	private List<Channel> airDChannels = new ArrayList<>(0);
 	private List<Channel> airAChannels = new ArrayList<>(0);
+	private List<Channel> satelliteDChannels = new ArrayList<>(0);
 
 	private List<Channel> currentChannelList = new ArrayList<>(0);
 
@@ -76,6 +78,10 @@ public class ChannelListProviderImpl implements ChannelListProvider {
 			break;
 		case AIR_A:
 			currentChannelList = airAChannels;
+			break;
+		case SATELLITE_D:
+			currentChannelList = satelliteDChannels;
+			break;
 		default:
 			throw new IllegalArgumentException("Unknown channel list type: " + listType);
 		}
@@ -103,6 +109,8 @@ public class ChannelListProviderImpl implements ChannelListProvider {
 			logChannels("AirD", airDChannels);
 			airAChannels.addAll(new AirAListLoader(zip).load());
 			logChannels("AirA", airAChannels);
+			satelliteDChannels.addAll(new SateDListLoader(zip).load());
+			logChannels("SateD", satelliteDChannels);
 		} catch (IOException e) {
 			LOG.warn("Could not read channel lists from [" + file + "]", e);
 		}

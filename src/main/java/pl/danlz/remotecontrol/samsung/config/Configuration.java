@@ -64,7 +64,7 @@ public class Configuration {
 	}
 
 	public enum ChannelListType {
-		CABLE_D, AIR_D, AIR_A;
+		CABLE_D, AIR_D, AIR_A, SATELLITE_D;
 	}
 
 	private static Configuration config;
